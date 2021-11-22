@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.sunlotocenter.activity">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-feature android:name="android.hardware.camera" />
+
+    <application
+        android:name="com.sunlotocenter.MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme.NoActionBar.Blank"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".admin.CreateBankActivity"
+            android:exported="true" />
+        <activity
+            android:name=".admin.BlameListActivity"
+            android:exported="true" />
+        <activity
+            android:name=".admin.BlameActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".admin.GameScheduleActivity"
+            android:exported="true" />
+        <activity
+            android:name=".AutoComposeActivity"
+            android:exported="true" />
+        <activity
+            android:name=".GameActivity"
+            android:exported="true" />
+        <activity
+            android:name=".seller.SellerDashboardActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ChangePasswordActivity"
+            android:exported="true" />
+        <activity android:name=".admin.BankListActivity" />
+        <activity android:name=".ResultListActivity" />
+        <activity android:name=".admin.AdminReportActivity" />
+        <activity android:name=".admin.EmployeeListActivity" />
+        <activity android:name=".admin.PreventTroubleActivity" />
+        <activity android:name=".admin.ManageGamePriceActivity" />
+        <activity android:name=".admin.ManageGameActivity" />
+        <activity
+            android:name=".admin.CompanyInfoActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".admin.AdminPersonalInfoActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".admin.AdminBroadcastActivity" />
+        <activity android:name=".NotificationActivity" />
+        <activity android:name=".SettingActivity" />
+        <activity android:name=".admin.AdminDashboardActivity" />
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar.Blank"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.yongchun.library.view.ImageSelectorActivity" />
+        <activity android:name="com.yongchun.library.view.ImagePreviewActivity" />
+        <activity android:name="com.yongchun.library.view.ImageCropActivity" />
+    </application>
+
+</manifest>

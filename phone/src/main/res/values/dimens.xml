@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dim_country_list_textview_size">14sp</dimen>
+    <dimen name="dim_country_flag_width">24dp</dimen>
+    <dimen name="dim_country_layout_horizontal_margin">30dp</dimen>
+    <dimen name="dim_country_layout_vertical_margin">15dp</dimen>
+    <dimen name="dim_country_flag_dimension_vertical">20dp</dimen>
+    <dimen name="dim_country_flag_dimension_horizontal">30dp</dimen>
+    <dimen name="dim_phone_edx_height">43dp</dimen>
+</resources>

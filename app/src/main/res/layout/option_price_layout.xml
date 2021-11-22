@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:weightSum="100">
+
+        <com.sunlotocenter.validator.ValidatableEditText
+            android:id="@+id/edxAmount1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_text_height"
+            android:layout_weight="100"
+            android:inputType="numberDecimal"
+            app:hint="@string/amount1"
+            app:max_length="10"
+            app:text_size="@dimen/main_text_size" />
+
+        <com.sunlotocenter.validator.ValidatableEditText
+            android:id="@+id/edxAmount2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_text_height"
+            android:layout_marginTop="10dp"
+            android:layout_weight="100"
+            android:inputType="numberDecimal"
+            app:hint="@string/amount2"
+            app:max_length="10"
+            app:text_size="@dimen/main_text_size" />
+
+        <com.sunlotocenter.validator.ValidatableEditText
+            android:id="@+id/edxAmount3"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_text_height"
+            android:layout_marginTop="10dp"
+            android:layout_weight="100"
+            android:inputType="numberDecimal"
+            app:hint="@string/amount3"
+            app:max_length="10"
+            app:text_size="@dimen/main_text_size" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+</RelativeLayout>

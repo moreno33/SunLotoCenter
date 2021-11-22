@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/game_background">
+
+        <TextView
+            android:id="@+id/txtEntryMorning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Antre: 200,000 HTG"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/main_text_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtOutMorning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Soti: 100,000"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/main_text_size"
+            app:layout_constraintStart_toStartOf="@id/txtEntryMorning"
+            app:layout_constraintTop_toBottomOf="@id/txtEntryMorning" />
+
+        <TextView
+            android:id="@+id/txtAmountMorning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="100,000"
+            android:textColor="@color/main_green"
+            android:textSize="@dimen/main_text_size"
+            app:layout_constraintStart_toStartOf="@+id/txtOutMorning"
+            app:layout_constraintTop_toBottomOf="@+id/txtOutMorning" />
+
+        <TextView
+            android:id="@+id/txtMorning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:text="@string/morning"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/main_text_size"
+            app:layout_constraintBottom_toTopOf="@+id/txtDateMorning"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/txtEntryMorning" />
+
+        <TextView
+            android:id="@+id/txtDateMorning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1 fev 2021"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/main_text_size"
+            app:layout_constraintBottom_toBottomOf="@+id/txtAmountMorning"
+            app:layout_constraintEnd_toEndOf="@+id/txtMorning"
+            app:layout_constraintTop_toBottomOf="@+id/txtMorning" />
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/main_gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtAmountMorning" />
+
+
+        <TextView
+            android:id="@+id/txtEntryNight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Antre: 100,000HTG"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/main_text_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view1" />
+
+        <TextView
+            android:id="@+id/txtOutNight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="200,000"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/main_text_size"
+            app:layout_constraintStart_toStartOf="@+id/txtEntryNight"
+            app:layout_constraintTop_toBottomOf="@+id/txtEntryNight" />
+
+        <TextView
+            android:id="@+id/txtDateNight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1 fev 2021"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/main_text_size"
+            app:layout_constraintBottom_toBottomOf="@+id/txtAmountNight"
+            app:layout_constraintEnd_toEndOf="@+id/txtNight"
+            app:layout_constraintTop_toBottomOf="@+id/txtNight" />
+
+        <TextView
+            android:id="@+id/txtNight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="swa"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/main_text_size"
+            app:layout_constraintBottom_toTopOf="@+id/txtDateNight"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/txtEntryNight" />
+
+        <TextView
+            android:id="@+id/txtAmountNight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="16dp"
+            android:text="22h20"
+            android:textColor="@color/main_red"
+            android:textSize="@dimen/main_text_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/txtOutNight"
+            app:layout_constraintTop_toBottomOf="@+id/txtOutNight" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>

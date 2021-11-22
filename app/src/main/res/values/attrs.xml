@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ValidatableEditText">
+        <attr name="text_color" format="color"/>
+        <attr name="text_size" format="dimension"/>
+        <attr name="text" format="string"/>
+        <attr name="hint" format="string"/>
+        <attr name="drawable_left" format="reference"/>
+        <attr name="android:inputType"/>
+        <attr name="android:layout_height"/>
+        <attr name="max_length" format="integer"/>
+        <attr name="active" format="boolean"/>
+    </declare-styleable>
+</resources>

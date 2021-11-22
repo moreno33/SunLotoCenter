@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".SettingActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp"
+        android:background="@color/main_gray"
+        android:paddingBottom="1dp">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            app:title="@string/limit" />
+    </com.google.android.material.appbar.AppBarLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textview7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="@string/alert_and_block_title"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/main_text_size"
+                    app:layout_constraintBottom_toTopOf="@id/edxBorletAlert"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <!--Borlet-->
+
+                <TextView
+                    android:id="@+id/textview6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:text="@string/borlet"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/main_text_size"
+                    app:layout_constraintBottom_toBottomOf="@+id/edxBorletAlert"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/edxBorletAlert"
+                    app:layout_constraintTop_toTopOf="@id/edxBorletAlert" />
+
+                <EditText
+                    android:id="@+id/edxBorletAlert"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/edit_text_height"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/main_edit_text_background"
+                    android:drawableLeft="@drawable/currency_usd_black_18"
+                    android:drawablePadding="7dp"
+                    android:hint="@string/alert"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textSize="@dimen/main_text_size"
+                    app:layout_constraintEnd_toStartOf="@+id/edxBorletBLock"
+                    app:layout_constraintStart_toEndOf="@+id/textview6"
+                    app:layout_constraintTop_toBottomOf="@+id/textview7" />
+                <EditText
+                    android:id="@+id/edxBorletBLock"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/edit_text_height"
+                    android:layout_marginEnd="30dp"
+                    android:background="@drawable/main_edit_text_background"
+                    android:drawableLeft="@drawable/currency_usd_black_18"
+                    android:drawablePadding="7dp"
+                    android:hint="@string/block"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textSize="@dimen/main_text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/edxBorletAlert"
+                    app:layout_constraintBottom_toBottomOf="@id/edxBorletAlert"
+                    app:layout_constraintStart_toEndOf="@id/edxBorletAlert"/>
+
+
+                <!--Marriage-->
+
+                <TextView
+                    android:id="@+id/textview5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:text="@string/marriage"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/main_text_size"
+                    app:layout_constraintBottom_toBottomOf="@+id/edxMarriageAlert"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/edxMarriageAlert"
+                    app:layout_constraintTop_toTopOf="@id/edxMarriageAlert" />
+
+                <EditText
+                    android:id="@+id/edxMarriageAlert"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/edit_text_height"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/main_edit_text_background"
+                    android:drawableLeft="@drawable/currency_usd_black_18"
+                    android:drawablePadding="7dp"
+                    android:hint="@string/alert"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textSize="@dimen/main_text_size"
+                    app:layout_constraintEnd_toStartOf="@+id/edxMarriageBLock"
+                    app:layout_constraintStart_toEndOf="@+id/textview5"
+                    app:layout_constraintTop_toBottomOf="@+id/edxBorletAlert" />
+                <EditText
+                    android:id="@+id/edxMarriageBLock"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/edit_text_height"
+                    android:layout_marginEnd="30dp"
+                    android:background="@drawable/main_edit_text_background"
+                    android:drawableLeft="@drawable/currency_usd_black_18"
+                    android:drawablePadding="7dp"
+                    android:hint="@string/block"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textSize="@dimen/main_text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/edxMarriageAlert"
+                    app:layout_constraintBottom_toBottomOf="@id/edxMarriageAlert"
+                    app:layout_constraintStart_toEndOf="@id/edxMarriageAlert"/>
+
+                <!--Loto 3-->
+
+                <TextView
+                    android:id="@+id/textview4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:text="@string/loto3"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/main_text_size"
+                    app:layout_constraintBottom_toBottomOf="@+id/edxLoto3Alert"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/edxLoto3Alert"
+                    app:layout_constraintTop_toTopOf="@id/edxLoto3Alert" />
+
+                <EditText
+                    android:id="@+id/edxLoto3Alert"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/edit_text_height"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/main_edit_text_background"
+                    android:drawableLeft="@drawable/currency_usd_black_18"
+                    android:drawablePadding="7dp"
+                    android:hint="@string/alert"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textSize="@dimen/main_text_size"
+                    app:layout_constraintEnd_toStartOf="@+id/edxLoto3BLock"
+                    app:layout_constraintStart_toEndOf="@+id/textview4"
+                    app:layout_constraintTop_toBottomOf="@+id/edxMarriageAlert" />
+                <EditText
+                    android:id="@+id/edxLoto3BLock"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/edit_text_height"
+                    android:layout_marginEnd="30dp"
+                    android:background="@drawable/main_edit_text_background"
+                    android:drawableLeft="@drawable/currency_usd_black_18"
+                    android:drawablePadding="7dp"
+                    android:hint="@string/block"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textSize="@dimen/main_text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/edxLoto3Alert"
+                    app:layout_constraintBottom_toBottomOf="@id/edxLoto3Alert"
+                    app:layout_constraintStart_toEndOf="@id/edxLoto3Alert"/>
+
+
+                <!--Loto 4-->
+
+                <TextView
+                    android:id="@+id/textview3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:text="@string/loto4"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/main_text_size"
+                    app:layout_constraintBottom_toBottomOf="@+id/edxLoto4Alert"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/edxLoto4Alert"
+                    app:layout_constraintTop_toTopOf="@id/edxLoto4Alert" />
+
+                <EditText
+                    android:id="@+id/edxLoto4Alert"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/edit_text_height"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/main_edit_text_background"
+                    android:drawableLeft="@drawable/currency_usd_black_18"
+                    android:drawablePadding="7dp"
+                    android:hint="@string/alert"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textSize="@dimen/main_text_size"
+                    app:layout_constraintEnd_toStartOf="@+id/edxLoto4BLock"
+                    app:layout_constraintStart_toEndOf="@+id/textview3"
+                    app:layout_constraintTop_toBottomOf="@+id/edxLoto3Alert" />
+                <EditText
+                    android:id="@+id/edxLoto4BLock"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/edit_text_height"
+                    android:layout_marginEnd="30dp"
+                    android:background="@drawable/main_edit_text_background"
+                    android:drawableLeft="@drawable/currency_usd_black_18"
+                    android:drawablePadding="7dp"
+                    android:hint="@string/block"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textSize="@dimen/main_text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/edxLoto4Alert"
+                    app:layout_constraintBottom_toBottomOf="@id/edxLoto4Alert"
+                    app:layout_constraintStart_toEndOf="@id/edxLoto4Alert"/>
+
+                <!--Loto 5-->
+
+                <TextView
+                    android:id="@+id/textview2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:text="@string/loto5"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/main_text_size"
+                    app:layout_constraintBottom_toBottomOf="@+id/edxLoto5Alert"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/edxLoto5Alert"
+                    app:layout_constraintTop_toTopOf="@id/edxLoto5Alert" />
+
+                <EditText
+                    android:id="@+id/edxLoto5Alert"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/edit_text_height"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/main_edit_text_background"
+                    android:drawableLeft="@drawable/currency_usd_black_18"
+                    android:drawablePadding="7dp"
+                    android:hint="@string/alert"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textSize="@dimen/main_text_size"
+                    app:layout_constraintEnd_toStartOf="@+id/edxLoto5BLock"
+                    app:layout_constraintStart_toEndOf="@+id/textview2"
+                    app:layout_constraintTop_toBottomOf="@+id/edxLoto4Alert" />
+                <EditText
+                    android:id="@+id/edxLoto5BLock"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/edit_text_height"
+                    android:layout_marginEnd="30dp"
+                    android:background="@drawable/main_edit_text_background"
+                    android:drawableLeft="@drawable/currency_usd_black_18"
+                    android:drawablePadding="7dp"
+                    android:hint="@string/block"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textSize="@dimen/main_text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/edxLoto5Alert"
+                    app:layout_constraintBottom_toBottomOf="@id/edxLoto5Alert"
+                    app:layout_constraintStart_toEndOf="@id/edxLoto5Alert"/>
+
+
+                <life.sabujak.roundedbutton.RoundedButton
+                    android:id="@+id/btnChange"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/edit_text_height"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="30dp"
+                    android:gravity="center"
+                    android:text="@string/add"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/main_text_size"
+                    app:buttonCornerRadius="@dimen/main_corner"
+                    app:buttonGradientEndColor="@color/colorPrimary"
+                    app:buttonGradientStartColor="@color/colorPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edxLoto5Alert" />
+
+
+                <TextView
+                    android:id="@+id/textview1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/add_game_to_block"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/main_text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btnChange" />
+
+                <life.sabujak.roundedbutton.RoundedButton
+                    android:id="@+id/btnAdd"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/edit_text_height"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="30dp"
+                    android:gravity="center"
+                    android:text="@string/add"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/main_text_size"
+                    app:buttonCornerRadius="@dimen/main_corner"
+                    app:buttonGradientEndColor="@color/colorPrimary"
+                    app:buttonGradientStartColor="@color/colorPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textview1" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintTop_toBottomOf="@id/btnAdd"
+                    app:layout_constraintDimensionRatio="1:1">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rclblock"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

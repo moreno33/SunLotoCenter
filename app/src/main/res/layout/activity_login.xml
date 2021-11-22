@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".LoginActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="20dp"
+        android:text="@string/connect_to_administer_account"
+        android:textColor="@color/colorPrimary"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toTopOf="@+id/edxPhone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.emarkall.worldwidephonenumberedittext.WorldWidePhoneNumberEditText
+        android:id="@+id/edxPhone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="10dp"
+        android:background="@android:color/transparent"
+        android:hint="@string/phone_number"
+        android:textSize="@dimen/main_text_size"
+        app:layout_constraintBottom_toTopOf="@+id/edxPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:textColor="@color/colorPrimary"
+        app:textSize="@dimen/main_text_size" />
+
+
+    <com.sunlotocenter.validator.ValidatableEditText
+        android:id="@+id/edxPassword"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/edit_text_height"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnLogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:hint="@string/password"
+        app:text_size="@dimen/main_text_size"
+        app:drawable_left="@drawable/lock_outline_18" />
+
+    <life.sabujak.roundedbutton.RoundedButton
+        android:id="@+id/btnLogin"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/edit_text_height"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="20dp"
+        android:text="@string/connect"
+        android:textAllCaps="false"
+        app:buttonGradientStartColor="@color/colorPrimary"
+        app:buttonGradientEndColor="@color/colorPrimary"
+        android:gravity="center"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:buttonCornerRadius="@dimen/main_corner"
+        android:textSize="@dimen/main_text_size"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginBottom="60dp"
+        android:text="@string/term_and_condition_link"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/colorPrimary"
+        android:textAlignment="center"
+        android:textSize="@dimen/main_text_size"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

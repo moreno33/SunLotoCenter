@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:weightSum="100">
+
+        <com.sunlotocenter.validator.ValidatableEditText
+            android:id="@+id/edxNumber"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dim_tabs_controls_height"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="40"
+            android:inputType="number"
+            app:hint="00X00"
+            app:max_length="5"
+            app:text_size="20sp" />
+
+        <com.sunlotocenter.validator.ValidatableEditText
+            android:id="@+id/edxAmount"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dim_tabs_controls_height"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="40"
+            android:inputType="numberDecimal"
+            app:hint="@string/amount"
+            app:max_length="10"
+            app:text_size="20sp" />
+
+        <life.sabujak.roundedbutton.RoundedButton
+            android:id="@+id/btnAdd"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dim_tabs_controls_height"
+            android:layout_weight="20"
+            android:gravity="center"
+            android:text="+"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:buttonCornerRadius="@dimen/main_corner"
+            app:buttonGradientEndColor="@color/main_green"
+            app:buttonGradientStartColor="@color/main_green" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+</RelativeLayout>

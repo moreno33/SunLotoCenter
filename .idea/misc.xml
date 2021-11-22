@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.121875" />
+        <entry key="app/src/main/res/drawable/account_alert_outline_black_18.xml" value="0.2" />
+        <entry key="app/src/main/res/drawable/account_cancel_outline_black_18.xml" value="0.2" />
+        <entry key="app/src/main/res/drawable/account_group_outline.xml" value="0.20855263157894738" />
+        <entry key="app/src/main/res/drawable/account_outline_white_24.xml" value="0.20855263157894738" />
+        <entry key="app/src/main/res/drawable/auto_loto_background.xml" value="0.20986842105263157" />
+        <entry key="app/src/main/res/drawable/auto_loto_background_default.xml" value="0.20986842105263157" />
+        <entry key="app/src/main/res/drawable/auto_loto_background_disabled.xml" value="0.17401315789473684" />
+        <entry key="app/src/main/res/drawable/auto_loto_background_enabled.xml" value="0.17401315789473684" />
+        <entry key="app/src/main/res/drawable/auto_loto_background_pressed.xml" value="0.17401315789473684" />
+        <entry key="app/src/main/res/drawable/av_timer_black_18.xml" value="0.2" />
+        <entry key="app/src/main/res/drawable/av_timer_black_24.xml" value="0.2" />
+        <entry key="app/src/main/res/drawable/background_gray.xml" value="0.1819078947368421" />
+        <entry key="app/src/main/res/drawable/blue_corner_radius.xml" value="0.20986842105263157" />
+        <entry key="app/src/main/res/drawable/blue_corner_radius_default.xml" value="0.20986842105263157" />
+        <entry key="app/src/main/res/drawable/blue_corner_radius_pressed.xml" value="0.2" />
+        <entry key="app/src/main/res/drawable/camera_outline_white_18.xml" value="0.20855263157894738" />
+        <entry key="app/src/main/res/drawable/chevron_down_black_18.xml" value="0.2" />
+        <entry key="app/src/main/res/drawable/chevron_down_white_18.xml" value="0.2" />
+        <entry key="app/src/main/res/drawable/clickable_background.xml" value="0.20986842105263157" />
+        <entry key="app/src/main/res/drawable/dashboard_top_background.xml" value="0.20986842105263157" />
+        <entry key="app/src/main/res/drawable/delete_outline_black_16.xml" value="0.18289473684210528" />
+        <entry key="app/src/main/res/drawable/delete_outline_black_24.xml" value="0.18289473684210528" />
+        <entry key="app/src/main/res/drawable/dots_horizontal_black_18.xml" value="0.2" />
+        <entry key="app/src/main/res/drawable/game_row_divider.xml" value="0.2" />
+        <entry key="app/src/main/res/drawable/gender_male_female_black_18.xml" value="0.2" />
+        <entry key="app/src/main/res/drawable/green_circle_background.xml" value="0.20986842105263157" />
+        <entry key="app/src/main/res/drawable/green_corner_radius.xml" value="0.20986842105263157" />
+        <entry key="app/src/main/res/drawable/green_corner_radius_default.xml" value="0.20986842105263157" />
+        <entry key="app/src/main/res/drawable/marry_all_background.xml" value="0.20986842105263157" />
+        <entry key="app/src/main/res/drawable/marry_all_background_default.xml" value="0.20986842105263157" />
+        <entry key="app/src/main/res/drawable/marry_all_background_disabled.xml" value="0.17401315789473684" />
+        <entry key="app/src/main/res/drawable/marry_all_background_enabled.xml" value="0.17401315789473684" />
+        <entry key="app/src/main/res/drawable/marry_all_background_pressed.xml" value="0.17401315789473684" />
+        <entry key="app/src/main/res/drawable/pencil_outline_black_18.xml" value="0.2" />
+        <entry key="app/src/main/res/drawable/pencil_outline_black_24.xml" value="0.2" />
+        <entry key="app/src/main/res/drawable/plus_white_24.xml" value="0.1819078947368421" />
+        <entry key="app/src/main/res/drawable/send_outline_black_24.xml" value="0.20986842105263157" />
+        <entry key="app/src/main/res/drawable/send_outline_white_24.xml" value="0.20986842105263157" />
+        <entry key="app/src/main/res/drawable/tabs_background.xml" value="0.20986842105263157" />
+        <entry key="app/src/main/res/drawable/tabs_background_default.xml" value="0.20986842105263157" />
+        <entry key="app/src/main/res/drawable/tabs_background_pressed.xml" value="0.20986842105263157" />
+        <entry key="app/src/main/res/drawable/tabs_first_background.xml" value="0.20986842105263157" />
+        <entry key="app/src/main/res/drawable/tabs_first_background_default.xml" value="0.20986842105263157" />
+        <entry key="app/src/main/res/drawable/tabs_first_background_pressed.xml" value="0.20986842105263157" />
+        <entry key="app/src/main/res/drawable/tabs_first_background_white.xml" value="0.20986842105263157" />
+        <entry key="app/src/main/res/drawable/tabs_last_background.xml" value="0.20986842105263157" />
+        <entry key="app/src/main/res/drawable/tabs_last_background_default.xml" value="0.20986842105263157" />
+        <entry key="app/src/main/res/drawable/tabs_last_background_pressed.xml" value="0.20986842105263157" />
+        <entry key="app/src/main/res/drawable/wallet_outline_black_18.xml" value="0.2" />
+        <entry key="app/src/main/res/drawable/white_corner_radius.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/activity_admin_dashboard.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/activity_admin_personal_info.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_admin_report.xml" value="0.13201474173232164" />
+        <entry key="app/src/main/res/layout/activity_bank_list.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_blame.xml" value="0.18980263157894736" />
+        <entry key="app/src/main/res/layout/activity_blame_list.xml" value="0.18980263157894736" />
+        <entry key="app/src/main/res/layout/activity_change_password.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_company_info.xml" value="0.12773224043715847" />
+        <entry key="app/src/main/res/layout/activity_create_bank.xml" value="0.19835526315789473" />
+        <entry key="app/src/main/res/layout/activity_employee_list.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_game.xml" value="0.19967105263157894" />
+        <entry key="app/src/main/res/layout/activity_game_sechedule.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_manage_game.xml" value="0.13524590163934427" />
+        <entry key="app/src/main/res/layout/activity_marry_all.xml" value="0.18157894736842106" />
+        <entry key="app/src/main/res/layout/activity_seller_dashboard.xml" value="0.19967105263157894" />
+        <entry key="app/src/main/res/layout/bank_layout.xml" value="0.45" />
+        <entry key="app/src/main/res/layout/blame_layout.xml" value="0.22699386503067484" />
+        <entry key="app/src/main/res/layout/bottom_game_schedule_layout.xml" value="0.1837431693989071" />
+        <entry key="app/src/main/res/layout/dialog_layout.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/employee_layout.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/fragment_borlet.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_loto3.xml" value="0.18980263157894736" />
+        <entry key="app/src/main/res/layout/fragment_loto4.xml" value="0.18980263157894736" />
+        <entry key="app/src/main/res/layout/fragment_loto5.xml" value="0.18980263157894736" />
+        <entry key="app/src/main/res/layout/fragment_marriage.xml" value="0.18980263157894736" />
+        <entry key="app/src/main/res/layout/game_header_layout.xml" value="0.16776315789473684" />
+        <entry key="app/src/main/res/layout/game_layout.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/game_row_layout.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/game_schedule_layout.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/game_schedule_session_layout.xml" value="0.1837431693989071" />
+        <entry key="app/src/main/res/layout/marry_all_layout.xml" value="0.16537638329846163" />
+        <entry key="app/src/main/res/layout/marry_all_row_layout.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/option_price_layout.xml" value="0.18886612021857924" />
+        <entry key="app/src/main/res/layout/report_layout.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/valid_error_layout.xml" value="0.25" />
+        <entry key="app/src/main/res/menu/mn_employee_action.xml" value="0.18980263157894736" />
+        <entry key="app/src/main/res/menu/mn_user_type.xml" value="0.1" />
+        <entry key="library/src/main/res/drawable/item_divider.xml" value="0.2" />
+        <entry key="phone/src/main/res/drawable/account_cancel_outline_black_1i.xml" value="0.2" />
+        <entry key="phone/src/main/res/layout/country_layout.xml" value="0.16632513661202186" />
+        <entry key="phone/src/main/res/layout/phone_number_layout.xml" value="0.25" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

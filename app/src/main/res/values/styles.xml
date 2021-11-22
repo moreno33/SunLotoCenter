@@ -1,0 +1,39 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorAccent">@color/colorAccent</item>
+<!--        <item name="spbStyle">@style/GNowProgressBar</item>-->
+<!--        <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>-->
+
+        <!--        <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>-->
+        <!--        <item name="android:buttonStyle">@style/RobotoButtonStyle</item>-->
+        <item name="android:spinnerItemStyle">@style/spinnerStyle</item>
+    </style>
+    <style name="spinnerStyle">
+        <item name="android:text">12sp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:paddingLeft">10dp</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <!-- Base application theme. -->
+<!--    <style name="AppTheme" parent="AppTheme.NoActionBar">-->
+<!--        &lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+<!--        <item name="colorPrimary">@color/white</item>-->
+<!--        <item name="colorAccent">@color/colorAccent</item>-->
+<!--    </style>-->
+
+    <style name="AppTheme.NoActionBar.Blank">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@android:color/white</item>
+<!--        <item name="otpViewStyle">@style/OtpWidget.OtpView</item>-->
+    </style>
+
+</resources>

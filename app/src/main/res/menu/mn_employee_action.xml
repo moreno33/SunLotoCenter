@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/addPassword"
+        android:title="@string/addOrChangePassword"/>
+    <item android:id="@+id/mnBlock"
+        android:title="@string/block_user"/>
+    <item android:id="@+id/mnReprimand"
+        android:title="@string/reprimand"/>
+    <item android:id="@+id/mnBalance"
+        android:title="@string/balance"/>
+
+</menu>

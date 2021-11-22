@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".GameActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp"
+        android:background="@color/main_gray"
+        android:paddingBottom="1dp">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            app:title="@string/play" />
+    </com.google.android.material.appbar.AppBarLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:fitsSystemWindows="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="100dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/contraint"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/dashboard_top_background"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <LinearLayout
+                        android:id="@+id/tabs"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:paddingTop="1dp"
+                        android:paddingRight="1dp"
+                        android:paddingLeft="1dp">
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btnBorlet"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dim_tabs_height"
+                            android:layout_weight="1"
+                            android:background="@drawable/tabs_first_background"
+                            android:text="@string/borlet"
+                            android:textColor="@color/white" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btnMarriage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dim_tabs_height"
+                            android:layout_weight="1"
+                            android:background="@drawable/tabs_background"
+                            android:text="@string/marriage"
+                            android:textColor="@color/white" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btnLoto3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dim_tabs_height"
+                            android:layout_weight="1"
+                            android:background="@drawable/tabs_background"
+                            android:text="@string/loto3"
+                            android:textColor="@color/white" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btnLoto4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dim_tabs_height"
+                            android:layout_weight="1"
+                            android:background="@drawable/tabs_background"
+                            android:text="@string/loto4"
+                            android:textColor="@color/white" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btnLoto5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dim_tabs_height"
+                            android:layout_weight="1"
+                            android:background="@drawable/tabs_last_background"
+                            android:text="@string/loto5"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/view1"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:background="@color/white"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tabs"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"/>
+
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/tabsViewPager"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fitsSystemWindows="true"
+                        app:layout_constraintTop_toBottomOf="@id/view1"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <LinearLayout
+                    android:id="@+id/constraint2"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dim_tabs_height"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/contraint"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btnAutoLoto4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dim_tabs_height"
+                        android:text="@string/auto_loto_4"
+                        android:layout_weight="1"
+                        android:textColor="@color/white"
+                        android:background="@drawable/auto_loto_background"
+                        android:layout_marginRight="1dp"
+                        android:enabled="false"/>
+                    <Button
+                        android:id="@+id/btnAutoMarriage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dim_tabs_height"
+                        android:text="@string/marry_all"
+                        android:textColor="@color/white"
+                        android:layout_weight="1"
+                        android:background="@drawable/marry_all_background"
+                        android:enabled="false"/>
+
+                </LinearLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:minHeight="430dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/yellow_background"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/constraint2"
+                    app:layout_constraintDimensionRatio="4:5" >
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rclGame"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@color/white">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@color/main_gray"/>
+
+
+            <life.sabujak.roundedbutton.RoundedButton
+                android:id="@+id/btnTotalPreview"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="16dp"
+                android:textAllCaps="true"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/main_text_size"
+                app:buttonCornerRadius="@dimen/main_corner"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/imgSend"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:buttonGradientStartColor="@color/blue"
+                app:buttonGradientEndColor="@color/blue"
+                android:drawableEnd="@drawable/chevron_down_white_18"
+                android:paddingEnd="16dp"
+                android:paddingStart="16dp"/>
+            <ImageButton
+                android:id="@+id/imgSend"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:src="@drawable/send_outline_white_24"
+                android:background="@drawable/green_corner_radius"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/btnTotalPreview"
+                app:layout_constraintBottom_toBottomOf="@id/btnTotalPreview"
+                android:layout_marginEnd="16dp"
+                android:padding="20dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

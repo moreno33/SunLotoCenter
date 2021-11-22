@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent">
+
+    <EditText
+        android:id="@+id/edxText"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edit_text_height"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="@drawable/main_edit_text_background"
+        android:drawablePadding="7dp"
+        android:inputType="textCapSentences"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rclError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
