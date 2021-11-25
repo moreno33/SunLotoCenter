@@ -67,7 +67,7 @@
                     app:layout_constraintEnd_toStartOf="@+id/edxBorletAlert"
                     app:layout_constraintTop_toTopOf="@id/edxBorletAlert" />
 
-                <EditText
+                <com.sunlotocenter.validator.ValidatableEditText
                     android:id="@+id/edxBorletAlert"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/edit_text_height"
@@ -75,27 +75,23 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="10dp"
                     android:background="@drawable/main_edit_text_background"
-                    android:drawableLeft="@drawable/currency_usd_black_18"
+                    app:drawable_left="@drawable/currency_usd_black_18"
                     android:drawablePadding="7dp"
-                    android:hint="@string/alert"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:textSize="@dimen/main_text_size"
+                    app:hint="@string/alert"
+                    app:text_size="@dimen/main_text_size"
                     app:layout_constraintEnd_toStartOf="@+id/edxBorletBLock"
                     app:layout_constraintStart_toEndOf="@+id/textview6"
                     app:layout_constraintTop_toBottomOf="@+id/textview7" />
-                <EditText
+                <com.sunlotocenter.validator.ValidatableEditText
                     android:id="@+id/edxBorletBLock"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/edit_text_height"
                     android:layout_marginEnd="30dp"
                     android:background="@drawable/main_edit_text_background"
-                    android:drawableLeft="@drawable/currency_usd_black_18"
+                    app:drawable_left="@drawable/currency_usd_black_18"
                     android:drawablePadding="7dp"
-                    android:hint="@string/block"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:textSize="@dimen/main_text_size"
+                    app:hint="@string/block"
+                    app:text_size="@dimen/main_text_size"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/edxBorletAlert"
                     app:layout_constraintBottom_toBottomOf="@id/edxBorletAlert"
@@ -117,7 +113,7 @@
                     app:layout_constraintEnd_toStartOf="@+id/edxMarriageAlert"
                     app:layout_constraintTop_toTopOf="@id/edxMarriageAlert" />
 
-                <EditText
+                <com.sunlotocenter.validator.ValidatableEditText
                     android:id="@+id/edxMarriageAlert"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/edit_text_height"
@@ -125,27 +121,23 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:background="@drawable/main_edit_text_background"
-                    android:drawableLeft="@drawable/currency_usd_black_18"
+                    app:drawable_left="@drawable/currency_usd_black_18"
                     android:drawablePadding="7dp"
-                    android:hint="@string/alert"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:textSize="@dimen/main_text_size"
+                    app:hint="@string/alert"
+                    app:text_size="@dimen/main_text_size"
                     app:layout_constraintEnd_toStartOf="@+id/edxMarriageBLock"
                     app:layout_constraintStart_toEndOf="@+id/textview5"
                     app:layout_constraintTop_toBottomOf="@+id/edxBorletAlert" />
-                <EditText
+                <com.sunlotocenter.validator.ValidatableEditText
                     android:id="@+id/edxMarriageBLock"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/edit_text_height"
                     android:layout_marginEnd="30dp"
                     android:background="@drawable/main_edit_text_background"
-                    android:drawableLeft="@drawable/currency_usd_black_18"
+                    app:drawable_left="@drawable/currency_usd_black_18"
                     android:drawablePadding="7dp"
-                    android:hint="@string/block"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:textSize="@dimen/main_text_size"
+                    app:hint="@string/block"
+                    app:text_size="@dimen/main_text_size"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/edxMarriageAlert"
                     app:layout_constraintBottom_toBottomOf="@id/edxMarriageAlert"
@@ -166,7 +158,7 @@
                     app:layout_constraintEnd_toStartOf="@+id/edxLoto3Alert"
                     app:layout_constraintTop_toTopOf="@id/edxLoto3Alert" />
 
-                <EditText
+                <com.sunlotocenter.validator.ValidatableEditText
                     android:id="@+id/edxLoto3Alert"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/edit_text_height"
@@ -174,27 +166,23 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:background="@drawable/main_edit_text_background"
-                    android:drawableLeft="@drawable/currency_usd_black_18"
+                    app:drawable_left="@drawable/currency_usd_black_18"
                     android:drawablePadding="7dp"
-                    android:hint="@string/alert"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:textSize="@dimen/main_text_size"
+                    app:hint="@string/alert"
+                    app:text_size="@dimen/main_text_size"
                     app:layout_constraintEnd_toStartOf="@+id/edxLoto3BLock"
                     app:layout_constraintStart_toEndOf="@+id/textview4"
                     app:layout_constraintTop_toBottomOf="@+id/edxMarriageAlert" />
-                <EditText
+                <com.sunlotocenter.validator.ValidatableEditText
                     android:id="@+id/edxLoto3BLock"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/edit_text_height"
                     android:layout_marginEnd="30dp"
                     android:background="@drawable/main_edit_text_background"
-                    android:drawableLeft="@drawable/currency_usd_black_18"
+                    app:drawable_left="@drawable/currency_usd_black_18"
                     android:drawablePadding="7dp"
-                    android:hint="@string/block"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:textSize="@dimen/main_text_size"
+                    app:hint="@string/block"
+                    app:text_size="@dimen/main_text_size"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/edxLoto3Alert"
                     app:layout_constraintBottom_toBottomOf="@id/edxLoto3Alert"
@@ -216,7 +204,7 @@
                     app:layout_constraintEnd_toStartOf="@+id/edxLoto4Alert"
                     app:layout_constraintTop_toTopOf="@id/edxLoto4Alert" />
 
-                <EditText
+                <com.sunlotocenter.validator.ValidatableEditText
                     android:id="@+id/edxLoto4Alert"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/edit_text_height"
@@ -224,27 +212,23 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:background="@drawable/main_edit_text_background"
-                    android:drawableLeft="@drawable/currency_usd_black_18"
+                    app:drawable_left="@drawable/currency_usd_black_18"
                     android:drawablePadding="7dp"
-                    android:hint="@string/alert"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:textSize="@dimen/main_text_size"
+                    app:hint="@string/alert"
+                    app:text_size="@dimen/main_text_size"
                     app:layout_constraintEnd_toStartOf="@+id/edxLoto4BLock"
                     app:layout_constraintStart_toEndOf="@+id/textview3"
                     app:layout_constraintTop_toBottomOf="@+id/edxLoto3Alert" />
-                <EditText
+                <com.sunlotocenter.validator.ValidatableEditText
                     android:id="@+id/edxLoto4BLock"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/edit_text_height"
                     android:layout_marginEnd="30dp"
                     android:background="@drawable/main_edit_text_background"
-                    android:drawableLeft="@drawable/currency_usd_black_18"
+                    app:drawable_left="@drawable/currency_usd_black_18"
                     android:drawablePadding="7dp"
-                    android:hint="@string/block"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:textSize="@dimen/main_text_size"
+                    app:hint="@string/block"
+                    app:text_size="@dimen/main_text_size"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/edxLoto4Alert"
                     app:layout_constraintBottom_toBottomOf="@id/edxLoto4Alert"
@@ -265,7 +249,7 @@
                     app:layout_constraintEnd_toStartOf="@+id/edxLoto5Alert"
                     app:layout_constraintTop_toTopOf="@id/edxLoto5Alert" />
 
-                <EditText
+                <com.sunlotocenter.validator.ValidatableEditText
                     android:id="@+id/edxLoto5Alert"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/edit_text_height"
@@ -273,27 +257,23 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:background="@drawable/main_edit_text_background"
-                    android:drawableLeft="@drawable/currency_usd_black_18"
+                    app:drawable_left="@drawable/currency_usd_black_18"
                     android:drawablePadding="7dp"
-                    android:hint="@string/alert"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:textSize="@dimen/main_text_size"
+                    app:hint="@string/alert"
+                    app:text_size="@dimen/main_text_size"
                     app:layout_constraintEnd_toStartOf="@+id/edxLoto5BLock"
                     app:layout_constraintStart_toEndOf="@+id/textview2"
                     app:layout_constraintTop_toBottomOf="@+id/edxLoto4Alert" />
-                <EditText
+                <com.sunlotocenter.validator.ValidatableEditText
                     android:id="@+id/edxLoto5BLock"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/edit_text_height"
                     android:layout_marginEnd="30dp"
                     android:background="@drawable/main_edit_text_background"
-                    android:drawableLeft="@drawable/currency_usd_black_18"
+                    app:drawable_left="@drawable/currency_usd_black_18"
                     android:drawablePadding="7dp"
-                    android:hint="@string/block"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:textSize="@dimen/main_text_size"
+                    app:hint="@string/block"
+                    app:text_size="@dimen/main_text_size"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/edxLoto5Alert"
                     app:layout_constraintBottom_toBottomOf="@id/edxLoto5Alert"
@@ -301,7 +281,7 @@
 
 
                 <life.sabujak.roundedbutton.RoundedButton
-                    android:id="@+id/btnChange"
+                    android:id="@+id/btnCreateArletBlock"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/edit_text_height"
                     android:layout_marginStart="30dp"
@@ -331,10 +311,10 @@
                     android:textSize="@dimen/main_text_size"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/btnChange" />
+                    app:layout_constraintTop_toBottomOf="@id/btnCreateArletBlock" />
 
                 <life.sabujak.roundedbutton.RoundedButton
-                    android:id="@+id/btnAdd"
+                    android:id="@+id/btnAddBlock"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/edit_text_height"
                     android:layout_marginStart="30dp"
@@ -356,13 +336,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginTop="20dp"
-                    app:layout_constraintTop_toBottomOf="@id/btnAdd"
-                    app:layout_constraintDimensionRatio="1:1">
+                    android:paddingStart="30dp"
+                    android:paddingEnd="30dp"
+                    android:paddingBottom="16dp"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintTop_toBottomOf="@id/btnAddBlock">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rclblock"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
+                        android:background="@drawable/main_edit_text_background"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

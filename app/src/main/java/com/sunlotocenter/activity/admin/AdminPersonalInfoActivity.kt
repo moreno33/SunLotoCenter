@@ -78,7 +78,7 @@ class AdminPersonalInfoActivity : ProtectedActivity() {
                                 return false
                             }
 
-                        }, true)
+                        }, true, DialogType.ERROR)
                 }else{
                     //Update the local data is connected user is changed
                     if(it.success){
@@ -105,7 +105,7 @@ class AdminPersonalInfoActivity : ProtectedActivity() {
                                     return false
                                 }
 
-                            }, false)
+                            }, false, DialogType.SUCCESS)
                     }else{
                         showDialog(this@AdminPersonalInfoActivity,
                             getString(R.string.internet_error_title),
@@ -116,7 +116,7 @@ class AdminPersonalInfoActivity : ProtectedActivity() {
                                     return false
                                 }
 
-                            }, false)
+                            }, false, DialogType.ERROR)
                     }
 
                 }

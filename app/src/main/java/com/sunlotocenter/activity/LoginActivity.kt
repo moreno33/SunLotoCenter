@@ -13,6 +13,7 @@ import com.sunlotocenter.extensions.isConnected
 import com.sunlotocenter.extensions.neutralDialog
 import com.sunlotocenter.extensions.redirectToDashboard
 import com.sunlotocenter.utils.ClickListener
+import com.sunlotocenter.utils.DialogType
 import com.sunlotocenter.utils.userApi
 import com.sunlotocenter.utils.showDialog
 import com.sunlotocenter.validator.Form
@@ -98,8 +99,7 @@ class LoginActivity : BasicActivity() {
                           }
 
                       },
-                      true
-                  )
+                      true, DialogType.ERROR)
                 }
             }
 

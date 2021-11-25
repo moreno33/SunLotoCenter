@@ -17,6 +17,7 @@ import com.sunlotocenter.listener.LoadMoreListener
 import com.sunlotocenter.listener.SaveBankListener
 import com.sunlotocenter.model.BankViewModel
 import com.sunlotocenter.utils.ClickListener
+import com.sunlotocenter.utils.DialogType
 import com.sunlotocenter.utils.REFRESH_REQUEST_CODE
 import kotlinx.android.synthetic.main.activity_bank_list.*
 import kotlinx.android.synthetic.main.activity_bank_list.toolbar
@@ -123,8 +124,7 @@ class BankListActivity : ProtectedActivity(),
                     override fun onClick(): Boolean {
                         return false
                     }
-                }, true
-            )
+                }, true, DialogType.ERROR)
         }else{
             if(it.success){
                 com.sunlotocenter.utils.showDialog(this,
@@ -135,8 +135,7 @@ class BankListActivity : ProtectedActivity(),
                         override fun onClick(): Boolean {
                             return false
                         }
-                    }, false
-                )
+                    }, false, DialogType.SUCCESS)
                 bankViewModel.loadBanks(true)
             }else{
                 com.sunlotocenter.utils.showDialog(this,
@@ -147,8 +146,7 @@ class BankListActivity : ProtectedActivity(),
                         override fun onClick(): Boolean {
                             return false
                         }
-                    }, false
-                )
+                    }, false, DialogType.ERROR)
             }
 
         }

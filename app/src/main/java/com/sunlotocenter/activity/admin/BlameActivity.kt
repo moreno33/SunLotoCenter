@@ -14,6 +14,7 @@ import com.sunlotocenter.dao.User
 import com.sunlotocenter.extensions.enableHome
 import com.sunlotocenter.model.UserViewModel
 import com.sunlotocenter.utils.ClickListener
+import com.sunlotocenter.utils.DialogType
 import com.sunlotocenter.utils.USER_EXTRA
 import com.sunlotocenter.validator.*
 import kotlinx.android.synthetic.main.activity_blame.*
@@ -56,7 +57,7 @@ class BlameActivity : ProtectedActivity() {
                     }
 
                 },
-                true)
+                true, DialogType.ERROR)
         }
     }
 
@@ -81,8 +82,7 @@ class BlameActivity : ProtectedActivity() {
                         return false
                     }
 
-                }, true
-            )
+                }, true, DialogType.ERROR)
         }else{
             com.sunlotocenter.utils.showDialog(this,
                 getString(R.string.success_title),
@@ -95,8 +95,7 @@ class BlameActivity : ProtectedActivity() {
                         return false
                     }
 
-                }, false
-            )
+                }, false, DialogType.SUCCESS)
         }
     }
 

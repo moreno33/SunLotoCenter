@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.github.zawadz88.materialpopupmenu.popupMenu
 import com.sunlotocenter.activity.ChangePasswordActivity
 import com.sunlotocenter.activity.R
@@ -23,6 +25,7 @@ import com.sunlotocenter.listener.SaveBankListener
 import com.sunlotocenter.utils.BANK_EXTRA
 import com.sunlotocenter.utils.REFRESH_REQUEST_CODE
 import com.sunlotocenter.utils.getDateString
+import com.sunlotocenter.utils.glide
 import kotlinx.android.synthetic.main.bank_layout.view.*
 
 class BankListAdapter(var banks: ArrayList<Bank>, var saveBankListener: SaveBankListener) : RecyclerView.Adapter<BankListAdapter.CustomViewHolder>() {
@@ -46,18 +49,11 @@ class BankListAdapter(var banks: ArrayList<Bank>, var saveBankListener: SaveBank
 //        else
 //            holder.vwStatus.background= ContextCompat.getDrawable(context, R.drawable.red_circle_background)
 
-        if(bank.profilePath.isNullOrEmpty()){
-            Glide
-                .with(context)
-                .load(R.drawable.bank_image)
-                .into(holder.imgProfile)
-
-        }else{
-            Glide
-                .with(context)
-                .load(bank.profilePath)
-                .into(holder.imgProfile)
-        }
+        glide(context,
+            bank.profilePath,
+            holder.imgProfile,
+            R.drawable.background_gray,
+            R.drawable.bank_image)
 
 //        //Click to open menu
         holder.imgMenu.setOnClickListener {

@@ -15,6 +15,7 @@ import com.sunlotocenter.dao.*
 import com.sunlotocenter.extensions.enableHome
 import com.sunlotocenter.model.GameViewModel
 import com.sunlotocenter.utils.ClickListener
+import com.sunlotocenter.utils.DialogType
 import com.sunlotocenter.validator.Form
 import com.sunlotocenter.validator.LengthValidator
 import com.sunlotocenter.validator.MinLengthValidator
@@ -57,10 +58,6 @@ class GameScheduleActivity : ProtectedActivity() {
         )
         prepareControl()
         observe()
-    }
-
-    override fun onResume() {
-        super.onResume()
         fillControl()
     }
 
@@ -80,8 +77,7 @@ class GameScheduleActivity : ProtectedActivity() {
                                 return false
                             }
 
-                        }, true
-                    )
+                        }, true, DialogType.ERROR)
                 }else{
                     com.sunlotocenter.utils.showDialog(this@GameScheduleActivity,
                         getString(R.string.success_title),
@@ -97,8 +93,7 @@ class GameScheduleActivity : ProtectedActivity() {
                                 return false
                             }
 
-                        }, false
-                    )
+                        }, false, DialogType.SUCCESS)
                 }
             })
     }

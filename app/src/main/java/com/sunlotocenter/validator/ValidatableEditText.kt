@@ -147,4 +147,13 @@ class ValidatableEditText : LinearLayout, Validable {
     fun focus(){
         this.edxText.requestFocus()
     }
+    fun setHint(hint: String){
+        edxText.hint= hint
+    }
+    fun setMaxLength(maxLength: Int){
+        edxText.filters = arrayOf(InputFilter.LengthFilter(maxLength))
+    }
+    fun removeTextChangedListener(textWatcher: TextWatcher){
+        edxText.removeTextChangedListener(textWatcher)
+    }
 }

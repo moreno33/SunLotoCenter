@@ -3,6 +3,8 @@ package com.sunlotocenter.activity.admin
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.view.View.GONE
 import android.widget.AdapterView
@@ -24,6 +26,8 @@ import com.sunlotocenter.validator.MinLengthValidator
 import com.yongchun.library.view.ImageSelectorActivity
 import kotlinx.android.synthetic.main.activity_create_bank.*
 import kotlinx.android.synthetic.main.activity_create_bank.toolbar
+import kotlinx.android.synthetic.main.fragment_marriage.*
+import kotlinx.android.synthetic.main.fragment_marriage.view.*
 import org.modelmapper.ModelMapper
 import java.util.*
 import kotlin.collections.ArrayList
@@ -82,7 +86,7 @@ class CreateBankActivity: ProtectedActivity() {
                                 return false
                             }
 
-                        }, true)
+                        }, true, DialogType.ERROR)
                 }else{
                     //Update the local data is connected user is changed
                     if(it.success){
@@ -101,7 +105,7 @@ class CreateBankActivity: ProtectedActivity() {
                                     return false
                                 }
 
-                            }, false)
+                            }, false, DialogType.SUCCESS)
                     }else{
                         showDialog(this@CreateBankActivity,
                             getString(R.string.internet_error_title),
@@ -112,7 +116,7 @@ class CreateBankActivity: ProtectedActivity() {
                                     return false
                                 }
 
-                            }, false)
+                            }, false, DialogType.ERROR)
                     }
 
                 }
@@ -204,6 +208,20 @@ class CreateBankActivity: ProtectedActivity() {
 
         }
 
+        edxCode.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if(s== null) return
+                if(s.length<= 3 && before== 1){
+                    edxCode.text= "SLC"
+                    edxCode.setSelection(edxCode.text.length)
+                }
+            }
+            override fun afterTextChanged(s: Editable?) {
+            }
+        })
+
         btnSubmit.setOnClickListener {
             submit()
         }
@@ -220,7 +238,7 @@ class CreateBankActivity: ProtectedActivity() {
                         return false
                     }
 
-                }, false)
+                }, false, DialogType.ERROR)
             }else{
                 if(bankExtra != null)
                     ModelMapper().map(bankExtra, bank)

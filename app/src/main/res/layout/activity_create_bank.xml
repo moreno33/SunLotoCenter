@@ -108,6 +108,7 @@
                     android:inputType="textCapSentences"
                     app:drawable_left="@drawable/account_outline_18"
                     app:hint="@string/kod"
+                    app:text="SLC"
                     app:layout_constraintBottom_toTopOf="@+id/clWorker"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

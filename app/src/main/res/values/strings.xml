@@ -127,6 +127,20 @@
     <string name="kod">Kòd bank lan</string>
     <string name="change">Fè yon chanjman</string>
     <string name="update_user">Modifye itilizatè an</string>
+    <string name="create_game_price_success_message">Ou ajoute pri jwèt yo avèk siksè!</string>
+    <string name="update_game_price_success_message">Ou modifye pri jwèt yo avèk siksè!</string>
+    <string name="create_game_alert_and_block_success_message">Ou anrejistre alèt ak blòk pou boul yo avèk siksè!</string>
+    <string name="update_game_alert_and_block_success_message">Ou modifye alèt ak blòk pou boul yo avèk siksè!</string>
+    <string name="block_game">Bloke boul</string>
+    <string name="to_block">Bloke</string>
+    <string name="create_blocked_game_success_message">Ou bloke boul la avèk siksè!</string>
+    <string name="update_blocked_game_success_message">Ou debloke boul lan ak siskè!</string>
+    <string name="game">Jwèt</string>
+    <string name="type">Tip jwèt</string>
+    <string name="unblock_game">Debloke boul la</string>
+    <string name="want_to_unblock_game">Eske ou si ou vle debloke %1$s?</string>
+    <string name="yes">Wi</string>
+    <string name="no">Non</string>
     <string-array name="employee_category">
         <item>Vandè</item>
         <item>Administratè</item>

@@ -15,6 +15,7 @@ import com.sunlotocenter.activity.R
 import com.sunlotocenter.dao.*
 import com.sunlotocenter.extensions.gameTypes
 import com.sunlotocenter.utils.ClickListener
+import com.sunlotocenter.utils.DialogType
 import com.sunlotocenter.utils.showDialog
 import kotlinx.android.synthetic.main.game_schedule_session_layout.view.*
 import kotlinx.android.synthetic.main.valid_error_layout.view.*
@@ -86,14 +87,14 @@ class GameScheduleSessionAdapter(var schedules: ArrayList<GameScheduleSession>, 
     }
 
     private fun showClosedGameMessage() {
-        showDialog(context, context.getString(R.string.error),
+        showDialog(context, context.getString(R.string.internet_error_title),
             context.getString(R.string.game_close_error_message),
             context.getString(R.string.ok), object :ClickListener{
                 override fun onClick(): Boolean {
                     return false
                 }
 
-            }, true)
+            }, true, DialogType.ERROR)
     }
 
 

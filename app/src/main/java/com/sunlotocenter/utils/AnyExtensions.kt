@@ -22,6 +22,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -38,6 +39,7 @@ import com.sunlotocenter.api.BankApi
 import com.sunlotocenter.api.GameApi
 import com.sunlotocenter.api.UserApi
 import com.sunlotocenter.dao.Entity
+import kotlinx.android.synthetic.main.dialog_layout.view.*
 import life.sabujak.roundedbutton.RoundedButton
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -63,6 +65,8 @@ val USER_EXTRA= "USER_EXTRA"
 val REFRESH_REQUEST_CODE= 3000
 
 val BANK_EXTRA= "SUN_LOTO_CENTER_USER_EXTRA"
+val GAME_PRICE_EXTRA= "GAME_PRICE_EXTRA"
+val BLOCKED_GAME_EXTRA= "BLOCKED_GAME_EXTRA"
 
 val userApi =
     MyApplication.getInstance().clientNetworking.create(UserApi::class.java)
@@ -294,7 +298,7 @@ fun dateUntil(startDate: DateTime, endDate: DateTime): List<Date> {
 fun showDialog(context: Context, title: String, message: String, neutralText: String,
                listener: ClickListener,
                isCancelable: Boolean,
-               dialogType: DialogType= DialogType.NEUTRAL) {
+               dialogType: DialogType) {
     val builder = AlertDialog.Builder(context)
     val view = LayoutInflater.from(context).inflate(R.layout.dialog_layout, null)
 
@@ -302,7 +306,7 @@ fun showDialog(context: Context, title: String, message: String, neutralText: St
     txtTitle.text = title
     val txtMessage = view.findViewById<TextView>(R.id.txtMessage)
     txtMessage.text = message
-    val txtPositiveButton = view.findViewById<RoundedButton>(R.id.btnPositive)
+    val txtPositiveButton = view.btnPositive
     txtPositiveButton.text = neutralText
 
 
@@ -311,20 +315,17 @@ fun showDialog(context: Context, title: String, message: String, neutralText: St
     dialog.setCancelable(isCancelable)
     txtPositiveButton.setOnClickListener { view1 -> if (!listener.onClick()) dialog.dismiss() }
 
-    controlDialogType(dialogType, view)
+    controlDialogType(dialogType, view, context)
 }
 
-    private fun controlDialogType(dialogType: DialogType, view: View) {
+    private fun controlDialogType(dialogType: DialogType, view: View, context: Context) {
         when(dialogType){
-//            DialogType.NEUTRAL-> view.imgStatus.visibility= View.GONE
-//            DialogType.SUCCESS-> {
-//                view.imgStatus.visibility= View.VISIBLE
-//                view.imgStatus.setImageResource(R.drawable.drw_success_flat)
-//            }
-//            DialogType.ERROR-> {
-//                view.imgStatus.visibility= View.VISIBLE
-//                view.imgStatus.setImageResource(R.drawable.drw_error_flat)
-//            }
+            DialogType.NEUTRAL-> {
+                view.btnPositive.background= ContextCompat.getDrawable(context, R.drawable.black_corner_radius)
+                view.btnNegative.background= ContextCompat.getDrawable(context, R.drawable.empty_black_corner_radius)
+            }
+            DialogType.SUCCESS-> view.btnPositive.background= ContextCompat.getDrawable(context, R.drawable.green_corner_radius)
+            DialogType.ERROR-> view.btnPositive.background= ContextCompat.getDrawable(context, R.drawable.red_corner_radius)
         }
     }
 
@@ -356,6 +357,7 @@ fun showDialog(context: Context, title: String, message: String,
     val txtNegativeButton = view.findViewById<TextView>(R.id.btnNegative)
     txtNegativeButton.text = negativeText
     txtNegativeButton.visibility = View.VISIBLE
+    controlDialogType(dialogType, view, context)
 
     val dialog = builder.setView(view).show()
     dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -363,8 +365,6 @@ fun showDialog(context: Context, title: String, message: String,
 
     txtPositiveButton.setOnClickListener { view1 -> if (!positiveListener.onClick()) dialog.dismiss() }
     txtNegativeButton.setOnClickListener { view12 -> if (!negativeListener.onClick()) dialog.dismiss() }
-
-    controlDialogType(dialogType, view)
 }
 
 /**
@@ -406,7 +406,7 @@ fun showDialog(context: Context, title: String, txtMessage: TextView,
     txtPositiveButton.setOnClickListener { v -> if (!positiveListener.onClick()) dialog.dismiss() }
     txtNegativeButton.setOnClickListener { v -> if (!negativeListener.onClick()) dialog.dismiss() }
 
-    controlDialogType(dialogType, view)
+    controlDialogType(dialogType, view, context)
 }
 
 /**
@@ -455,7 +455,7 @@ fun showDialog(context: Context, title: String, child: View,
     }
     btnNegativeButton.setOnClickListener { v -> if (!negativeListener.onClick()) dialog.dismiss() }
 
-    controlDialogType(dialogType, view)
+    controlDialogType(dialogType, view, context)
 }
 
 fun clickableString(textView: TextView, textToShow: String, listener: ClickListener) {

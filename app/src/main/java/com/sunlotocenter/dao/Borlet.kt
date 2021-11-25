@@ -1,5 +1,7 @@
 package com.sunlotocenter.dao
 
+import com.sunlotocenter.utils.isNotEmpty
+
 class Borlet(number:String, amount:Double, option:String, type: Int): Game(null, number, amount, option,0, type){
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -9,7 +11,7 @@ class Borlet(number:String, amount:Double, option:String, type: Int): Game(null,
     }
 
     override fun hashCode(): Int {
-        if(number.isEmpty()) return number.hashCode()*amount.hashCode()*opt.hashCode()*type.hashCode()
+        if(!isNotEmpty(number)) return number.hashCode()*amount.hashCode()*opt.hashCode()*type.hashCode()
         return number.hashCode()
     }
 

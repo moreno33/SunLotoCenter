@@ -18,6 +18,7 @@ import com.sunlotocenter.listener.LoadMoreListener
 import com.sunlotocenter.listener.SaveUserListener
 import com.sunlotocenter.model.UserViewModel
 import com.sunlotocenter.utils.ClickListener
+import com.sunlotocenter.utils.DialogType
 import com.sunlotocenter.utils.REFRESH_REQUEST_CODE
 import kotlinx.android.synthetic.main.activity_employee_list.*
 
@@ -123,8 +124,7 @@ SaveUserListener{
                     override fun onClick(): Boolean {
                         return false
                     }
-                }, true
-            )
+                }, true, DialogType.ERROR)
         }else{
             if(it.success){
                 com.sunlotocenter.utils.showDialog(this,
@@ -140,8 +140,7 @@ SaveUserListener{
                         override fun onClick(): Boolean {
                             return false
                         }
-                    }, false
-                )
+                    }, false, DialogType.SUCCESS)
                 userViewModel.loadEmployees(true)
             }else{
                 com.sunlotocenter.utils.showDialog(this,
@@ -152,8 +151,7 @@ SaveUserListener{
                         override fun onClick(): Boolean {
                             return false
                         }
-                    }, false
-                )
+                    }, false, DialogType.ERROR)
             }
 
         }

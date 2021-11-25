@@ -28,6 +28,7 @@ import com.sunlotocenter.extensions.gameTypes
 import com.sunlotocenter.model.GameViewModel
 import com.sunlotocenter.model.UserViewModel
 import com.sunlotocenter.utils.ClickListener
+import com.sunlotocenter.utils.DialogType
 import com.sunlotocenter.utils.DividerItemDecorator
 import com.sunlotocenter.utils.randomWithNDigits
 import kotlinx.android.synthetic.main.bottom_game_schedule_layout.view.*
@@ -142,8 +143,7 @@ class GameActivity : ProtectedActivity(), AddGameListener, GameScheduleSessionAd
                             override fun onClick(): Boolean {
                                 return false
                             }
-                        }, true
-                    )
+                        }, true, DialogType.ERROR)
                 }else{
                     com.sunlotocenter.utils.showDialog(this@GameActivity,
                         getString(
@@ -160,8 +160,7 @@ class GameActivity : ProtectedActivity(), AddGameListener, GameScheduleSessionAd
                                 return false
                             }
 
-                        }, false
-                    )
+                        }, false, DialogType.SUCCESS)
                 }
             })
 
@@ -176,7 +175,7 @@ class GameActivity : ProtectedActivity(), AddGameListener, GameScheduleSessionAd
     private fun filteredGame(gameSet: TreeSet<Game>): List<Game> {
         val filteredGame= ArrayList<Game>()
         gameSet.forEach {
-            if(it.type==1 && it.amount> 0){
+            if(it.type==1 && it.amount > 0){
                 filteredGame.add(it)
             }
         }

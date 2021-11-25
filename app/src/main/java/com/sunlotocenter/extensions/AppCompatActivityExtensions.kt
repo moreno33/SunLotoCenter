@@ -28,6 +28,17 @@ fun AppCompatActivity.gameTypes(): Array<SpinnerItem>{
     SpinnerItem("GA", getString(R.string.georgia))
     )
 }
+
+fun AppCompatActivity.gameCategories(): Array<SpinnerItem>{
+    return arrayOf(
+        SpinnerItem("Borlet", getString(R.string.borlet)),
+        SpinnerItem("Marriage", getString(R.string.marriage)),
+        SpinnerItem("Loto3", getString(R.string.loto3)),
+        SpinnerItem("Loto4", getString(R.string.loto4)),
+        SpinnerItem("Loto5", getString(R.string.loto5))
+    )
+}
+
 /**
  * This method allows to configure a toolbar.
  */

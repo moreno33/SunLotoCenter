@@ -6,6 +6,9 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.sunlotocenter.MyApplication
 import com.sunlotocenter.activity.*
 import com.sunlotocenter.dao.Sex
@@ -41,6 +44,7 @@ class AdminDashboardActivity : ProtectedActivity() {
 
     private fun loadScreen() {
         glide(this, MyApplication.getInstance().connectedUser.profilePath, imgAdmin, R.drawable.background_gray, getProfileImage(MyApplication.getInstance().connectedUser))
+
         txtName.text= "${MyApplication.getInstance().connectedUser.firstName} ${MyApplication.getInstance().connectedUser.lastName}"
         txtPosition.text= UserType.ADMIN.id
     }

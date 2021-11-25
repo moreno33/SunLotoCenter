@@ -10,10 +10,7 @@ import com.sunlotocenter.dao.Response
 import com.sunlotocenter.dao.User
 import com.sunlotocenter.extensions.enableHome
 import com.sunlotocenter.model.UserViewModel
-import com.sunlotocenter.utils.ACTION_LOGIN
-import com.sunlotocenter.utils.ACTION_SAVE
-import com.sunlotocenter.utils.ClickListener
-import com.sunlotocenter.utils.USER_EXTRA
+import com.sunlotocenter.utils.*
 import com.sunlotocenter.validator.*
 import kotlinx.android.synthetic.main.activity_change_password.*
 
@@ -103,8 +100,7 @@ class ChangePasswordActivity : ProtectedActivity() {
                         return false
                     }
 
-                }, true
-            )
+                }, true, DialogType.ERROR)
         }else{
             if(userExtra!!.sequence.id== MyApplication.getInstance().connectedUser.sequence.id){
                 if(it.success){
@@ -122,8 +118,7 @@ class ChangePasswordActivity : ProtectedActivity() {
                                 return false
                             }
 
-                        }, false
-                    )
+                        }, false, DialogType.ERROR)
                 }
             }
         }
@@ -143,8 +138,7 @@ class ChangePasswordActivity : ProtectedActivity() {
                         return false
                     }
 
-                }, true
-            )
+                }, true, DialogType.ERROR)
         }else{
             //Update the local data is connected user is changed
             if(userExtra!!.sequence.id== MyApplication.getInstance().connectedUser.sequence.id)
@@ -157,7 +151,6 @@ class ChangePasswordActivity : ProtectedActivity() {
                         R.string.password_change_success
                     else
                         R.string.update_user_password_success_message
-
                 ),
                 getString(R.string.ok),
                 object : ClickListener {
@@ -166,8 +159,7 @@ class ChangePasswordActivity : ProtectedActivity() {
                         return false
                     }
 
-                }, false
-            )
+                }, false, DialogType.SUCCESS)
         }
     }
 

@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.github.zawadz88.materialpopupmenu.popupMenu
 import com.sunlotocenter.MyApplication
 import com.sunlotocenter.activity.ChangePasswordActivity
@@ -46,7 +48,14 @@ class EmployeeListAdapter(var employees: ArrayList<User>, var saveUserListener: 
         else
             holder.vwStatus.background= ContextCompat.getDrawable(context, R.drawable.red_circle_background)
 
-        glide(context, employee.profilePath, holder.imgProfile, R.drawable.background_gray, getProfileImage(employee))
+//        glide(context, employee.profilePath, holder.imgProfile, R.drawable.background_gray, getProfileImage(employee))
+        glide(context,
+            employee.profilePath,
+            holder.imgProfile,
+            R.drawable.background_gray,
+            getProfileImage(employee))
+
+
 
         //Click to open menu
         holder.imgMenu.setOnClickListener {
@@ -56,13 +65,13 @@ class EmployeeListAdapter(var employees: ArrayList<User>, var saveUserListener: 
     }
 
     private fun getProfileImage(user: User?): Int {
-        if(user== null){
-            return R.drawable.admin_male_icon
+        return if(user== null){
+            R.drawable.admin_male_icon
         }else{
             if (user.sex== Sex.MALE){
-                return R.drawable.admin_male_icon
+                R.drawable.admin_male_icon
             }else{
-                return R.drawable.woman_icon
+                R.drawable.woman_icon
             }
         }
 
@@ -132,11 +141,11 @@ class EmployeeListAdapter(var employees: ArrayList<User>, var saveUserListener: 
     }
 
     class CustomViewHolder(var item: View) : RecyclerView.ViewHolder(item){
-        var txtName= item.txtName
-        var txtAlert= item.txtAlert
-        var txtStartDate= item.txtTime
-        var vwStatus= item.vwStatus
-        var imgProfile= item.imgProfile
-        var imgMenu= item.imgMenu
+        val txtName by lazy { item.txtName }
+        val txtAlert by lazy { item.txtAlert }
+        val txtStartDate by lazy { item.txtTime }
+        val vwStatus by lazy { item.vwStatus }
+        val imgProfile by lazy { item.imgProfile }
+        val imgMenu by lazy { item.imgMenu }
     }
 }

@@ -1,14 +1,21 @@
 package com.sunlotocenter.dao
 
+import com.sunlotocenter.utils.isNotEmpty
 import java.io.Serializable
 
-open abstract class Game(var id:Long?= null, var number:String, var amount: Double, var opt: String, var position:Int, var type:Int, var slot: Slot?= null):
+open abstract class Game(var id:Long?= null,
+                         var number:String,
+                         var amount: Double,
+                         var opt: String,
+                         var position:Int,
+                         var type:Int,
+                         var slot: Slot?= null):
     Comparable<Game>, Cloneable, Serializable{
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other== null) return false
         if (javaClass != other?.javaClass) return false
-        if(number.isEmpty()) return false
+        if(!isNotEmpty(number)) return false
         return number== (other as Game).number
     }
 
@@ -19,7 +26,7 @@ open abstract class Game(var id:Long?= null, var number:String, var amount: Doub
     override fun compareTo(other: Game): Int {
         if(this.position== other.position) {
             if(this.type== other.type) {
-                if(opt.isEmpty()){
+                if(!isNotEmpty(opt)){
                     if(this.number== other.number) return 0
                     else return 1
                 }else{

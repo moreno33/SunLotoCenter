@@ -21,6 +21,9 @@
         android:theme="@style/AppTheme.NoActionBar.Blank"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".admin.BlockedGameActivity"
+            android:exported="true" />
+        <activity
             android:name=".admin.CreateBankActivity"
             android:exported="true" />
         <activity
