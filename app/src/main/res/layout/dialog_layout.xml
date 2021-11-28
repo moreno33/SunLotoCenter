@@ -99,7 +99,7 @@
 
 
 
-            <life.sabujak.roundedbutton.RoundedButton
+            <Button
                 android:id="@+id/btnNegative"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/edit_text_height"
@@ -108,15 +108,12 @@
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:textAllCaps="false"
-                android:textColor="@color/white"
+                android:textColor="@color/colorPrimary"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/btnPositive"
                 app:layout_constraintTop_toTopOf="parent"
-                app:buttonGradientStartColor="@color/main_red"
-                app:buttonGradientEndColor="@color/main_red"
-                app:buttonCornerRadius="@dimen/main_corner"
                 android:textSize="@dimen/main_text_size"
                 android:gravity="center"/>
 

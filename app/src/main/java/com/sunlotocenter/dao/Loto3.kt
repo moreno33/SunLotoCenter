@@ -1,5 +1,7 @@
 package com.sunlotocenter.dao
 
+import com.sunlotocenter.utils.isNotEmpty
+
 class Loto3(number:String, amount:Double, option:String, type: Int): Game(null, number, amount, option, 2, type){
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -9,8 +11,8 @@ class Loto3(number:String, amount:Double, option:String, type: Int): Game(null, 
     }
 
     override fun hashCode(): Int {
-        if(number.isEmpty()) return number.hashCode()*amount.hashCode()*opt.hashCode()*type.hashCode()
-        return number.hashCode()
+        return number.hashCode()*amount.hashCode()*opt.hashCode()*type.hashCode()
+//        return number.hashCode()
     }
 
 
@@ -21,5 +23,18 @@ class Loto3(number:String, amount:Double, option:String, type: Int): Game(null, 
             Loto3(this.number, this.amount, this.opt, this.type)
         }
         return loto3
+    }
+
+    override fun compareTo(other: Game): Int {
+        if(this.position== other.position) {
+            if(this.type== other.type) {
+                if(this.number== other.number) return 0
+                else return 1
+            }
+            else if(this.type> other.type) return 1
+            else return -1
+        }
+        else if(this.position> other.position) return 1
+        else return -1
     }
 }

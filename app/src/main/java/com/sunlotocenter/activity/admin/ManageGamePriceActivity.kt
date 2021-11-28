@@ -37,7 +37,7 @@ class ManageGamePriceActivity : ProtectedActivity() {
         gameViewModel= ViewModelProvider(this, SavedStateViewModelFactory(application, this))
             .get(GameViewModel::class.java)
 
-        btnCreated.setOnClickListener {
+        btnSubmit.setOnClickListener {
             ACTION= "SAVE"
             submit()
         }
@@ -76,6 +76,7 @@ class ManageGamePriceActivity : ProtectedActivity() {
                 loto3Price= edxLoto3Price.text.toInt()
                 loto4Price= edxLoto4Price.text.toInt()
                 loto5Price= edxLoto5Price.text.toInt()
+                author = MyApplication.getInstance().connectedUser
             }
 
             dialog.show()

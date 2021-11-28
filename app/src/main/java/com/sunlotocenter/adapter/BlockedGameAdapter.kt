@@ -48,7 +48,7 @@ class BlockedGameAdapter(var blockedGames: ArrayList<BlockedGame>, var onChangeB
 
     private fun getGameName(number: String, context: Context): String? {
         return if(number.length== 2) return context.getString(R.string.borlet)
-        else if(number.length== 5) return context.getString(R.string.marriage)
+        else if(number.length== 5 && number.contains("X")) return context.getString(R.string.marriage)
         else if(number.length== 3) return context.getString(R.string.loto3)
         else if(number.length== 4) return context.getString(R.string.loto4)
         else context.getString(R.string.loto5)

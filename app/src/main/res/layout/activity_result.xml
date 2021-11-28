@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".admin.GameScheduleActivity">
+    tools:context=".admin.ResultActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/white"
-            app:title="@string/manage_game" />
+            app:title="@string/result" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -39,24 +39,23 @@
                 android:layout_height="match_parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/clCategory"
+                    android:id="@+id/clType"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
-                    android:layout_marginEnd="30dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
                     app:layout_constraintBottom_toTopOf="@id/layout1"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/clSession"
                     app:layout_constraintStart_toStartOf="parent">
 
                     <androidx.appcompat.widget.AppCompatSpinner
-                        android:id="@+id/spnGame"
+                        android:id="@+id/spnType"
                         android:layout_width="0dp"
                         android:layout_height="@dimen/edit_text_height"
                         android:background="@drawable/main_edit_text_background"
                         android:paddingStart="27dp"
                         android:paddingEnd="10dp"
-                        android:prompt="@string/category"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -77,7 +76,49 @@
                         android:layout_marginEnd="10dp"
                         android:src="@drawable/chevron_down_black_18"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@+id/spnGame"
+                        app:layout_constraintEnd_toEndOf="@+id/spnType"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clSession"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginBottom="10dp"
+                    app:layout_constraintTop_toTopOf="@id/clType"
+                    app:layout_constraintBottom_toBottomOf="@id/clType"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/clType">
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/spnSession"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/edit_text_height"
+                        android:background="@drawable/main_edit_text_background"
+                        android:paddingStart="27dp"
+                        android:paddingEnd="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:src="@drawable/av_timer_black_18"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:src="@drawable/chevron_down_black_18"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/spnSession"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -86,40 +127,40 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    app:layout_constraintBottom_toTopOf="@id/edxInterval"
+                    app:layout_constraintBottom_toTopOf="@id/edxLo3"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     android:orientation="horizontal"
                     android:weightSum="100">
 
                     <com.sunlotocenter.validator.ValidatableEditText
-                        android:id="@+id/edxMorning"
+                        android:id="@+id/edxLo1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="30dp"
                         android:layout_marginEnd="10dp"
                         android:drawablePadding="7dp"
                         android:inputType="number"
-                        app:drawable_left="@drawable/av_timer_black_18"
-                        app:hint="@string/morning_time"
-                        app:layout_constraintEnd_toStartOf="@+id/edxNight"
+                        app:drawable_left="@drawable/gamepad_circle_outline_black_18"
+                        app:hint="@string/lo1"
+                        app:layout_constraintEnd_toStartOf="@+id/edxLo2"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:max_length="5"
+                        app:max_length="3"
                         app:text_size="@dimen/main_text_size"
                         android:layout_weight="50">
 
                     </com.sunlotocenter.validator.ValidatableEditText>
 
                     <com.sunlotocenter.validator.ValidatableEditText
-                        android:id="@+id/edxNight"
+                        android:id="@+id/edxLo2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:inputType="number"
-                        app:drawable_left="@drawable/av_timer_black_18"
-                        app:hint="@string/night_time"
+                        app:drawable_left="@drawable/gamepad_circle_outline_black_18"
+                        app:hint="@string/lo2"
                         android:layout_marginRight="30dp"
-                        app:max_length="5"
+                        app:max_length="2"
                         app:text_size="@dimen/main_text_size"
                         android:layout_weight="50"/>
 
@@ -127,19 +168,19 @@
 
 
                 <com.sunlotocenter.validator.ValidatableEditText
-                    android:id="@+id/edxInterval"
+                    android:id="@+id/edxLo3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
                     android:layout_marginEnd="30dp"
                     android:layout_marginBottom="20dp"
                     android:inputType="number"
-                    app:drawable_left="@drawable/av_timer_black_18"
-                    app:hint="@string/security_interval"
+                    app:drawable_left="@drawable/gamepad_circle_outline_black_18"
+                    app:hint="@string/lo3"
                     app:layout_constraintBottom_toTopOf="@+id/btnAdd"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:max_length="3"
+                    app:max_length="2"
                     app:text_size="@dimen/main_text_size" />
 
                 <life.sabujak.roundedbutton.RoundedButton

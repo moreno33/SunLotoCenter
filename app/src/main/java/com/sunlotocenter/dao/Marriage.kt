@@ -6,12 +6,12 @@ class Marriage(number:String, amount:Double, option:String, type: Int): Game(nul
         if (this === other) return true
         if (other== null) return false
         if (javaClass != other?.javaClass) return false
-        return number== (other as Game).number
+        return this.number== (other as Game).number || this.number== other.number.split("X")[1] +"X"+other.number.split("X")[0]
     }
 
     override fun hashCode(): Int {
-        if(number.isEmpty()) return number.hashCode()*amount.hashCode()*opt.hashCode()*type.hashCode()
-        return number.hashCode()
+        return number.hashCode()*amount.hashCode()*opt.hashCode()*type.hashCode()
+//        return number.hashCode()
     }
 
 

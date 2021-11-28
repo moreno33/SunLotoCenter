@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.text.Editable
 import android.text.InputFilter
 import android.text.InputType
 import android.text.TextWatcher
@@ -16,6 +17,7 @@ import com.sunlotocenter.activity.R
 import com.sunlotocenter.adapter.ErrorAdapter
 import kotlinx.android.synthetic.main.validatable_edit_text_layout.view.*
 import android.view.inputmethod.EditorInfo
+import androidx.core.widget.addTextChangedListener
 import org.w3c.dom.TypeInfo
 
 
@@ -51,6 +53,7 @@ class ValidatableEditText : LinearLayout, Validable {
     private var myHeight: Float= 0f
     private var maxLength: Int= 0
     private var active= true
+    var adapter: ErrorAdapter?= null
 
     val validators= ArrayList<MyValidator>()
     private val errMsgs= ArrayList<String>()
@@ -75,7 +78,7 @@ class ValidatableEditText : LinearLayout, Validable {
             }
 
             invalidate()
-            var adapter= ErrorAdapter(this.errMsgs)
+            adapter= ErrorAdapter(this.errMsgs)
             rclError.layoutManager= LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             rclError.adapter= adapter
 
@@ -124,6 +127,23 @@ class ValidatableEditText : LinearLayout, Validable {
         textColor.let { edxText.setTextColor(it!!) }
         edxText.setText(text)
         edxText.hint= hint
+        edxText.addTextChangedListener(object :TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                adapter?.apply {
+                    if(errors.isNotEmpty()){
+                        errors.clear()
+                        notifyDataSetChanged()
+                    }
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+        })
         edxText.setCompoundDrawablesWithIntrinsicBounds(drawableLeft, null, null, null);
         edxText.inputType= inputType
         if (myHeight> 0f){

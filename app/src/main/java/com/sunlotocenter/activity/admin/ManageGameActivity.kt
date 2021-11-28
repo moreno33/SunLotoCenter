@@ -1,5 +1,6 @@
 package com.sunlotocenter.activity.admin
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.SavedStateViewModelFactory
@@ -13,12 +14,15 @@ import com.sunlotocenter.dao.GameSchedule
 import com.sunlotocenter.extensions.enableHome
 import com.sunlotocenter.listener.LoadMoreListener
 import com.sunlotocenter.model.GameViewModel
+import com.sunlotocenter.utils.ClickListener
+import com.sunlotocenter.utils.DialogType
+import com.sunlotocenter.utils.REFRESH_REQUEST_CODE
 import kotlinx.android.synthetic.main.activity_manage_game.*
 import kotlinx.android.synthetic.main.activity_manage_game.toolbar
 
 class ManageGameActivity :
     ProtectedActivity(),
-    LoadMoreListener.OnLoadMoreListener {
+    LoadMoreListener.OnLoadMoreListener, GameScheduleAdapter.OnGameScheduleChangeListener{
 
     private var loadMoreListener: LoadMoreListener?= null
     private lateinit var gameScheduleAdapter: GameScheduleAdapter
@@ -42,22 +46,20 @@ class ManageGameActivity :
         setUpAdapter()
 
         btnAdd.setOnClickListener {
-            startActivityForResult(Intent(this, GameScheduleActivity::class.java), GameScheduleActivity.GAME_SCHEDULE_REQUEST_CODE)
+            startActivityForResult(Intent(this, GameScheduleActivity::class.java), REFRESH_REQUEST_CODE)
         }
     }
 
     override fun onResume() {
         super.onResume()
-        gameViewModel.loadSchedules()
+        gameViewModel.loadSchedules(true)
     }
 
     private fun setUpAdapter() {
         rclGameSchedule.setHasFixedSize(true)
         rclGameSchedule.layoutManager= LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        gameScheduleAdapter= GameScheduleAdapter(
-            if(isSaveState) gameViewModel.schedules else arrayListOf()
-        )
+        gameScheduleAdapter= GameScheduleAdapter(if(isSaveState) gameViewModel.schedules else arrayListOf(), this)
         gameViewModel.schedules.clear()
 
         rclGameSchedule.adapter= gameScheduleAdapter
@@ -71,6 +73,48 @@ class ManageGameActivity :
     private fun observe() {
         gameViewModel.lastAddedSchedulesData.observe(this,
             { schedules -> addSchedules(schedules) })
+        gameViewModel.gameScheduleData.observe(this,
+            {
+                dialog.dismiss()
+                if(it== null){
+                    com.sunlotocenter.utils.showDialog(this@ManageGameActivity,
+                        getString(R.string.internet_error_title),
+                        getString(
+                            R.string.internet_error_message
+                        ),
+                        getString(R.string.ok),
+                        object : ClickListener {
+                            override fun onClick(): Boolean {
+                                return false
+                            }
+
+                        }, true, DialogType.ERROR)
+                }else{
+                    if(it.success){
+                        com.sunlotocenter.utils.showDialog(this@ManageGameActivity,
+                            getString(R.string.success_title),
+                            getString(R.string.update_game_schedule_success_message ),
+                            getString(R.string.ok),
+                            object : ClickListener {
+                                override fun onClick(): Boolean {
+                                    gameViewModel.loadSchedules(true)
+                                    return false
+                                }
+
+                            }, false, DialogType.SUCCESS)
+                    }else{
+                        com.sunlotocenter.utils.showDialog(this@ManageGameActivity,
+                            getString(R.string.internet_error_title), it.message!!,
+                            getString(R.string.ok),
+                            object : ClickListener {
+                                override fun onClick(): Boolean {
+                                    return false
+                                }
+
+                            }, false, DialogType.ERROR)
+                    }
+                }
+            })
     }
 
     private fun addSchedules(schedules: ArrayList<GameSchedule>) {
@@ -78,6 +122,12 @@ class ManageGameActivity :
         if(schedules.isEmpty()){
             loadMoreListener?.setFinished(true)
             loadMoreListener?.setLoaded()
+            if(gameViewModel.page== 0){
+                gameScheduleAdapter.apply {
+                    schedules.clear()
+                    notifyDataSetChanged()
+                }
+            }
             return
         }
         val isFirstPage= gameViewModel.page== 0
@@ -106,6 +156,33 @@ class ManageGameActivity :
     }
 
     override fun onLoadMore() {
-        gameViewModel.loadSchedules()
+        gameViewModel.loadSchedules(false)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode== Activity.RESULT_OK && requestCode== REFRESH_REQUEST_CODE){
+            gameViewModel.loadSchedules(true)
+        }
+    }
+
+    override fun onChange(gameSchedule: GameSchedule) {
+        com.sunlotocenter.utils.showDialog(this, getString(R.string.to_block),
+            getString(R.string.want_to_block_schedule),
+            getString(R.string.yes), getString(R.string.no), object : ClickListener {
+                override fun onClick(): Boolean {
+                    dialog.show()
+                    gameViewModel.saveGameSchedule(gameSchedule)
+                    return false
+                }
+
+            }, object : ClickListener {
+                override fun onClick(): Boolean {
+                    return false
+                }
+
+            },
+            false, DialogType.NEUTRAL
+        )
     }
 }

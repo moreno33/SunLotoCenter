@@ -47,6 +47,8 @@
     <string name="balance">Balans</string>
     <string name="enter">Antre</string>
     <string name="out">Sòti</string>
+    <string name="enter_value">Antre: %1$d</string>
+    <string name="out_value">Sòti: %1$s</string>
     <string name="from">De</string>
     <string name="to">a</string>
     <string name="result">Tiraj</string>
@@ -99,8 +101,8 @@
     <string name="game_success_message">Jwèt ou an soumèt avèk siksè</string>
     <string name="print_receipt">Enprime</string>
     <string name="security_interval">Entèval sekirite (an minit)</string>
-    <string name="morning_time">Lè maten</string>
-    <string name="night_time">Lè aswè</string>
+    <string name="morning_time">Lè kloti maten (00:00)</string>
+    <string name="night_time">Lè kloti aswè (00:00)</string>
     <string name="new_york">Nouyòk</string>
     <string name="florida">Florida</string>
     <string name="georgia">Jòjya</string>
@@ -141,6 +143,15 @@
     <string name="want_to_unblock_game">Eske ou si ou vle debloke %1$s?</string>
     <string name="yes">Wi</string>
     <string name="no">Non</string>
+    <string name="bad_time_validator_error">Lè sa pa bon, chwazi yon lè ant 00:00 e 23:59</string>
+    <string name="max_min_validator_error">Chan sa pa dwe pi plis ke %1$d minit</string>
+    <string name="want_to_block_schedule">Ou si ou vle bloke jwèt sa?</string>
+    <string name="to_unblock">Debloke</string>
+    <string name="attention">Atansyon</string>
+    <string name="unsubmitted_game_warning_message">Ou gen boul kew poko soumèt, siw fè bak wap pèdi tout. Ou vle fè bak kanmenm?</string>
+    <string name="create_result_success_message">Ou pibliye rezilta tiraj lan avèk siksè!</string>
+    <string name="morning_uppercase">Maten</string>
+    <string name="night_uppercase">Swa</string>
     <string-array name="employee_category">
         <item>Vandè</item>
         <item>Administratè</item>

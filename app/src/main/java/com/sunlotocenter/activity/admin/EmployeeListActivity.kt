@@ -165,7 +165,7 @@ SaveUserListener{
             return
         }
         val isFirstPage= userViewModel.page== 0
-        if(employees.size< 10)
+        if(employees.size< LoadMoreListener.SIZE_PER_PAGE)
             loadMoreListener?.setFinished(true)
         val lastPosition= employeeListAdapter.employees.size
         if(isFirstPage)

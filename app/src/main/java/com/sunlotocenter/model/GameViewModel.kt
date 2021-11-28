@@ -6,12 +6,16 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sunlotocenter.dao.*
+import com.sunlotocenter.dto.Report
+import com.sunlotocenter.dto.Result
+import com.sunlotocenter.dto.TotalReport
 import com.sunlotocenter.utils.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.joda.time.DateTime
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.await
@@ -21,11 +25,19 @@ import kotlin.collections.ArrayList
 
 class GameViewModel (private val savedStateHandle: SavedStateHandle) : ViewModel() {
 
+
     private val SCHEDULES: String= "schedules"
+    private val REPORTS: String= "reports"
+    private val BLOCKED_GAMES: String= "blocked_games"
+    private val RESULTS= "results"
     var lastAddedSchedulesData= MutableLiveData<ArrayList<GameSchedule>>()
     var lastAddedBlockedGamesData= MutableLiveData<ArrayList<BlockedGame>>()
+    var lastAddedReportsData= MutableLiveData<ArrayList<Report>>()
+    var lastAddedResultsData= MutableLiveData<ArrayList<Result>>()
     var schedules= arrayListOf<GameSchedule>()
+    var reports= arrayListOf<Report>()
     var blockedGames= arrayListOf<BlockedGame>()
+    var results= arrayListOf<Result>()
     var page= -1
     var ACTION= ACTION_SAVE
 
@@ -34,6 +46,8 @@ class GameViewModel (private val savedStateHandle: SavedStateHandle) : ViewModel
     var gamePriceData= MutableLiveData<Response<GamePrice>>()
     var gameAlertAndBlockData= MutableLiveData<Response<GameAlertAndBlock>>()
     var blockedGameData= MutableLiveData<Response<BlockedGame>>()
+    var totalReportData= MutableLiveData<Response<TotalReport>>()
+    var gameResultData= MutableLiveData<Response<GameResult>>()
 
 
     fun getGamePrice(){
@@ -87,13 +101,8 @@ class GameViewModel (private val savedStateHandle: SavedStateHandle) : ViewModel
 
         })
     }
-
-    fun loadSchedules(){
-        loadSchedules(true)
-    }
-
-    private fun loadSchedules(isLoadMore: Boolean) {
-        if(isLoadMore)
+    fun loadSchedules(isFirstPage: Boolean) {
+        if(!isFirstPage)
             page++
         else
             page= 0
@@ -144,8 +153,39 @@ class GameViewModel (private val savedStateHandle: SavedStateHandle) : ViewModel
         })
     }
 
+    fun loadReports(isFirstPage: Boolean) {
+        if(!isFirstPage)
+            page++
+        else
+            page= 0
+
+        gameApi.getReports(page).enqueue(object: Callback<Response<ArrayList<Report>>>{
+            override fun onResponse(
+                call: Call<Response<ArrayList<Report>>>,
+                response: retrofit2.Response<Response<ArrayList<Report>>>
+            ) {
+                if(response.body()== null){
+                    lastAddedReportsData.postValue(ArrayList())
+                }else{
+                    lastAddedReportsData.postValue(response.body()!!.data)
+                }
+
+
+            }
+
+            override fun onFailure(call: Call<Response<ArrayList<Report>>>, t: Throwable) {
+                lastAddedReportsData.postValue(ArrayList())
+            }
+
+        })
+    }
+
     fun loadSaveState() {
         schedules= savedStateHandle.get(SCHEDULES)?: arrayListOf()
+        reports= savedStateHandle.get(REPORTS)?: arrayListOf()
+        blockedGames= savedStateHandle.get(BLOCKED_GAMES)?: arrayListOf()
+        results= savedStateHandle.get(RESULTS)?: arrayListOf()
+
     }
 
 
@@ -186,6 +226,27 @@ class GameViewModel (private val savedStateHandle: SavedStateHandle) : ViewModel
 
             override fun onFailure(call: Call<Response<GameSchedule>>, t: Throwable) {
                 gameScheduleData.value= null
+            }
+        })
+    }
+
+    fun saveGameResult(gameResult: GameResult) {
+
+        val headers= HashMap<String, String>()
+        headers["accept-language"] = Locale.getDefault().toString()
+        val call: Call<Response<GameResult>> = gameApi.saveGameResult(gameResult, headers)
+        call.enqueue(object : Callback<Response<GameResult>> {
+            override fun onResponse(call: Call<Response<GameResult>>,
+                                    response: retrofit2.Response<Response<GameResult>>) {
+                if(response.code()== 200){
+                    gameResultData.value= response.body()
+                }else{
+                    gameResultData.value= null
+                }
+            }
+
+            override fun onFailure(call: Call<Response<GameResult>>, t: Throwable) {
+                gameResultData.value= null
             }
         })
     }
@@ -250,4 +311,58 @@ class GameViewModel (private val savedStateHandle: SavedStateHandle) : ViewModel
             }
         })
     }
+
+    fun getTotalReport(start: DateTime?= null, end:DateTime?= null) {
+        gameApi.getTotalReport(start, end).enqueue(object: Callback<Response<TotalReport>>{
+            override fun onResponse(
+                call: Call<Response<TotalReport>>,
+                response: retrofit2.Response<Response<TotalReport>>
+            ) {
+                if(response.body()== null){
+                    totalReportData.postValue(null)
+                }else{
+                    totalReportData.postValue(response.body())
+                }
+
+
+            }
+
+            override fun onFailure(call: Call<Response<TotalReport>>, t: Throwable) {
+                totalReportData.postValue(null)
+            }
+
+        })
+    }
+
+    fun loadResults(isFirstPage: Boolean, gameType: GameType) {
+        if(!isFirstPage)
+            page++
+        else
+            page= 0
+
+        gameApi.getResults(page, gameType).enqueue(object: Callback<Response<ArrayList<Result>>>{
+            override fun onResponse(
+                call: Call<Response<ArrayList<Result>>>,
+                response: retrofit2.Response<Response<ArrayList<Result>>>
+            ) {
+                if(response.body()== null){
+                    lastAddedResultsData.postValue(ArrayList())
+                }else{
+                    lastAddedResultsData.postValue(response.body()!!.data)
+                }
+            }
+
+            override fun onFailure(call: Call<Response<ArrayList<Result>>>, t: Throwable) {
+                lastAddedReportsData.postValue(ArrayList())
+            }
+
+        })
+    }
+
+//    fun saveState() {
+//        schedules= savedStateHandle.set(SCHEDULES)
+//        reports= savedStateHandle.get(REPORTS)?
+//        blockedGames= savedStateHandle.get(BLOCKED_GAMES)
+//        results= savedStateHandle.get(RESULTS)?
+//    }
 }

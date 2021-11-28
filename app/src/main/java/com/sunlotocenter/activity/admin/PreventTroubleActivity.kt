@@ -76,35 +76,11 @@ class PreventTroubleActivity : ProtectedActivity(),
         gameViewModel.loadBlockedGame(true)
     }
 
-//    private fun addBlock() {
-//        if(form.isValid()){
-//            gameArletAndBlock= GameAlertAndBlock(sequence = com.sunlotocenter.dao.Sequence(), author = MyApplication.getInstance().connectedUser)
-//            if(gameArletAndBlockFromServer!= null){
-//                ModelMapper().map(gameArletAndBlockFromServer, gameArletAndBlock)
-//            }
-//            gameArletAndBlock?.apply {
-//                borletAlertPrice = edxBorletAlert.text.toInt()
-//                borletBlockPrice = edxBorletBLock.text.toInt()
-//                marriageAlertPrice = edxMarriageAlert.text.toInt()
-//                marriageBlockPrice = edxMarriageBLock.text.toInt()
-//                loto3AlertPrice= edxLoto3Alert.text.toInt()
-//                loto3BlockPrice= edxLoto3BLock.text.toInt()
-//                loto4AlertPrice= edxLoto4Alert.text.toInt()
-//                loto4BlockPrice= edxLoto4BLock.text.toInt()
-//                loto5AlertPrice= edxLoto5Alert.text.toInt()
-//                loto5BlockPrice= edxLoto5BLock.text.toInt()
-//            }
-//
-//            dialog.show()
-//            gameViewModel.saveGameAlertAndBlock(gameArletAndBlock!!)
-//        }
-//    }
-
     private fun prefill(gameAlertAndBlock: GameAlertAndBlock?) {
         if(gameAlertAndBlock!= null){
             edxBorletAlert.text= gameAlertAndBlock.borletAlertPrice.toString()
             edxBorletAlert.setSelection(edxBorletAlert.text.length)
-            edxBorletBLock.text= gameAlertAndBlock.borletAlertPrice.toString()
+            edxBorletBLock.text= gameAlertAndBlock.borletBlockPrice.toString()
             edxMarriageAlert.text= gameAlertAndBlock.marriageAlertPrice.toString()
             edxMarriageBLock.text= gameAlertAndBlock.marriageBlockPrice.toString()
             edxLoto3Alert.text= gameAlertAndBlock.loto3AlertPrice.toString()
@@ -133,6 +109,7 @@ class PreventTroubleActivity : ProtectedActivity(),
                 loto4BlockPrice= edxLoto4BLock.text.toInt()
                 loto5AlertPrice= edxLoto5Alert.text.toInt()
                 loto5BlockPrice= edxLoto5BLock.text.toInt()
+                author = MyApplication.getInstance().connectedUser
             }
 
             dialog.show()
@@ -207,7 +184,8 @@ class PreventTroubleActivity : ProtectedActivity(),
 
         gameViewModel.lastAddedBlockedGamesData.observe(this, { blockedGames ->
                 dialog.dismiss()
-                addBlockedGames(blockedGames) })
+                addBlockedGames(blockedGames)
+        })
         gameViewModel.blockedGameData.observe(this, {
             gameViewModel.loadBlockedGame(true)
         })
@@ -234,6 +212,10 @@ class PreventTroubleActivity : ProtectedActivity(),
         if(blockedBames.isEmpty()){
             loadMoreListener?.setFinished(true)
             loadMoreListener?.setLoaded()
+            if(gameViewModel.page== 0) {
+                blockedGameAdapter.blockedGames.clear()
+                blockedGameAdapter.notifyDataSetChanged()
+            }
             return
         }
         val isFirstPage= gameViewModel.page== 0

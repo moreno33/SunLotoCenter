@@ -29,6 +29,16 @@ fun AppCompatActivity.gameTypes(): Array<SpinnerItem>{
     )
 }
 
+fun AppCompatActivity.gameSessions(): Array<SpinnerItem>{
+    return arrayOf(
+        SpinnerItem("AM", getString(R.string.morning_uppercase)),
+        SpinnerItem("PM", getString(R.string.night_uppercase)),
+    )
+}
+
+
+
+
 fun AppCompatActivity.gameCategories(): Array<SpinnerItem>{
     return arrayOf(
         SpinnerItem("Borlet", getString(R.string.borlet)),

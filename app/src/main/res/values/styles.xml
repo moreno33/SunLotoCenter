@@ -35,5 +35,8 @@
         <item name="colorPrimary">@android:color/white</item>
 <!--        <item name="otpViewStyle">@style/OtpWidget.OtpView</item>-->
     </style>
+    <style name="AppTheme.NoActionBar.Blank.WhiteAccent">
+        <item name="colorAccent">@color/white</item>
+    </style>
 
 </resources>

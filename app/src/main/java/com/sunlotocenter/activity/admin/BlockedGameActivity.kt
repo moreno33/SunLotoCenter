@@ -302,10 +302,11 @@ class BlockedGameActivity : ProtectedActivity() {
                 ModelMapper().map(blockedGameExtra, blockedGame)
             }
             blockedGame?.apply {
-                number= edxGame.text.toString()
+                number= edxGame.text
                 author = MyApplication.getInstance().connectedUser!!
                 type= selectedGameType
                 current= true
+                author = MyApplication.getInstance().connectedUser!!
             }
             dialog.show()
             gameViewModel.saveBlockedGame(blockedGame!!)

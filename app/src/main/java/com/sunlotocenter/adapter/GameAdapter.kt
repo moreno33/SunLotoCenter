@@ -14,8 +14,9 @@ import com.sunlotocenter.dao.Game
 import com.sunlotocenter.dao.User
 import com.sunlotocenter.utils.USER_EXTRA
 import kotlinx.android.synthetic.main.game_row_layout.view.*
+import java.util.*
 
-class GameAdapter(var gameSet: Set<Game>) : RecyclerView.Adapter<GameAdapter.CustomViewHolder>() {
+class GameAdapter(var gameSet: TreeSet<Game>, var onGameRemoveListener: OnGameRemoveListener) : RecyclerView.Adapter<GameAdapter.CustomViewHolder>() {
 
     private val BORLET_HEADER: Int= 0
     private val MARRIAGE_HEADER: Int= 1
@@ -73,6 +74,10 @@ class GameAdapter(var gameSet: Set<Game>) : RecyclerView.Adapter<GameAdapter.Cus
                 holder.txtGame.text= game.number
                 holder.txtOption.text= game.opt.toString()
                 holder.txtAmount.text= game.amount.toString()
+                //Click to open menu
+                holder.imgAction.setOnClickListener {
+                    deleteGame(game, position)
+                }
             }
             BORLET_HEADER->{
                 holder.txtGame.text= context.getString(R.string.borlet)
@@ -89,52 +94,36 @@ class GameAdapter(var gameSet: Set<Game>) : RecyclerView.Adapter<GameAdapter.Cus
             LOTO5_HEADER->{
                 holder.txtGame.text= context.getString(R.string.loto5)
             }
-
         }
-
-        //Click to open menu
-//        holder.imgMenu.setOnClickListener {
-//            showMenu(it, employee)
-//        }
 
     }
 
-    private fun showMenu(view: View?, employee: User) {
-        val popupMenu = popupMenu {
-            section {
-                item {
-                    label = context.getString(R.string.addOrChangePassword)
-                    icon = R.drawable.pencil_outline_black_18
-                    callback = {
-                        context.startActivity(Intent(context, ChangePasswordActivity::class.java).putExtra(
-                            USER_EXTRA, employee))
-                    }
-                }
-                item {
-                    labelRes = R.string.block_user
-                    icon = R.drawable.account_cancel_outline_black_18
-                    callback = {
+    private fun deleteGame(game: Game, position: Int) {
+        var count= 0
+        gameSet.forEach { if(it.javaClass== game.javaClass) count++ }
 
-                    }
+        if(count== 2){
+            var gameIterator= gameSet.iterator()
+            while (gameIterator.hasNext()){
+                var next= gameIterator.next()
+                if(next.javaClass== game.javaClass){
+                    gameIterator.remove()
+                    notifyDataSetChanged()
                 }
-                item {
-                    labelRes = R.string.reprimand
-                    icon = R.drawable.account_alert_outline_black_18
-                    callback = {
+            }
 
-                    }
-                }
-                item {
-                    labelRes = R.string.balance
-                    icon = R.drawable.wallet_outline_black_18
-                    callback = {
-
-                    }
+        }else if(count> 2){
+            var gameIterator= gameSet.iterator()
+            while (gameIterator.hasNext()){
+                var next= gameIterator.next()
+                if(next== game){
+                    gameIterator.remove()
+                    notifyDataSetChanged()
                 }
             }
         }
+        onGameRemoveListener.onRemove(gameSet, game)
 
-        popupMenu.show(context, view!!)
     }
 
     override fun getItemCount(): Int {
@@ -142,9 +131,13 @@ class GameAdapter(var gameSet: Set<Game>) : RecyclerView.Adapter<GameAdapter.Cus
     }
 
     class CustomViewHolder(var item: View) : RecyclerView.ViewHolder(item){
-        var txtGame= item.txtGame
-        var txtOption= item.txtOption
-        var txtAmount= item.txtAmount
-//        var imgMenu= item.imgMenu
+        val txtGame by lazy { item.txtGame }
+        val txtOption by lazy { item.txtOption }
+        val txtAmount by lazy { item.txtAmount }
+        val imgAction by lazy { item.imgAction }
+    }
+
+    interface OnGameRemoveListener{
+        fun onRemove(games:Set<Game>, game: Game)
     }
 }

@@ -4,6 +4,7 @@ package com.sunlotocenter.activity
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.widget.AppCompatButton
@@ -37,7 +38,10 @@ import kotlin.collections.ArrayList
 import kotlin.math.ceil
 
 
-class GameActivity : ProtectedActivity(), AddGameListener, GameScheduleSessionAdapter.GameScheduleSessionListener {
+class GameActivity : ProtectedActivity(),
+    AddGameListener,
+    GameScheduleSessionAdapter.GameScheduleSessionListener,
+    GameAdapter.OnGameRemoveListener{
 
     private lateinit var tabsAdapter:TabsPagerAdapter
     private var gameSet= TreeSet<Game>()
@@ -63,18 +67,14 @@ class GameActivity : ProtectedActivity(), AddGameListener, GameScheduleSessionAd
         tabsViewPager.adapter= tabsAdapter
 
         //Game list adapter
-        gameAdapter= GameAdapter(gameSet)
+        gameAdapter= GameAdapter(gameSet, this)
 
         rclGame.apply {
             setHasFixedSize(true)
             adapter= gameAdapter
             layoutManager= LinearLayoutManager(this.context)
-            val decoration= DividerItemDecoration(
-                this.context,
-                DividerItemDecoration.VERTICAL
-            )
-            decoration.setDrawable(resources.getDrawable(R.drawable.game_row_divider))
-            addItemDecoration(decoration)
+
+            addItemDecoration(DividerItemDecorator(ContextCompat.getDrawable(context, R.drawable.game_row_divider)))
         }
 
         //Initialize total preview text
@@ -156,11 +156,10 @@ class GameActivity : ProtectedActivity(), AddGameListener, GameScheduleSessionAd
                         ),
                         object : ClickListener {
                             override fun onClick(): Boolean {
-                                finish()
                                 return false
                             }
 
-                        }, false, DialogType.SUCCESS)
+                        }, false, if(it.success) DialogType.SUCCESS else DialogType.ERROR)
                 }
             })
 
@@ -283,6 +282,7 @@ class GameActivity : ProtectedActivity(), AddGameListener, GameScheduleSessionAd
     }
 
     override fun addGame(game: Game) {
+        txtInfo.visibility= View.GONE
         //Let check if we already have header for this specific game and add one
         if(gameSet.isEmpty()){
             addHeaderAndGame(game, gameSet)
@@ -375,5 +375,42 @@ class GameActivity : ProtectedActivity(), AddGameListener, GameScheduleSessionAd
         }else{
             btnTotalPreview.text= "${text} (${gameScheduleSession.gameSchedule.type!!.id}-${gameScheduleSession.gameSession.id})"
         }
+    }
+
+    override fun onRemove(games: Set<Game>, game: Game) {
+        if(gameSet.isEmpty()){
+            txtInfo.visibility= View.VISIBLE
+            btnAutoLoto4.isEnabled= false
+            btnAutoMarriage.isEnabled= false
+        }
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        return if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() === 0) {
+            if(gameAdapter.gameSet.isNotEmpty()){
+                com.sunlotocenter.utils.showDialog(this,
+                    getString(R.string.attention),
+                    getString(R.string.unsubmitted_game_warning_message),
+                    getString(R.string.no),
+                    getString(R.string.yes),
+                    object :ClickListener{
+                        override fun onClick(): Boolean {
+                            return false
+                        }
+
+                    },
+                    object :ClickListener{
+                        override fun onClick(): Boolean {
+                            finish()
+                            return false
+                        }
+
+                    },
+                    true
+                )
+                return true
+            }
+            return super.onKeyDown(keyCode, event)
+        } else super.onKeyDown(keyCode, event)
     }
 }

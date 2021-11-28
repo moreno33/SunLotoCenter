@@ -40,7 +40,6 @@ import com.sunlotocenter.api.GameApi
 import com.sunlotocenter.api.UserApi
 import com.sunlotocenter.dao.Entity
 import kotlinx.android.synthetic.main.dialog_layout.view.*
-import life.sabujak.roundedbutton.RoundedButton
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -67,6 +66,8 @@ val REFRESH_REQUEST_CODE= 3000
 val BANK_EXTRA= "SUN_LOTO_CENTER_USER_EXTRA"
 val GAME_PRICE_EXTRA= "GAME_PRICE_EXTRA"
 val BLOCKED_GAME_EXTRA= "BLOCKED_GAME_EXTRA"
+val GAME_SCHEDULE_EXTRA= "GAME_SCHEDULE_EXTRA"
+val RESULT_EXTRA= "RESULT_EXTRA"
 
 val userApi =
     MyApplication.getInstance().clientNetworking.create(UserApi::class.java)
@@ -394,7 +395,7 @@ fun showDialog(context: Context, title: String, txtMessage: TextView,
         LinearLayout.LayoutParams.WRAP_CONTENT,
         LinearLayout.LayoutParams.WRAP_CONTENT)
     centerView.addView(txtMessage)
-    val txtPositiveButton = view.findViewById<RoundedButton>(R.id.btnPositive)
+    val txtPositiveButton = view.findViewById<Button>(R.id.btnPositive)
     txtPositiveButton.text = positiveText
     val txtNegativeButton = view.findViewById<TextView>(R.id.btnNegative)
     txtNegativeButton.text = negativeText
@@ -440,9 +441,9 @@ fun showDialog(context: Context, title: String, child: View,
         LinearLayout.LayoutParams.MATCH_PARENT,
         LinearLayout.LayoutParams.WRAP_CONTENT)
     centerView.addView(child)
-    val btnPositiveButton = view.findViewById<RoundedButton>(R.id.btnPositive)
+    val btnPositiveButton = view.findViewById<Button>(R.id.btnPositive)
     btnPositiveButton.text = positiveText
-    val btnNegativeButton = view.findViewById<RoundedButton>(R.id.btnNegative)
+    val btnNegativeButton = view.findViewById<Button>(R.id.btnNegative)
     btnNegativeButton.text = negativeText
     btnNegativeButton.visibility = View.VISIBLE
 
