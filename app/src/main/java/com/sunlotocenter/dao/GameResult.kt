@@ -1,6 +1,7 @@
 package com.sunlotocenter.dao
 
 import org.joda.time.DateTime
+import java.io.Serializable
 
 class GameResult(sequence: Sequence,
                  var resultDate: DateTime? = null,
@@ -10,4 +11,4 @@ class GameResult(sequence: Sequence,
                  var lo2: String? = null,
                  var lo3: String? = null,
                  var author: User?= null
-) : Entity(sequence = sequence)
+) : Entity(sequence = sequence), Serializable

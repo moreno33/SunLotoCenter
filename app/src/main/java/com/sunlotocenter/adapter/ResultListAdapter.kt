@@ -17,16 +17,14 @@ import com.sunlotocenter.activity.ChangePasswordActivity
 import com.sunlotocenter.activity.R
 import com.sunlotocenter.activity.admin.AdminPersonalInfoActivity
 import com.sunlotocenter.activity.admin.BlameListActivity
+import com.sunlotocenter.activity.admin.ResultActivity
 import com.sunlotocenter.dao.GameResult
 import com.sunlotocenter.dao.Sex
 import com.sunlotocenter.dao.User
 import com.sunlotocenter.dao.UserStatus
 import com.sunlotocenter.dto.Result
 import com.sunlotocenter.listener.SaveUserListener
-import com.sunlotocenter.utils.REFRESH_REQUEST_CODE
-import com.sunlotocenter.utils.USER_EXTRA
-import com.sunlotocenter.utils.getDateString
-import com.sunlotocenter.utils.glide
+import com.sunlotocenter.utils.*
 import kotlinx.android.synthetic.main.activity_admin_dashboard.*
 import kotlinx.android.synthetic.main.employee_layout.view.*
 import kotlinx.android.synthetic.main.result_header_layout.view.*
@@ -53,7 +51,11 @@ class ResultListAdapter(var results: ArrayList<Result>) :
             holder.txtFirst.text= resultHeader?.lo1
             holder.txtSecond.text= resultHeader?.lo2
             holder.txtThird.text= resultHeader?.lo3
-            holder.imgEdit.setOnClickListener {  }
+            holder.imgEdit.setOnClickListener {
+                (context as AppCompatActivity).startActivityForResult(
+                    Intent(context, ResultActivity::class.java).putExtra(RESULT_EXTRA, resultHeader),
+                    REFRESH_REQUEST_CODE)
+            }
         }
         else{
             holder.txtLo1Morning.text= result.morning?.lo1?:"-"

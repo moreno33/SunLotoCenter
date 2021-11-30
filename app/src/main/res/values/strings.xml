@@ -49,8 +49,8 @@
     <string name="out">Sòti</string>
     <string name="enter_value">Antre: %1$d</string>
     <string name="out_value">Sòti: %1$s</string>
-    <string name="from">De</string>
-    <string name="to">a</string>
+    <string name="from">jj/mm/aa</string>
+    <string name="to">jj/mm/aa</string>
     <string name="result">Tiraj</string>
     <string name="bank">Bank</string>
     <string name="bank_total">Total: %s bank</string>
@@ -152,6 +152,7 @@
     <string name="create_result_success_message">Ou pibliye rezilta tiraj lan avèk siksè!</string>
     <string name="morning_uppercase">Maten</string>
     <string name="night_uppercase">Swa</string>
+    <string name="date_validator_error">Dat sa pa bon</string>
     <string-array name="employee_category">
         <item>Vandè</item>
         <item>Administratè</item>

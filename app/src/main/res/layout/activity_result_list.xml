@@ -97,12 +97,12 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        app:layout_constraintBottom_toBottomOf="@id/edxFrom"
                         app:layout_constraintEnd_toStartOf="@id/edxFrom"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/edxFrom">
+                        app:layout_constraintTop_toTopOf="@id/edxFrom"
+                        app:layout_constraintHorizontal_weight="32">
 
-                        <androidx.appcompat.widget.AppCompatSpinner
+                        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                             android:id="@+id/spnType"
                             android:layout_width="0dp"
                             android:layout_height="@dimen/edit_text_height"
@@ -113,7 +113,7 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"/>
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -134,43 +134,43 @@
                             app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <EditText
+                    <com.sunlotocenter.validator.ValidatableEditText
                         android:id="@+id/edxFrom"
                         android:layout_width="0dp"
-                        android:layout_height="@dimen/edit_text_height"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="10dp"
                         android:layout_marginBottom="16dp"
-                        android:background="@drawable/main_edit_text_background"
                         android:drawableLeft="@drawable/calendar_month_outline_black_18"
                         android:drawablePadding="7dp"
-                        android:hint="@string/from"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:textSize="@dimen/main_text_size"
+                        android:inputType="number"
+                        app:hint="@string/from"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/edxTo"
+                        app:layout_constraintHorizontal_weight="34"
                         app:layout_constraintStart_toEndOf="@id/clType"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.0" />
+                        app:layout_constraintVertical_bias="0.0"
+                        app:max_length="10"
+                        app:text_size="@dimen/main_text_size" />
 
-                    <EditText
+                    <com.sunlotocenter.validator.ValidatableEditText
                         android:id="@+id/edxTo"
                         android:layout_width="0dp"
-                        android:layout_height="@dimen/edit_text_height"
+                        android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
-                        android:background="@drawable/main_edit_text_background"
                         android:drawableLeft="@drawable/calendar_month_outline_black_18"
                         android:drawablePadding="7dp"
-                        android:hint="@string/to"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:textSize="@dimen/main_text_size"
+                        android:inputType="number"
+                        app:hint="@string/to"
                         app:layout_constraintBottom_toBottomOf="@id/edxFrom"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_weight="34"
                         app:layout_constraintStart_toEndOf="@id/edxFrom"
-                        app:layout_constraintTop_toTopOf="@id/edxFrom" />
+                        app:layout_constraintTop_toTopOf="@id/edxFrom"
+                        app:max_length="10"
+                        app:text_size="@dimen/main_text_size" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>

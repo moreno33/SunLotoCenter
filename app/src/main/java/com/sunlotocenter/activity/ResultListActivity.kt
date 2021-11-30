@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -19,6 +21,8 @@ import com.sunlotocenter.extensions.gameTypes
 import com.sunlotocenter.listener.LoadMoreListener
 import com.sunlotocenter.model.GameViewModel
 import com.sunlotocenter.utils.REFRESH_REQUEST_CODE
+import com.sunlotocenter.validator.DateValidator
+import com.sunlotocenter.validator.Form
 import kotlinx.android.synthetic.main.activity_result_list.*
 import kotlinx.android.synthetic.main.activity_result_list.toolbar
 
@@ -30,6 +34,7 @@ class ResultListActivity : ProtectedActivity(),
     private lateinit var gameViewModel: GameViewModel
     private var isSaveState= false
     private var gameType: GameType?= null
+    private var form= Form()
 
     override fun getLayoutId(): Int {
         return R.layout.activity_result_list
@@ -48,19 +53,81 @@ class ResultListActivity : ProtectedActivity(),
         setUpAdapter()
         prepareControl()
 
-        gameType?.let { gameViewModel.loadResults(true, it) }
+        gameType?.let { gameViewModel.loadResults(true, it, "", "") }
 
         swpLayout.isRefreshing= true
         swpLayout.setOnRefreshListener {
-            gameType?.let { gameViewModel.loadResults(true, it) }
+            gameType?.let { gameViewModel.loadResults(true, it, edxFrom.text, edxTo.text) }
         }
     }
 
     private fun prepareControl() {
+
+        edxFrom.addValidator(DateValidator(getString(R.string.date_validator_error)))
+        edxTo.addValidator(DateValidator(getString(R.string.date_validator_error)))
+        form.addInput(edxFrom, edxTo)
+
+        edxFrom.addTextChangedListener(object :TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if(s== null) return
+                if(s.length>= 2 && before== 0 && !s.contains("-")){
+                    edxFrom.text= "${s.substring(0,2)}-${s.substring(2)}"
+                    edxFrom.setSelection(edxFrom.text.length)
+                }else if(s.length>= 5 && before== 0 && !s.substring(3).contains("-")){
+                    edxFrom.text= "${s.substring(0,5)}-${s.substring(5)}"
+                    edxFrom.setSelection(edxFrom.text.length)
+                }
+                if(s.length== 10){
+                    if(edxTo.text.length== 10 && form.isValid()){
+                        gameType?.let { gameViewModel.loadResults(true, it, edxFrom.text, edxTo.text) }
+                    }else if(edxTo.text.length<10){
+                        edxTo.focus()
+                    }
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+        })
+
+        edxTo.addTextChangedListener(object :TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if(s== null) return
+                if(s.length>= 2 && before== 0 && !s.contains("-")){
+                    edxTo.text= "${s.substring(0,2)}-${s.substring(2)}"
+                    edxTo.setSelection(edxTo.text.length)
+                }else if(s.length>= 5 && before== 0 && !s.substring(3).contains("-")){
+                    edxTo.text= "${s.substring(0,5)}-${s.substring(5)}"
+                    edxTo.setSelection(edxTo.text.length)
+                }
+                if(s.length== 10){
+                    if(edxFrom.text.length== 10 && form.isValid()){
+                        gameType?.let { gameViewModel.loadResults(true, it, edxFrom.text, edxTo.text) }
+                    }else if (edxFrom.text.length<10){
+                        edxFrom.focus()
+                    }
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+        })
+
+
         //Fill game spinner
         val dataAdapter= ArrayAdapter(this, android.R.layout.simple_spinner_item, gameTypes())
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spnType.adapter = dataAdapter
+        spnType.setTitle(getString(R.string.game))
+        spnType.setPositiveButton(getString(R.string.ok))
         gameType= GameType.NY
         spnType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -72,7 +139,7 @@ class ResultListActivity : ProtectedActivity(),
                 GameType.values().forEach {
                     if(it.id == dataAdapter.getItem(position)!!.id){
                         gameType= it
-                        gameViewModel.loadResults(true, gameType!!)
+                        gameViewModel.loadResults(true, gameType!!, edxFrom.text, edxTo.text)
                     }
                 }
             }
@@ -161,14 +228,14 @@ class ResultListActivity : ProtectedActivity(),
     }
 
     override fun onLoadMore() {
-        gameType?.let { gameViewModel.loadResults(false, it) }
+        gameType?.let { gameViewModel.loadResults(false, it, edxFrom.text, edxTo.text) }
         progressBar.progressiveStart()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode== REFRESH_REQUEST_CODE && resultCode== Activity.RESULT_OK){
-            gameType?.let { gameViewModel.loadResults(true, it) }
+            gameType?.let { gameViewModel.loadResults(true, it, edxFrom.text, edxTo.text) }
         }
     }
 }

@@ -153,13 +153,13 @@ class GameViewModel (private val savedStateHandle: SavedStateHandle) : ViewModel
         })
     }
 
-    fun loadReports(isFirstPage: Boolean) {
+    fun loadReports(isFirstPage: Boolean, gameType: GameType, start: String, end: String) {
         if(!isFirstPage)
             page++
         else
             page= 0
 
-        gameApi.getReports(page).enqueue(object: Callback<Response<ArrayList<Report>>>{
+        gameApi.getReports(page, gameType, start, end).enqueue(object: Callback<Response<ArrayList<Report>>>{
             override fun onResponse(
                 call: Call<Response<ArrayList<Report>>>,
                 response: retrofit2.Response<Response<ArrayList<Report>>>
@@ -334,13 +334,13 @@ class GameViewModel (private val savedStateHandle: SavedStateHandle) : ViewModel
         })
     }
 
-    fun loadResults(isFirstPage: Boolean, gameType: GameType) {
+    fun loadResults(isFirstPage: Boolean, gameType: GameType, start: String, end: String) {
         if(!isFirstPage)
             page++
         else
             page= 0
 
-        gameApi.getResults(page, gameType).enqueue(object: Callback<Response<ArrayList<Result>>>{
+        gameApi.getResults(page, gameType, start, end).enqueue(object: Callback<Response<ArrayList<Result>>>{
             override fun onResponse(
                 call: Call<Response<ArrayList<Result>>>,
                 response: retrofit2.Response<Response<ArrayList<Result>>>
@@ -353,7 +353,7 @@ class GameViewModel (private val savedStateHandle: SavedStateHandle) : ViewModel
             }
 
             override fun onFailure(call: Call<Response<ArrayList<Result>>>, t: Throwable) {
-                lastAddedReportsData.postValue(ArrayList())
+                lastAddedResultsData.postValue(ArrayList())
             }
 
         })

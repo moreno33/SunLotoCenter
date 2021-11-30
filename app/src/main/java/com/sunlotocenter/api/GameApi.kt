@@ -42,14 +42,21 @@ interface GameApi {
     @POST("/blocks")
     fun saveBlockedGame(@Body blockedGame: BlockedGame, @HeaderMap headers: HashMap<String, String>): Call<Response<BlockedGame>>
 
-    @GET("/reports/{page}")
-    fun getReports(@Path("page") page: Int): Call<Response<ArrayList<Report>>>
+    @GET("/reports/{page}/{type}/{start}/{end}")
+    fun getReports(@Path("page") page: Int,
+                   @Path("type") type: GameType,
+                   @Path("start") start: String?,
+                   @Path("end") end: String?): Call<Response<ArrayList<Report>>>
 
     @GET("/reports/total/{start}/{end}")
     fun getTotalReport(@Path("start") start: DateTime?= null, @Path("end") end: DateTime?= null): Call<Response<TotalReport>>
 
-    @GET("/results/{page}/{type}")
-    fun getResults(@Path("page") page: Int, @Path("type") type: GameType): Call<Response<ArrayList<Result>>>
+    @GET("/results/{page}/{type}/{start}/{end}")
+    fun getResults(@Path("page") page: Int,
+                   @Path("type") type: GameType,
+                   @Path("start") start: String?,
+                   @Path("end") end: String?):
+            Call<Response<ArrayList<Result>>>
 
     @POST("/results")
     fun saveGameResult(@Body gameResult: GameResult, @HeaderMap headers: HashMap<String, String>): Call<Response<GameResult>>

@@ -104,12 +104,12 @@ class ResultActivity : ProtectedActivity() {
 
             //Move the spinners to the right value
             gameTypes().forEachIndexed{ index, element->
-                if(element.id == result!!.type!!.id){
+                if(element.id == resultExtra!!.type!!.id){
                     spnType.setSelection(index)
                 }
             }
             gameSessions().forEachIndexed{ index, element->
-                if(element.id == result!!.session!!.id){
+                if(element.id == resultExtra!!.session!!.id){
                     spnSession.setSelection(index)
                 }
             }

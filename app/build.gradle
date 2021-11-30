@@ -1,10 +1,12 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
+    dataBinding { enabled = true }
 
     defaultConfig {
         multiDexEnabled true
@@ -26,6 +28,7 @@ android {
     }
 }
 
+kapt { generateStubs = true }
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -47,6 +50,11 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
+    //Rx java
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'com.squareup:android-times-square:1.6.5@aar'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.16'
+
     //OkHttp
     implementation ("com.squareup.okhttp3:okhttp:3.12.12"){
           force = true //API 19 support
@@ -55,7 +63,7 @@ dependencies {
     //Joda time
     //Jodatime
     implementation 'net.danlew:android.joda:2.10.9.1'
-//    kapt 'com.android.databinding:compiler:2.2.3'
+    kapt 'com.android.databinding:compiler:2.2.3'
 
     //Image selector
     implementation project(':library')
