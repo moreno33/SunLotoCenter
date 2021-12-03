@@ -47,10 +47,10 @@
     <string name="balance">Balans</string>
     <string name="enter">Antre</string>
     <string name="out">Sòti</string>
-    <string name="enter_value">Antre: %1$d</string>
-    <string name="out_value">Sòti: %1$s</string>
-    <string name="from">jj/mm/aa</string>
-    <string name="to">jj/mm/aa</string>
+    <string name="enter_value">Antre: %.0f HTG</string>
+    <string name="out_value">Sòti: %.0f HTG</string>
+    <string name="from">jj-mm-aaaa</string>
+    <string name="to">jj-mm-aaaa</string>
     <string name="result">Tiraj</string>
     <string name="bank">Bank</string>
     <string name="bank_total">Total: %s bank</string>
@@ -153,6 +153,9 @@
     <string name="morning_uppercase">Maten</string>
     <string name="night_uppercase">Swa</string>
     <string name="date_validator_error">Dat sa pa bon</string>
+    <string name="lost">Pèt</string>
+    <string name="receipt">Fich %1$s</string>
+    <string name="total_amount">%1.0f HTG - %2.0f HTG = %3.0f</string>
     <string-array name="employee_category">
         <item>Vandè</item>
         <item>Administratè</item>

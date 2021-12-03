@@ -45,7 +45,9 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
+import org.joda.time.LocalTime
 import org.joda.time.format.DateTimeFormat
+import org.joda.time.format.DateTimeFormatter
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -68,6 +70,9 @@ val GAME_PRICE_EXTRA= "GAME_PRICE_EXTRA"
 val BLOCKED_GAME_EXTRA= "BLOCKED_GAME_EXTRA"
 val GAME_SCHEDULE_EXTRA= "GAME_SCHEDULE_EXTRA"
 val RESULT_EXTRA= "RESULT_EXTRA"
+val SLOT_LIST_EXTRA= "SLOT_LIST_EXTRA"
+val GAME_SESSION_EXTRA= "GAME_SESSION_EXTRA"
+val REPORT_EXTRA= "REPORT_EXTRA"
 
 val userApi =
     MyApplication.getInstance().clientNetworking.create(UserApi::class.java)
@@ -177,6 +182,14 @@ fun getDateString(date: DateTime, zone:DateTimeZone): String {
 
 }
 
+fun getTimeString(time: LocalTime, zone:DateTimeZone): String {
+    //This is the formatter to get a right format for the date
+    val formatter = DateTimeFormat.shortTime().withZone(zone).withLocale(Locale.getDefault())
+    return formatter.print(time)
+
+}
+
+
 fun getDateString(dateString: String): String {
 
     val date= DateTime.parse(dateString, DateTimeFormat.forPattern("yyyy-MM-dd"))
@@ -193,6 +206,14 @@ fun getDateString(dateString: String, zone: DateTimeZone): String {
 
 }
 
+fun getShortDateString(date: DateTime?, formatter: DateTimeFormatter): String? {
+    //This is the formatter to get a right format for the date
+    if(date== null) return null
+
+    val formatter = formatter.withZone(DateTimeZone.getDefault())
+    return formatter.print(date)
+}
+
 fun getShortDateString(date: DateTime?): String? {
     //This is the formatter to get a right format for the date
     if(date== null) return null
@@ -200,6 +221,7 @@ fun getShortDateString(date: DateTime?): String? {
     val formatter = DateTimeFormat.forPattern("yyyy-MM-dd").withZone(DateTimeZone.getDefault())
     return formatter.print(date)
 }
+
 
 fun getDate(date: DateTime): DateTime? {
     val formatter = DateTimeFormat.forPattern("yyyy-MM-dd").withZone(DateTimeZone.getDefault())

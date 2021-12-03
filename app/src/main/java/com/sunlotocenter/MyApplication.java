@@ -1,8 +1,13 @@
 package com.sunlotocenter;
 
+import android.app.Activity;
+import android.app.Application;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.multidex.MultiDexApplication;
 
 import com.google.gson.Gson;
@@ -12,11 +17,16 @@ import com.sunlotocenter.adapter.ClassTypeAdapter;
 import com.sunlotocenter.adapter.ClassTypeAdapterFactory;
 import com.sunlotocenter.adapter.DateTimeTypeAdapter;
 import com.sunlotocenter.adapter.GameTypeAdapter;
+import com.sunlotocenter.adapter.LocalTimeTypeAdapter;
 import com.sunlotocenter.adapter.UserTypeAdapter;
 import com.sunlotocenter.dao.Game;
+import com.sunlotocenter.dao.GameResult;
+import com.sunlotocenter.dao.GameSchedule;
 import com.sunlotocenter.dao.User;
+import com.sunlotocenter.service.ConfigurationService;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalTime;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,6 +35,7 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
@@ -36,7 +47,7 @@ import okhttp3.RequestBody;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MyApplication extends MultiDexApplication {
+public class MyApplication extends MultiDexApplication implements Application.ActivityLifecycleCallbacks{
 
     private static final String ACCOUNT_PREFERENCES = "com.woolib.ACCOUNT_PREFERENCES";
     /**
@@ -72,6 +83,7 @@ public class MyApplication extends MultiDexApplication {
 //            .registerTypeAdapter(Notification.class, new NotificationTypeAdapter<>())
 //            .registerTypeAdapter(Promo.class, new PromoTypeAdapter<>())
             .registerTypeAdapter(DateTime.class, new DateTimeTypeAdapter())
+            .registerTypeAdapter(LocalTime.class, new LocalTimeTypeAdapter())
             .create();
 
     private boolean isInBackground;
@@ -87,7 +99,7 @@ public class MyApplication extends MultiDexApplication {
 
 //        registerActivityLifecycleCallbacks(this);
 
-
+        registerActivityLifecycleCallbacks(this);
 
         //Temporary
 
@@ -212,7 +224,6 @@ public class MyApplication extends MultiDexApplication {
         return retrofit;
     }
 
-
     /**
      * This method allows to know whether there is a connected user or not
      * @return
@@ -230,125 +241,43 @@ public class MyApplication extends MultiDexApplication {
         startActivity(intent);
     }
 
-    public  void logoutWithoutRiderect(){
+    @Override
+    public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle bundle) {
 
-//        LoginManager.getInstance().logOut();
-//
-//        FirebaseAuth.getInstance().signOut();
-//
-//        new Prefs(this, PreferenceName.ACCOUNT).logout();
-//
-//        Log.i(TAG, "User logout successfully Good job! ");
     }
 
-    /**
-     * Return an account if there is one connected
-     * @returnx
-     */
-//    public Account getConnectedAccount() {
-//        prefs= new Prefs(this, PreferenceName.ACCOUNT);
-//        return prefs.getRegisteredAccount();
-//    }
+    @Override
+    public void onActivityStarted(@NonNull Activity activity) {
 
-    /**
-     * Set a connected account
-     * @param connectedAccount
-     */
-//    public void setConnectedAccount(Account connectedAccount){
-//        //Initialize the customer session.
-//        prefs= new Prefs(this, PreferenceName.ACCOUNT);
-//        prefs.setRegisteredAccount(connectedAccount);
-//        Log.i(TAG, "Start receiving token");
-//
-//    }
+    }
 
-    /**
-     * When the application finish to board
-     * @param b
-     */
-//    public void setBoarding(boolean b){
-//        prefs= new Prefs(this, PreferenceName.ONE_TIME_SAVING);
-//        prefs.setBoarding(b);
-//    }
+    @Override
+    public void onActivityResumed(@NonNull Activity activity) {
+        if(getConnectedUser()!= null){
+            startService(new Intent(this, ConfigurationService.class)
+                    .setAction(ConfigurationService.ACTION_CONFIG_DATA));
+        }
+    }
 
-    /**
-     * Return true if the user already boards the application
-     * @return
-     */
-//    public boolean isBoarding(){
-//        prefs= new Prefs(this, PreferenceName.ONE_TIME_SAVING);
-//        return prefs.isBoarding();
-//    }
+    @Override
+    public void onActivityPaused(@NonNull Activity activity) {
 
-    /**
-     * When the user close the banner inviting him to become a partner
-     * @param b
-     */
-//    public void setBanner(boolean b){
-//        prefs= new Prefs(this, PreferenceName.ACCOUNT);
-//        prefs.setBanner(b);
-//    }
+    }
 
-    /**
-     * Return false if hte user already close the banner.
-     * @return
-     */
-//    public boolean isBanner(){
-//        prefs= new Prefs(this, PreferenceName.ACCOUNT);
-//        return prefs.isBanner();
-//    }
+    @Override
+    public void onActivityStopped(@NonNull Activity activity) {
 
+    }
 
-//    @Override
-//    public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle bundle) {
-//
-//    }
-//
-//    @Override
-//    public void onActivityStarted(@NonNull Activity activity) {
-//
-//    }
-//
-//    @Override
-//    public void onActivityResumed(@NonNull Activity activity) {
-//        /*
-//         * Whenever our application get launched, it should get configured
-//         * calling the configuration service
-//         */
-//        Log.i(TAG, "The application resume.");
-//        startService(new Intent(this, ConfigurationService.class)
-//                .setAction(ConfigurationService.ACTION_RETRIEVE_MARK_MODEL_CATEGORY_FROM_SERVER));
-//        //We need to launch the service only when there is a user connected.
-//        if(getConnectedAccount()!= null){
-//            startService(new Intent(this, ConfigurationService.class)
-//                    .setAction(ConfigurationService.ACTION_CONTROL_CONNECTED_USER));
-//            startService(new Intent(this, ConfigurationService.class)
-//                    .setAction(ConfigurationService.ACTION_USER_META_DATA_INFO));
-//        }
-//
-//        startService(new Intent(this, ConfigurationService.class)
-//                .setAction(ConfigurationService.ACTION_VERSION));
-//    }
+    @Override
+    public void onActivitySaveInstanceState(@NonNull Activity activity, @NonNull Bundle bundle) {
 
-//    @Override
-//    public void onActivityPaused(@NonNull Activity activity) {
-//
-//    }
-//
-//    @Override
-//    public void onActivityStopped(@NonNull Activity activity) {
-//
-//    }
-//
-//    @Override
-//    public void onActivitySaveInstanceState(@NonNull Activity activity, @NonNull Bundle bundle) {
-//
-//    }
-//
-//    @Override
-//    public void onActivityDestroyed(@NonNull Activity activity) {
-//
-//    }
+    }
+
+    @Override
+    public void onActivityDestroyed(@NonNull Activity activity) {
+
+    }
 
     public void login(User user) {
         //We need to call this any time we are logged the user in.
@@ -464,6 +393,43 @@ public class MyApplication extends MultiDexApplication {
         //Initialize the customer session.
         prefs= new Prefs(this, PreferenceType.PERMANENT);
         prefs.setRegisteredUser(connectedUser);
+    }
+
+
+    /**
+     * Return the list of game schedules
+     * @return
+     */
+    public ArrayList<GameSchedule> getGameSchedules() {
+        prefs= new Prefs(this, PreferenceType.PERMANENT);
+        return prefs.getGameSchedules();
+    }
+
+    /**
+     * Set the list of game schedules
+     * @param gameSchedules
+     */
+    public void setGameSchedules(ArrayList<GameSchedule> gameSchedules){
+        prefs= new Prefs(this, PreferenceType.PERMANENT);
+        prefs.setGameSchedules(gameSchedules);
+    }
+
+    /**
+     * Return the latest game result
+     * @return
+     */
+    public GameResult getGameResult() {
+        prefs= new Prefs(this, PreferenceType.PERMANENT);
+        return prefs.getGameResult();
+    }
+
+    /**
+     * Set the list of game schedules
+     * @param gameResult
+     */
+    public void setGameResult(GameResult gameResult){
+        prefs= new Prefs(this, PreferenceType.PERMANENT);
+        prefs.setGameResult(gameResult);
     }
 
 

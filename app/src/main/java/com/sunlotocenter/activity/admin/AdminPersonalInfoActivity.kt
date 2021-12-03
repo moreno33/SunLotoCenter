@@ -253,6 +253,8 @@ class AdminPersonalInfoActivity : ProtectedActivity() {
                 UserType.SELLER->{
                     user= Seller(sex = user.sex, profilePath = user.profilePath)
                     if(userExtra != null){
+                        userExtra!!.sex= user.sex
+                        userExtra!!.profilePath= user.profilePath
                         ModelMapper().map(userExtra, user)
                     }
                     user.apply {
@@ -261,13 +263,13 @@ class AdminPersonalInfoActivity : ProtectedActivity() {
                         phoneNumber = PhoneNumber(edxPhone.region, edxPhone.countryCode, edxPhone.text)
                         address = edxAddress.text.trim()
                         city = edxCity.text.trim()
-                        sex = user.sex
-                        profilePath = user.profilePath
                     }
                 }
                 UserType.ADMIN->{
                     user= Admin(sex = user.sex, profilePath = user.profilePath)
                     if(userExtra != null){
+                        userExtra!!.sex= user.sex
+                        userExtra!!.profilePath= user.profilePath
                         ModelMapper().map(userExtra, user)
                     }
                     user.apply {
@@ -276,8 +278,6 @@ class AdminPersonalInfoActivity : ProtectedActivity() {
                         phoneNumber = PhoneNumber(edxPhone.region, edxPhone.countryCode, edxPhone.text)
                         address = edxAddress.text
                         city = edxCity.text
-                        sex = user.sex
-                        profilePath = user.profilePath
                     }
                 }
             }

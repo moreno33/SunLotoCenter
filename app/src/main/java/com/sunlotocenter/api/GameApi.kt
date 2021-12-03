@@ -1,11 +1,9 @@
 package com.sunlotocenter.api
 
 import com.sunlotocenter.dao.*
-import com.sunlotocenter.dto.Report
+import com.sunlotocenter.dao.Report
 import com.sunlotocenter.dto.Result
 import com.sunlotocenter.dto.TotalReport
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import org.joda.time.DateTime
 import retrofit2.Call
 import retrofit2.http.*
@@ -27,6 +25,9 @@ interface GameApi {
     @GET("/schedules")
     fun getAllSchedules(): Call<Response<ArrayList<GameSchedule>>>
 
+    @GET("/schedules/active")
+    fun getAllActiveSchedules(): Call<Response<ArrayList<GameSchedule>>>
+
     @GET("/prices")
     fun getGamePrice(): Call<Response<GamePrice>>
 
@@ -43,13 +44,14 @@ interface GameApi {
     fun saveBlockedGame(@Body blockedGame: BlockedGame, @HeaderMap headers: HashMap<String, String>): Call<Response<BlockedGame>>
 
     @GET("/reports/{page}/{type}/{start}/{end}")
-    fun getReports(@Path("page") page: Int,
-                   @Path("type") type: GameType,
+    fun getReports(@Path("page") page: Int,  @Path("type") type: GameType,
                    @Path("start") start: String?,
                    @Path("end") end: String?): Call<Response<ArrayList<Report>>>
 
-    @GET("/reports/total/{start}/{end}")
-    fun getTotalReport(@Path("start") start: DateTime?= null, @Path("end") end: DateTime?= null): Call<Response<TotalReport>>
+    @GET("/reports/total/{type}/{start}/{end}")
+    fun getTotalReport(@Path("type") type: GameType,
+                       @Path("start") start: String?= null,
+                       @Path("end") end: String?= null): Call<Response<TotalReport>>
 
     @GET("/results/{page}/{type}/{start}/{end}")
     fun getResults(@Path("page") page: Int,
@@ -57,6 +59,15 @@ interface GameApi {
                    @Path("start") start: String?,
                    @Path("end") end: String?):
             Call<Response<ArrayList<Result>>>
+
+
+    @GET("/slots/{page}/{sequenceId}/{session}")
+    fun getSlots(@Path("page") page: Int,
+                   @Path("sequenceId") sequenceId: Long,
+                   @Path("session") session: GameSession):
+            Call<Response<ArrayList<Slot>>>
+
+
 
     @POST("/results")
     fun saveGameResult(@Body gameResult: GameResult, @HeaderMap headers: HashMap<String, String>): Call<Response<GameResult>>

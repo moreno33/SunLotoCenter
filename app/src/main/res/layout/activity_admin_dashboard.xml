@@ -103,7 +103,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/view1"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        android:src="@drawable/moon"
+                        android:src="@drawable/white_balance_sunny"
                         android:layout_marginLeft="16dp"/>
 
                     <View
@@ -132,6 +132,7 @@
                             android:layout_marginStart="6dp"
                             android:background="@drawable/red_circle_background"
                             app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/layout2"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent">
 
@@ -176,7 +177,8 @@
                             android:layout_height="50dp"
                             android:background="@drawable/green_circle_background"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/btnGame"
+                            app:layout_constraintStart_toEndOf="@+id/layout2"
                             app:layout_constraintTop_toTopOf="parent">
 
                             <TextView
@@ -190,6 +192,31 @@
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <ImageButton
+                            android:id="@+id/btnGame"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/transparent"
+                            android:src="@drawable/chevron_down_white_18"
+                            app:layout_constraintEnd_toStartOf="@id/txtGame"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/layout3"/>
+
+                        <TextView
+                            android:id="@+id/txtGame"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/main_text_size"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/btnGame"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:text="NY"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"/>
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
                 <androidx.constraintlayout.widget.ConstraintLayout

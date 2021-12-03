@@ -2,7 +2,7 @@ package com.sunlotocenter.dao
 
 import com.sunlotocenter.utils.isNotEmpty
 
-class Borlet(number:String, amount:Double, option:String, type: Int): Game(null, number, amount, option,0, type){
+class Borlet(number:String, amount:Double, option:String, type: Int, amountWin: Double= 0.0, position:Int= 0): Game(null, number, amount, option,position, type, null, amountWin){
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other== null) return false

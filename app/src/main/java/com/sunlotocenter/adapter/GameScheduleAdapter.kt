@@ -14,10 +14,9 @@ import com.sunlotocenter.activity.R
 import com.sunlotocenter.activity.admin.GameScheduleActivity
 import com.sunlotocenter.dao.*
 import com.sunlotocenter.extensions.gameTypes
-import com.sunlotocenter.utils.GAME_SCHEDULE_EXTRA
-import com.sunlotocenter.utils.REFRESH_REQUEST_CODE
-import com.sunlotocenter.utils.USER_EXTRA
+import com.sunlotocenter.utils.*
 import kotlinx.android.synthetic.main.game_schedule_layout.view.*
+import org.joda.time.DateTimeZone
 
 class GameScheduleAdapter(var schedules: ArrayList<GameSchedule>, var onGameScheduleChangeListener: OnGameScheduleChangeListener) : RecyclerView.Adapter<GameScheduleAdapter.CustomViewHolder>() {
 
@@ -42,9 +41,9 @@ class GameScheduleAdapter(var schedules: ArrayList<GameSchedule>, var onGameSche
             holder.vwStatus.background= ContextCompat.getDrawable(context, R.drawable.red_circle_background)
         }
         holder.txtGameNameMorning.text= spinnerItem?.name
-        holder.txtEndTimeMorning.text= schedule.morningTime
+        holder.txtEndTimeMorning.text= getTimeString(schedule.morningTime!!, DateTimeZone.getDefault())
         holder.txtGameNameNight.text= spinnerItem?.name
-        holder.txtEndTimeNight.text= schedule.nightTime
+        holder.txtEndTimeNight.text= getTimeString(schedule.nightTime!!, DateTimeZone.getDefault())
 
 //        Click to open menu
         holder.imgMenu.setOnClickListener {

@@ -21,6 +21,9 @@
         android:theme="@style/AppTheme.NoActionBar.Blank"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".SlotListActivity"
+            android:exported="true" />
+        <activity
             android:name=".admin.ResultActivity"
             android:exported="true" />
         <activity
@@ -81,6 +84,7 @@
         <activity android:name="com.yongchun.library.view.ImageSelectorActivity" />
         <activity android:name="com.yongchun.library.view.ImagePreviewActivity" />
         <activity android:name="com.yongchun.library.view.ImageCropActivity" />
+        <service android:name="com.sunlotocenter.service.ConfigurationService" />
     </application>
 
 </manifest>

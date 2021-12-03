@@ -1,11 +1,13 @@
 package com.sunlotocenter.dao
 
+import org.joda.time.DateTime
+import org.joda.time.LocalTime
 import java.io.Serializable
 
 class GameSchedule (sequence: Sequence,
                     var type: GameType?= null,
-                    var morningTime: String?= null,
-                    var nightTime: String?= null,
+                    var morningTime: LocalTime?= null,
+                    var nightTime: LocalTime?= null,
                     var secInterval: Long?= null,
                     var current:Boolean= true, var author:User,
                     var status:GameScheduleStatus= GameScheduleStatus.ACTIVE):

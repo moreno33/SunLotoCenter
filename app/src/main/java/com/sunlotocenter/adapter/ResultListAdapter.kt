@@ -6,29 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
-import com.github.zawadz88.materialpopupmenu.popupMenu
-import com.sunlotocenter.MyApplication
-import com.sunlotocenter.activity.ChangePasswordActivity
 import com.sunlotocenter.activity.R
-import com.sunlotocenter.activity.admin.AdminPersonalInfoActivity
-import com.sunlotocenter.activity.admin.BlameListActivity
 import com.sunlotocenter.activity.admin.ResultActivity
-import com.sunlotocenter.dao.GameResult
-import com.sunlotocenter.dao.Sex
-import com.sunlotocenter.dao.User
-import com.sunlotocenter.dao.UserStatus
 import com.sunlotocenter.dto.Result
-import com.sunlotocenter.listener.SaveUserListener
 import com.sunlotocenter.utils.*
-import kotlinx.android.synthetic.main.activity_admin_dashboard.*
-import kotlinx.android.synthetic.main.employee_layout.view.*
 import kotlinx.android.synthetic.main.result_header_layout.view.*
 import kotlinx.android.synthetic.main.result_layout.view.*
+import kotlinx.android.synthetic.main.result_layout.view.txtDateMorning
+import kotlinx.android.synthetic.main.result_layout.view.txtDateNight
 
 class ResultListAdapter(var results: ArrayList<Result>) :
     RecyclerView.Adapter<ResultListAdapter.CustomViewHolder>() {
@@ -60,7 +46,7 @@ class ResultListAdapter(var results: ArrayList<Result>) :
         else{
             holder.txtLo1Morning.text= result.morning?.lo1?:"-"
             holder.txtLo2Morning.text= result.morning?.lo2?:"-"
-            holder.txtLo3Morning.text= result.morning?.lo3?:"-"
+            holder.txtLo3Morning.text= result.morning?.  lo3?:"-"
             holder.txtDateMorning.text= result.morning?.let{ getDateString(result.morning!!.resultDate!!)}?:"-"
 
             holder.txtLo1Night.text= result.night?.lo1?:"-"

@@ -34,6 +34,8 @@ import com.sunlotocenter.utils.DividerItemDecorator
 import com.sunlotocenter.utils.randomWithNDigits
 import kotlinx.android.synthetic.main.bottom_game_schedule_layout.view.*
 import org.michaelbel.bottomsheet.BottomSheet
+import java.util.stream.Collector
+import java.util.stream.Collectors
 import kotlin.collections.ArrayList
 import kotlin.math.ceil
 
@@ -95,7 +97,7 @@ class GameActivity : ProtectedActivity(),
         observe()
         btnTotalPreview.setOnClickListener {
             dialog.show()
-            gameViewModel.getAllGameSchedules()
+            gameViewModel.getAllActiveGameSchedules()
         }
     }
     private fun showMenu(schedules: List<GameSchedule>) {
@@ -124,7 +126,19 @@ class GameActivity : ProtectedActivity(),
     private fun submitSlot(gameSet: TreeSet<Game>) {
         if (gameSet.isEmpty() || selectedGameScheduleSession== null)return
         dialog.show()
-        val slot= Slot(filteredGame(gameSet), Sequence(), MyApplication.getInstance().connectedUser, selectedGameScheduleSession!!.gameSchedule.type!!, selectedGameScheduleSession!!.gameSession, randomWithNDigits(10))
+
+        val filteredGame= filteredGame(gameSet);
+
+        var total= 0.0
+        filteredGame.forEach {total += it.amount }
+
+        val slot= Slot(filteredGame,
+            Sequence(),
+            MyApplication.getInstance().connectedUser,
+            selectedGameScheduleSession!!.gameSchedule.type!!,
+            selectedGameScheduleSession!!.gameSession, randomWithNDigits(10),
+            true, SlotStatus.ACTIVE,
+            null, total)
         gameViewModel.play(slot)
     }
 

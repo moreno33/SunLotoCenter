@@ -3,9 +3,13 @@ package com.sunlotocenter;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.sunlotocenter.dao.GameResult;
+import com.sunlotocenter.dao.GameSchedule;
 import com.sunlotocenter.dao.User;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class is like a helper class to deal we data
@@ -18,6 +22,16 @@ public class Prefs {
      * For account
      */
     public static final String USER_PREF= "user_pref";
+
+    /**
+     * For game schedules
+     */
+    public static final String GAME_SCHEDULES_PREF= "game_schedules_pref";
+
+    /**
+     * For game result
+     */
+    public static final String GAME_RESULT_PREF= "game_schedules_pref";
 
     /**
      * Here we declare our shared preferences
@@ -69,6 +83,68 @@ public class Prefs {
             e.printStackTrace();
         }
         return user;
+    }
+
+    /**
+     * This helper method allows to retrieve the game
+     * schedule data
+     * @return
+     */
+    public ArrayList<GameSchedule> getGameSchedules(){
+        ArrayList<GameSchedule> gameSchedules= null;
+        try {
+            gameSchedules= (ArrayList<GameSchedule>) ObjectSerializer.deserialize(prefs.getString(GAME_SCHEDULES_PREF, null));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return gameSchedules;
+    }
+
+    /**
+     * This helper method allows to save the list of game schedules into
+     * the shared preferences
+     * @param gameSchedules
+     */
+    public void setGameSchedules(ArrayList<GameSchedule> gameSchedules){
+
+        SharedPreferences.Editor editor= prefs.edit();
+        try {
+            editor.putString(GAME_SCHEDULES_PREF, ObjectSerializer.serialize(gameSchedules));
+            editor.apply();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This helper method allows to retrieve the game
+     * result data
+     * @return
+     */
+    public GameResult getGameResult(){
+        GameResult gameResult= null;
+        try {
+            gameResult= (GameResult) ObjectSerializer.deserialize(prefs.getString(GAME_RESULT_PREF, null));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return gameResult;
+    }
+
+    /**
+     * This helper method allows to save the latest game result into
+     * the shared preferences
+     * @param gameResult
+     */
+    public void setGameResult(GameResult gameResult){
+
+        SharedPreferences.Editor editor= prefs.edit();
+        try {
+            editor.putString(GAME_RESULT_PREF, ObjectSerializer.serialize(gameResult));
+            editor.apply();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

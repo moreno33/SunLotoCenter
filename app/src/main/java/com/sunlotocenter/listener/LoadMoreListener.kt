@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 internal class LoadMoreListener(layoutManager: LinearLayoutManager) : RecyclerView.OnScrollListener() {
 
     companion object{
-        val SIZE_PER_PAGE= 20
+        val SIZE_PER_PAGE= 10
     }
 
     private var visibleThreshold = SIZE_PER_PAGE

@@ -16,14 +16,18 @@ import com.sunlotocenter.dao.*
 import com.sunlotocenter.extensions.gameTypes
 import com.sunlotocenter.utils.ClickListener
 import com.sunlotocenter.utils.DialogType
+import com.sunlotocenter.utils.getTimeString
 import com.sunlotocenter.utils.showDialog
 import kotlinx.android.synthetic.main.game_schedule_session_layout.view.*
 import kotlinx.android.synthetic.main.valid_error_layout.view.*
+import org.joda.time.DateTimeZone
 import org.joda.time.LocalTime
 import org.w3c.dom.Text
 import kotlin.collections.ArrayList
 
-class GameScheduleSessionAdapter(var schedules: ArrayList<GameScheduleSession>, var gameScheduleSessionListener: GameScheduleSessionListener) : RecyclerView.Adapter<GameScheduleSessionAdapter.CustomViewHolder>() {
+class GameScheduleSessionAdapter(var schedules: ArrayList<GameScheduleSession>,
+                                 var gameScheduleSessionListener: GameScheduleSessionListener, var showOpenStatus:Boolean= true) :
+    RecyclerView.Adapter<GameScheduleSessionAdapter.CustomViewHolder>() {
 
     lateinit var context: Context
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
@@ -41,27 +45,32 @@ class GameScheduleSessionAdapter(var schedules: ArrayList<GameScheduleSession>, 
                 spinnerItem= it
         }
         if(schedule.gameSession== GameSession.MORNING) {
-            holder.txtGame.text= "${spinnerItem!!.name} --- ${context.getString(R.string.morning)} (${schedule.gameSchedule.morningTime})"
+            holder.txtGame.text= "${spinnerItem!!.name} --- ${context.getString(R.string.morning)} ${ if(showOpenStatus)"(${getTimeString(schedule.gameSchedule.morningTime!!, DateTimeZone.getDefault())})" else ""}"
             Glide
                 .with(context)
                 .load(R.drawable.sun)
                 .into(holder.imgSession)
         }
         else {
-            holder.txtGame.text= "${spinnerItem!!.name} --- ${context.getString(R.string.night)} (${schedule.gameSchedule.nightTime})"
+            holder.txtGame.text= "${spinnerItem!!.name} --- ${context.getString(R.string.night)} ${ if(showOpenStatus)"(${getTimeString(schedule.gameSchedule.nightTime!!, DateTimeZone.getDefault())})" else ""}"
             Glide
                 .with(context)
                 .load(R.drawable.moon)
                 .into(holder.imgSession)
         }
 
+        if (showOpenStatus)holder.txtStatus.visibility= View.VISIBLE
+        else holder.txtStatus.visibility= View.GONE
+
         if(schedule.gameSession== GameSession.MORNING){
-            if(LocalTime.now().isAfter(LocalTime.parse(schedule.gameSchedule.morningTime!!)
+            if(LocalTime.now().isAfter(schedule.gameSchedule.morningTime!!
                     .minusMinutes(schedule.gameSchedule.secInterval!!.toInt()))){
                 holder.txtStatus.text= context.getString(R.string.game_close)
+
                 holder.txtStatus.setTextColor(ContextCompat.getColor(context, R.color.main_red))
                 holder.parent.setOnClickListener {
-                    showClosedGameMessage()
+                    if (showOpenStatus) showClosedGameMessage()
+                    else gameScheduleSessionListener.onClick(schedule)
                 }
             }else{
                 holder.txtStatus.text= context.getString(R.string.game_open)
@@ -71,11 +80,14 @@ class GameScheduleSessionAdapter(var schedules: ArrayList<GameScheduleSession>, 
                 }
             }
         }else{
-            if(LocalTime.now().isAfter(LocalTime.parse(schedule.gameSchedule.nightTime!!)
+            if(LocalTime.now().isAfter(schedule.gameSchedule.nightTime!!
                     .minusMinutes(schedule.gameSchedule.secInterval!!.toInt()))){
                 holder.txtStatus.text= context.getString(R.string.game_close)
                 holder.txtStatus.setTextColor(ContextCompat.getColor(context, R.color.main_red))
-                showClosedGameMessage()
+                holder.parent.setOnClickListener {
+                    if (showOpenStatus) showClosedGameMessage()
+                    else gameScheduleSessionListener.onClick(schedule)
+                }
             }else{
                 holder.txtStatus.text= context.getString(R.string.game_open)
                 holder.txtStatus.setTextColor(ContextCompat.getColor(context, R.color.main_green))

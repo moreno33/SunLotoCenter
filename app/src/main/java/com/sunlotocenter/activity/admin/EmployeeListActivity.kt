@@ -74,9 +74,6 @@ SaveUserListener{
 
         rclEmployees.adapter= employeeListAdapter
 
-        registerForContextMenu(rclEmployees)
-
-
         observe()
         setLoadMoreListener()
 

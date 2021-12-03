@@ -21,6 +21,12 @@ import com.sunlotocenter.model.GameViewModel
 import com.sunlotocenter.utils.*
 import com.sunlotocenter.validator.*
 import kotlinx.android.synthetic.main.activity_result.*
+import kotlinx.android.synthetic.main.activity_result.spnType
+import kotlinx.android.synthetic.main.activity_result.toolbar
+import kotlinx.android.synthetic.main.validatable_edit_text_layout.*
+import org.joda.time.DateTime
+import org.joda.time.DateTimeZone
+import org.joda.time.format.DateTimeFormat
 import org.modelmapper.ModelMapper
 
 class ResultActivity : ProtectedActivity() {
@@ -102,6 +108,7 @@ class ResultActivity : ProtectedActivity() {
         resultExtra= intent.extras?.getSerializable(RESULT_EXTRA) as GameResult?
         if (resultExtra!= null){
 
+            edxDate.text= getShortDateString(DateTime.now(), DateTimeFormat.forPattern("dd-MM-yyyy"))!!
             //Move the spinners to the right value
             gameTypes().forEachIndexed{ index, element->
                 if(element.id == resultExtra!!.type!!.id){
@@ -116,11 +123,32 @@ class ResultActivity : ProtectedActivity() {
             resultExtra?.lo1?.let{edxLo1.text= it }
             resultExtra?.lo2?.let{edxLo2.text= it }
             resultExtra?.lo3?.let{edxLo3.text= it }
+        }else{
+            edxDate.text= getShortDateString(DateTime.now(), DateTimeFormat.forPattern("dd-MM-yyyy"))!!
         }
     }
 
     private fun prepareControl() {
 
+        edxDate.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if(s== null) return
+                if(s.length>= 2 && before== 0 && !s.contains("-")){
+                    edxDate.text= "${s.substring(0,2)}-${s.substring(2)}"
+                    edxDate.setSelection(edxDate.text.length)
+                }else if(s.length>= 5 && before== 0 && !s.substring(3).contains("-")){
+                    edxDate.text= "${s.substring(0,5)}-${s.substring(5)}"
+                    edxDate.setSelection(edxDate.text.length)
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+        })
         edxLo1.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -208,6 +236,8 @@ class ResultActivity : ProtectedActivity() {
             result?.lo2= edxLo2.text
             result?.lo3= edxLo3.text
             result?.author= MyApplication.getInstance().connectedUser
+            result?.resultDate= DateTime.parse(edxText.text.toString(), DateTimeFormat.forPattern("dd-MM-yyyy")).withZone(
+                DateTimeZone.getDefault())
 
             dialog.show()
             gameViewModel.saveGameResult(result!!)

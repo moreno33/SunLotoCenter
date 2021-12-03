@@ -1,25 +1,16 @@
 package com.sunlotocenter.model
 
-import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.sunlotocenter.dao.*
-import com.sunlotocenter.dto.Report
+import com.sunlotocenter.dao.Report
 import com.sunlotocenter.dto.Result
 import com.sunlotocenter.dto.TotalReport
 import com.sunlotocenter.utils.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import okhttp3.MediaType
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import org.joda.time.DateTime
 import retrofit2.Call
 import retrofit2.Callback
-import retrofit2.await
-import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -30,14 +21,17 @@ class GameViewModel (private val savedStateHandle: SavedStateHandle) : ViewModel
     private val REPORTS: String= "reports"
     private val BLOCKED_GAMES: String= "blocked_games"
     private val RESULTS= "results"
+    private val SLOTS= "slots"
     var lastAddedSchedulesData= MutableLiveData<ArrayList<GameSchedule>>()
     var lastAddedBlockedGamesData= MutableLiveData<ArrayList<BlockedGame>>()
     var lastAddedReportsData= MutableLiveData<ArrayList<Report>>()
     var lastAddedResultsData= MutableLiveData<ArrayList<Result>>()
+    var lastAddedSlotsData= MutableLiveData<ArrayList<Slot>>()
     var schedules= arrayListOf<GameSchedule>()
     var reports= arrayListOf<Report>()
     var blockedGames= arrayListOf<BlockedGame>()
     var results= arrayListOf<Result>()
+    var slots= arrayListOf<Slot>()
     var page= -1
     var ACTION= ACTION_SAVE
 
@@ -101,6 +95,27 @@ class GameViewModel (private val savedStateHandle: SavedStateHandle) : ViewModel
 
         })
     }
+
+    fun getAllActiveGameSchedules(){
+        gameApi.getAllActiveSchedules().enqueue(object : Callback<Response<ArrayList<GameSchedule>>>{
+            override fun onResponse(
+                call: Call<Response<ArrayList<GameSchedule>>>,
+                response: retrofit2.Response<Response<ArrayList<GameSchedule>>>
+            ) {
+                if(response.body()== null){
+                    lastAddedSchedulesData.postValue(ArrayList())
+                }else{
+                    lastAddedSchedulesData.postValue(response.body()!!.data)
+                }
+            }
+
+            override fun onFailure(call: Call<Response<ArrayList<GameSchedule>>>, t: Throwable) {
+                lastAddedSchedulesData.postValue(ArrayList())
+            }
+
+        })
+    }
+
     fun loadSchedules(isFirstPage: Boolean) {
         if(!isFirstPage)
             page++
@@ -185,6 +200,7 @@ class GameViewModel (private val savedStateHandle: SavedStateHandle) : ViewModel
         reports= savedStateHandle.get(REPORTS)?: arrayListOf()
         blockedGames= savedStateHandle.get(BLOCKED_GAMES)?: arrayListOf()
         results= savedStateHandle.get(RESULTS)?: arrayListOf()
+        slots= savedStateHandle.get(SLOTS)?: arrayListOf()
 
     }
 
@@ -312,8 +328,8 @@ class GameViewModel (private val savedStateHandle: SavedStateHandle) : ViewModel
         })
     }
 
-    fun getTotalReport(start: DateTime?= null, end:DateTime?= null) {
-        gameApi.getTotalReport(start, end).enqueue(object: Callback<Response<TotalReport>>{
+    fun getTotalReport(gameType: GameType, start: String?= null, end:String?= null) {
+        gameApi.getTotalReport(gameType, start, end).enqueue(object: Callback<Response<TotalReport>>{
             override fun onResponse(
                 call: Call<Response<TotalReport>>,
                 response: retrofit2.Response<Response<TotalReport>>
@@ -323,8 +339,6 @@ class GameViewModel (private val savedStateHandle: SavedStateHandle) : ViewModel
                 }else{
                     totalReportData.postValue(response.body())
                 }
-
-
             }
 
             override fun onFailure(call: Call<Response<TotalReport>>, t: Throwable) {
@@ -354,6 +368,31 @@ class GameViewModel (private val savedStateHandle: SavedStateHandle) : ViewModel
 
             override fun onFailure(call: Call<Response<ArrayList<Result>>>, t: Throwable) {
                 lastAddedResultsData.postValue(ArrayList())
+            }
+
+        })
+    }
+
+    fun loadSlots(isFirstPage: Boolean, sequenceId: Long, gameSession: GameSession) {
+        if(!isFirstPage)
+            page++
+        else
+            page= 0
+
+        gameApi.getSlots(page, sequenceId, gameSession).enqueue(object: Callback<Response<ArrayList<Slot>>>{
+            override fun onResponse(
+                call: Call<Response<ArrayList<Slot>>>,
+                response: retrofit2.Response<Response<ArrayList<Slot>>>
+            ) {
+                if(response.body()== null){
+                    lastAddedSlotsData.postValue(ArrayList())
+                }else{
+                    lastAddedSlotsData.postValue(response.body()!!.data)
+                }
+            }
+
+            override fun onFailure(call: Call<Response<ArrayList<Slot>>>, t: Throwable) {
+                lastAddedSlotsData.postValue(ArrayList())
             }
 
         })

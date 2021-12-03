@@ -9,12 +9,13 @@ open abstract class Game(var id:Long?= null,
                          var opt: String,
                          var position:Int,
                          var type:Int,
-                         var slot: Slot?= null):
+                         var slot: Slot?= null,
+                         var amountWin: Double= 0.0):
     Comparable<Game>, Cloneable, Serializable{
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other== null) return false
-        if (javaClass != other?.javaClass) return false
+        if (javaClass != other.javaClass) return false
         if(!isNotEmpty(number)) return false
         return number== (other as Game).number
     }

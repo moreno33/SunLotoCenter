@@ -1,5 +1,6 @@
 package com.sunlotocenter.api
 
+import com.sunlotocenter.dto.Configuration
 import com.sunlotocenter.dao.Blame
 import com.sunlotocenter.dao.Response
 import com.sunlotocenter.dao.Seller
@@ -37,4 +38,7 @@ interface UserApi {
 
     @GET("/sellers/")
     fun getSellers(): Call<Response<ArrayList<Seller>>>
+
+    @GET("/config/data/{sequenceId}")
+    fun getConfigurationData(@Path("sequenceId") userSequenceId: Long?): Call<Response<Configuration>>
 }

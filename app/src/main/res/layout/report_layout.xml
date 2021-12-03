@@ -54,7 +54,7 @@
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/main_text_size"
             app:layout_constraintBottom_toTopOf="@+id/txtDateMorning"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/imgOpenMorning"
             app:layout_constraintTop_toTopOf="@id/txtEntryMorning" />
 
         <TextView
@@ -66,6 +66,18 @@
             app:layout_constraintBottom_toBottomOf="@+id/txtAmountMorning"
             app:layout_constraintEnd_toEndOf="@+id/txtMorning"
             app:layout_constraintTop_toBottomOf="@+id/txtMorning" />
+
+        <ImageView
+            android:id="@+id/imgOpenMorning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="16dp"
+            android:src="@drawable/chevron_right_black_18"
+            app:layout_constraintBottom_toTopOf="@id/view1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:id="@+id/view1"
@@ -119,7 +131,7 @@
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/main_text_size"
             app:layout_constraintBottom_toTopOf="@+id/txtDateNight"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/imgOpenNight"
             app:layout_constraintTop_toTopOf="@id/txtEntryNight" />
 
         <TextView
@@ -134,6 +146,18 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/txtOutNight"
             app:layout_constraintTop_toBottomOf="@+id/txtOutNight" />
+
+        <ImageView
+            android:id="@+id/imgOpenNight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="16dp"
+            android:src="@drawable/chevron_right_black_18"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

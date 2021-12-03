@@ -1,11 +1,11 @@
 package com.sunlotocenter.activity.admin
-
-import android.app.Activity
-import android.content.Intent
+import android.opengl.Visibility
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.lifecycle.SavedStateViewModelFactory
@@ -15,8 +15,7 @@ import com.sunlotocenter.activity.ProtectedActivity
 import com.sunlotocenter.activity.R
 import com.sunlotocenter.adapter.ReportAdapter
 import com.sunlotocenter.dao.GameType
-import com.sunlotocenter.dto.Report
-import com.sunlotocenter.dto.Result
+import com.sunlotocenter.dao.Report
 import com.sunlotocenter.extensions.enableHome
 import com.sunlotocenter.extensions.gameTypes
 import com.sunlotocenter.listener.LoadMoreListener
@@ -60,7 +59,7 @@ class AdminReportActivity : ProtectedActivity(),
         prepareControl()
 
         gameType?.let { gameViewModel.loadReports(true, it, "", "") }
-        gameViewModel.getTotalReport(null, null)
+        gameType?.let{ gameViewModel.getTotalReport(gameType!!, "", "") }
 //        swpLayout.isRefreshing= true
 //        swpLayout.setOnRefreshListener {
 //            gameType?.let { gameViewModel.loadReports(true, it, edxFrom.text, edxTo.text) }
@@ -175,6 +174,14 @@ class AdminReportActivity : ProtectedActivity(),
                 progressBar.progressiveStop()
 //                swpLayout.isRefreshing= false
             })
+        gameViewModel.totalReportData.observe(this, {
+            totalReport->
+                txtEnter.text= getString(R.string.enter_value, if(totalReport!= null) totalReport.data?.entry?.toFloat() else 0f)
+                txtOut.text= getString(R.string.enter_value, if(totalReport!= null) totalReport.data?.out?.toFloat() else 0f)
+                txtAmount.text= if(totalReport!= null) String.format("%.0f", (totalReport.data?.entry!!-totalReport.data.out)) else "0"
+                pgbReport.visibility= GONE
+                header_content.visibility= VISIBLE
+        })
 
     }
 
