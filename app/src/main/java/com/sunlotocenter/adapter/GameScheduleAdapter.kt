@@ -10,7 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.github.zawadz88.materialpopupmenu.popupMenu
 import com.sunlotocenter.activity.ChangePasswordActivity
-import com.sunlotocenter.activity.R
+import com.sunlotocenter.R
 import com.sunlotocenter.activity.admin.GameScheduleActivity
 import com.sunlotocenter.dao.*
 import com.sunlotocenter.extensions.gameTypes

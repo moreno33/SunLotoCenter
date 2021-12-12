@@ -8,7 +8,7 @@ import android.os.Build
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import com.sunlotocenter.activity.R
+import com.sunlotocenter.R
 import com.sunlotocenter.activity.admin.AdminDashboardActivity
 import com.sunlotocenter.activity.seller.SellerDashboardActivity
 import com.sunlotocenter.dao.Admin

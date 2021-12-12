@@ -3,12 +3,14 @@ package com.sunlotocenter.activity.admin
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.sunlotocenter.MyApplication
 import com.sunlotocenter.activity.BasicActivity
 import com.sunlotocenter.activity.ProtectedActivity
-import com.sunlotocenter.activity.R
+import com.sunlotocenter.R
 import com.sunlotocenter.adapter.GameScheduleAdapter
 import com.sunlotocenter.dao.GameSchedule
 import com.sunlotocenter.extensions.enableHome
@@ -18,7 +20,11 @@ import com.sunlotocenter.utils.ClickListener
 import com.sunlotocenter.utils.DialogType
 import com.sunlotocenter.utils.REFRESH_REQUEST_CODE
 import kotlinx.android.synthetic.main.activity_manage_game.*
+import kotlinx.android.synthetic.main.activity_manage_game.progressBar
+import kotlinx.android.synthetic.main.activity_manage_game.swpLayout
 import kotlinx.android.synthetic.main.activity_manage_game.toolbar
+import kotlinx.android.synthetic.main.activity_manage_game.txtInfo
+import kotlinx.android.synthetic.main.activity_notification.*
 
 class ManageGameActivity :
     ProtectedActivity(),
@@ -48,11 +54,11 @@ class ManageGameActivity :
         btnAdd.setOnClickListener {
             startActivityForResult(Intent(this, GameScheduleActivity::class.java), REFRESH_REQUEST_CODE)
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        gameViewModel.loadSchedules(true)
+        gameViewModel.loadSchedules(MyApplication.getInstance().company.sequence!!.id!!, true)
+        swpLayout.isRefreshing= true
+        swpLayout.setOnRefreshListener {
+            gameViewModel.loadSchedules(MyApplication.getInstance().company.sequence!!.id!!, true)
+        }
     }
 
     private fun setUpAdapter() {
@@ -72,7 +78,15 @@ class ManageGameActivity :
 
     private fun observe() {
         gameViewModel.lastAddedSchedulesData.observe(this,
-            { schedules -> addSchedules(schedules) })
+            { schedules ->
+                if(schedules.isEmpty() && gameViewModel.page== 0){
+                    txtInfo.visibility= View.VISIBLE
+                }else{
+                    txtInfo.visibility= View.GONE
+                }
+                addSchedules(schedules)
+                progressBar.progressiveStop()
+                swpLayout.isRefreshing= false })
         gameViewModel.gameScheduleData.observe(this,
             {
                 dialog.dismiss()
@@ -97,7 +111,7 @@ class ManageGameActivity :
                             getString(R.string.ok),
                             object : ClickListener {
                                 override fun onClick(): Boolean {
-                                    gameViewModel.loadSchedules(true)
+                                    gameViewModel.loadSchedules(MyApplication.getInstance().company.sequence!!.id!!, true)
                                     return false
                                 }
 
@@ -156,13 +170,14 @@ class ManageGameActivity :
     }
 
     override fun onLoadMore() {
-        gameViewModel.loadSchedules(false)
+        gameViewModel.loadSchedules(MyApplication.getInstance().company.sequence!!.id!!, false)
+        progressBar.progressiveStart()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode== Activity.RESULT_OK && requestCode== REFRESH_REQUEST_CODE){
-            gameViewModel.loadSchedules(true)
+            gameViewModel.loadSchedules(MyApplication.getInstance().company.sequence!!.id!!, true)
         }
     }
 

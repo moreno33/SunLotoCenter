@@ -10,7 +10,6 @@ class GamePrice(sequence: Sequence= Sequence(),
                 var loto3Price:Int?= null,
                 var loto4Price: Int?= null,
                 var loto5Price: Int?= null,
-                var current: Boolean= true,
-                var author: User):
-    Entity(sequence = sequence),
+                var author: User, company: Company):
+    Entity(sequence = sequence, company = company),
     Serializable

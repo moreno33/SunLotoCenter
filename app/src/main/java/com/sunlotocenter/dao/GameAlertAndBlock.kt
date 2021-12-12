@@ -13,7 +13,6 @@ class GameAlertAndBlock (sequence: Sequence,
                          var loto4BlockPrice:Int?= null,
                          var loto5AlertPrice:Int?= null,
                          var loto5BlockPrice:Int?= null,
-                         var current:Boolean= true,
-                         var author: User):
-        Entity(sequence = sequence),
+                         var author: User, company: Company):
+        Entity(sequence = sequence, company = company),
         Serializable

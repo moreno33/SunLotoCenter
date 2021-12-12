@@ -11,8 +11,9 @@ import android.widget.ArrayAdapter
 import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.sunlotocenter.MyApplication
 import com.sunlotocenter.activity.ProtectedActivity
-import com.sunlotocenter.activity.R
+import com.sunlotocenter.R
 import com.sunlotocenter.adapter.ReportAdapter
 import com.sunlotocenter.dao.GameType
 import com.sunlotocenter.dao.Report
@@ -58,7 +59,7 @@ class AdminReportActivity : ProtectedActivity(),
         setUpAdapter()
         prepareControl()
 
-        gameType?.let { gameViewModel.loadReports(true, it, "", "") }
+        gameType?.let { gameViewModel.loadReports(MyApplication.getInstance().company.sequence!!.id!!, true, it, "", "") }
         gameType?.let{ gameViewModel.getTotalReport(gameType!!, "", "") }
 //        swpLayout.isRefreshing= true
 //        swpLayout.setOnRefreshListener {
@@ -84,10 +85,14 @@ class AdminReportActivity : ProtectedActivity(),
                 }else if(s.length>= 5 && before== 0 && !s.substring(3).contains("-")){
                     edxFrom.text= "${s.substring(0,5)}-${s.substring(5)}"
                     edxFrom.setSelection(edxFrom.text.length)
+                }else if(edxFrom.text.isEmpty() && edxTo.text.isEmpty()){
+                    gameType?.let { gameViewModel.loadReports(MyApplication.getInstance().company.sequence!!.id!!, true, it, "", "") }
+                    gameType?.let{ gameViewModel.getTotalReport(gameType!!, "", "") }
                 }
                 if(s.length== 10){
                     if(edxTo.text.length== 10 && form.isValid()){
-                        gameType?.let { gameViewModel.loadReports(true, it, edxFrom.text, edxTo.text) }
+                        gameType?.let { gameViewModel.loadReports(MyApplication.getInstance().company.sequence!!.id!!, true, it, edxFrom.text, edxTo.text) }
+                        gameType?.let { gameViewModel.getTotalReport(it, edxFrom.text, edxTo.text) }
                     }else if(edxTo.text.length<10){
                         edxTo.focus()
                     }
@@ -111,10 +116,16 @@ class AdminReportActivity : ProtectedActivity(),
                 }else if(s.length>= 5 && before== 0 && !s.substring(3).contains("-")){
                     edxTo.text= "${s.substring(0,5)}-${s.substring(5)}"
                     edxTo.setSelection(edxTo.text.length)
+                }else if(edxFrom.text.isEmpty() && edxTo.text.isEmpty()){
+                    gameType?.let { gameViewModel.loadReports(MyApplication.getInstance().company.sequence!!.id!!,
+                        true, it, "", "") }
+                    gameType?.let{ gameViewModel.getTotalReport(gameType!!, "", "") }
                 }
                 if(s.length== 10){
                     if(edxFrom.text.length== 10 && form.isValid()){
-                        gameType?.let { gameViewModel.loadReports(true, it, edxFrom.text, edxTo.text) }
+                        gameType?.let { gameViewModel.loadReports(MyApplication.getInstance().company.sequence!!.id!!,
+                            true, it, edxFrom.text, edxTo.text) }
+                        gameType?.let { gameViewModel.getTotalReport(it, edxFrom.text, edxTo.text) }
                     }else if (edxFrom.text.length<10){
                         edxFrom.focus()
                     }
@@ -144,7 +155,11 @@ class AdminReportActivity : ProtectedActivity(),
                 GameType.values().forEach {
                     if(it.id == dataAdapter.getItem(position)!!.id){
                         gameType= it
-                        gameViewModel.loadReports(true, gameType!!, edxFrom.text, edxTo.text)
+                        if (form.isValid()){
+                            gameViewModel.loadReports(MyApplication.getInstance().company.sequence!!.id!!,
+                                true, gameType!!, edxFrom.text, edxTo.text)
+                            gameType?.let{ gameViewModel.getTotalReport(gameType!!, edxFrom.text, edxTo.text) }
+                        }
                     }
                 }
             }
@@ -177,7 +192,7 @@ class AdminReportActivity : ProtectedActivity(),
         gameViewModel.totalReportData.observe(this, {
             totalReport->
                 txtEnter.text= getString(R.string.enter_value, if(totalReport!= null) totalReport.data?.entry?.toFloat() else 0f)
-                txtOut.text= getString(R.string.enter_value, if(totalReport!= null) totalReport.data?.out?.toFloat() else 0f)
+                txtOut.text= getString(R.string.out_value, if(totalReport!= null) totalReport.data?.out?.toFloat() else 0f)
                 txtAmount.text= if(totalReport!= null) String.format("%.0f", (totalReport.data?.entry!!-totalReport.data.out)) else "0"
                 pgbReport.visibility= GONE
                 header_content.visibility= VISIBLE
@@ -227,7 +242,8 @@ class AdminReportActivity : ProtectedActivity(),
     }
 
     override fun onLoadMore() {
-        gameType?.let { gameViewModel.loadReports(false, it, edxFrom.text, edxTo.text) }
+        gameType?.let { gameViewModel.loadReports(MyApplication.getInstance().company.sequence!!.id!!,
+            false, it, edxFrom.text, edxTo.text) }
         progressBar.progressiveStart()
     }
 }

@@ -5,10 +5,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.sunlotocenter.BuildConfig
 import com.sunlotocenter.MyApplication
+import com.sunlotocenter.R
 import com.sunlotocenter.activity.admin.*
 import com.sunlotocenter.dao.Seller
 import com.sunlotocenter.extensions.enableHome
+import com.sunlotocenter.utils.COMPANY_EXTRA
 import com.sunlotocenter.utils.USER_EXTRA
 import kotlinx.android.synthetic.main.activity_admin_setting.*
 
@@ -55,6 +58,7 @@ class SettingActivity : ProtectedActivity() {
             action.key.setOnClickListener {
                 var intent= Intent(this, action.value)
                 intent.putExtra(USER_EXTRA, MyApplication.getInstance().connectedUser)
+                intent.putExtra(COMPANY_EXTRA, MyApplication.getInstance().company)
                 startActivity(intent)
             }
         }

@@ -6,9 +6,8 @@ class Slot(var games: List<Game>,
            var type:GameType,
            var session: GameSession,
            var uniq:String,
-           var current: Boolean= true,
            var status: SlotStatus= SlotStatus.ACTIVE,
            var gamePrice: GamePrice?= null,
            var total: Double,
-           var totalWin: Double?= null):
-    Entity(sequence = sequence)
+           var totalWin: Double?= null, company: Company):
+    Entity(sequence = sequence, company = company)

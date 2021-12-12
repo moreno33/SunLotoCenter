@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".SettingActivity">
+    tools:context=".activity.admin.CompanyInfoActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -45,7 +45,7 @@
                     android:layout_marginBottom="20dp">
 
                     <com.makeramen.roundedimageview.RoundedImageView
-                        android:id="@+id/imageView1"
+                        android:id="@+id/imgLogo"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
                         android:layout_marginTop="20dp"
@@ -78,80 +78,67 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <EditText
+                <com.sunlotocenter.validator.ValidatableEditText
                     android:id="@+id/edxCompanyName"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/edit_text_height"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
                     android:layout_marginEnd="30dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/main_edit_text_background"
                     app:layout_constraintBottom_toTopOf="@+id/edxPhone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:hint="@string/company_name"
-                    android:textSize="@dimen/main_text_size"
-                    android:drawableLeft="@drawable/account_outline_18"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:drawablePadding="7dp"/>
+                    app:hint="@string/company_name"
+                    app:text_size="@dimen/main_text_size"
+                    app:max_length="50"
+                    app:drawable_left="@drawable/account_outline_18"/>
 
-                <EditText
+                <com.emarkall.worldwidephonenumberedittext.WorldWidePhoneNumberEditText
                     android:id="@+id/edxPhone"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/edit_text_height"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
                     android:layout_marginEnd="30dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/main_edit_text_background"
                     app:layout_constraintBottom_toTopOf="@+id/edxAddress"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:hint="@string/company_phone_number"
-                    android:textSize="@dimen/main_text_size"
-                    android:drawableLeft="@drawable/phone_outline_black_18"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:drawablePadding="7dp"/>
+                    app:textColor="@color/colorPrimary"
+                    app:textSize="@dimen/main_text_size"
+                    android:background="@android:color/transparent"/>
 
-                <EditText
+                <com.sunlotocenter.validator.ValidatableEditText
                     android:id="@+id/edxAddress"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/edit_text_height"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
                     android:layout_marginEnd="30dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/main_edit_text_background"
                     app:layout_constraintBottom_toTopOf="@+id/edxCity"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:hint="@string/address"
-                    android:textSize="@dimen/main_text_size"
-                    android:drawableLeft="@drawable/map_marker_outline_black_18"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:drawablePadding="7dp"/>
+                    app:hint="@string/address"
+                    app:text_size="@dimen/main_text_size"
+                    app:max_length="50"
+                    app:drawable_left="@drawable/map_marker_outline_black_18" />
 
-                <EditText
+                <com.sunlotocenter.validator.ValidatableEditText
                     android:id="@+id/edxCity"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/edit_text_height"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
                     android:layout_marginEnd="30dp"
                     android:layout_marginBottom="20dp"
-                    app:layout_constraintBottom_toTopOf="@+id/roundedButton"
+                    app:layout_constraintBottom_toTopOf="@+id/btnSubmit"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:background="@drawable/main_edit_text_background"
-                    android:hint="@string/city"
-                    android:textSize="@dimen/main_text_size"
-                    android:drawableLeft="@drawable/map_marker_outline_black_18"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:drawablePadding="7dp"/>
+                    app:hint="@string/city"
+                    app:text_size="@dimen/main_text_size"
+                    app:max_length="50"
+                    app:drawable_left="@drawable/map_marker_outline_black_18" />
 
                 <life.sabujak.roundedbutton.RoundedButton
-                    android:id="@+id/roundedButton"
+                    android:id="@+id/btnSubmit"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/edit_text_height"
                     android:layout_marginStart="30dp"

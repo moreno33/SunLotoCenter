@@ -5,10 +5,11 @@ import java.io.Serializable
 
 abstract class Entity(
     var id: Long? = null,
-    var sequence: Sequence,
+    var sequence: Sequence= Sequence(),
     var createdDateTime: DateTime? = null,
-    var updatedDateTime: DateTime? = null
-) : Serializable{
+    var updatedDateTime: DateTime? = null,
+    var current:Boolean= true,
+    var company: Company?= null) : Serializable{
 
     val classType: Class<out Entity?>
 

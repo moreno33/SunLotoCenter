@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import com.sunlotocenter.R
 import com.sunlotocenter.activity.*
 import com.sunlotocenter.activity.SettingActivity
+import com.sunlotocenter.activity.admin.NotificationActivity
 import kotlinx.android.synthetic.main.activity_seller_dashboard.*
 
 class SellerDashboardActivity : ProtectedActivity() {

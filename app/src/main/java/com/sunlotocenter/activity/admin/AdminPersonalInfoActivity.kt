@@ -14,8 +14,8 @@ import com.emarkall.worldwidephonenumberedittext.Country
 import com.emarkall.worldwidephonenumberedittext.CountryListActivity
 import com.emarkall.worldwidephonenumberedittext.WorldWidePhoneNumberEditText
 import com.sunlotocenter.MyApplication
+import com.sunlotocenter.R
 import com.sunlotocenter.activity.ProtectedActivity
-import com.sunlotocenter.activity.R
 import com.sunlotocenter.dao.*
 import com.sunlotocenter.extensions.enableHome
 import com.sunlotocenter.model.UserViewModel
@@ -36,7 +36,7 @@ class AdminPersonalInfoActivity : ProtectedActivity() {
     }
 
     private lateinit var userViewModel: UserViewModel
-    private var user: User= Seller()
+    private var user: User= Seller(sex = Sex.MALE, company = MyApplication.getInstance().company)
     var userExtra: User?= null
     private var userType: UserType= UserType.SELLER
 
@@ -251,7 +251,7 @@ class AdminPersonalInfoActivity : ProtectedActivity() {
 
             when(userType){
                 UserType.SELLER->{
-                    user= Seller(sex = user.sex, profilePath = user.profilePath)
+                    user= Seller(sex = user.sex, profilePath = user.profilePath, company = MyApplication.getInstance().company)
                     if(userExtra != null){
                         userExtra!!.sex= user.sex
                         userExtra!!.profilePath= user.profilePath
@@ -266,7 +266,7 @@ class AdminPersonalInfoActivity : ProtectedActivity() {
                     }
                 }
                 UserType.ADMIN->{
-                    user= Admin(sex = user.sex, profilePath = user.profilePath)
+                    user= Admin(sex = user.sex, profilePath = user.profilePath, company = MyApplication.getInstance().company)
                     if(userExtra != null){
                         userExtra!!.sex= user.sex
                         userExtra!!.profilePath= user.profilePath
@@ -287,12 +287,14 @@ class AdminPersonalInfoActivity : ProtectedActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
         super.onActivityResult(requestCode, resultCode, data)
+
         if (resultCode == RESULT_OK) {
             if(requestCode == ImageSelectorActivity.REQUEST_IMAGE){
                 val images = data?.getSerializableExtra(ImageSelectorActivity.REQUEST_OUTPUT) as ArrayList<String>
                 user.profilePath= images[0]
-                glide(this, user.profilePath, imgProfile, R.drawable.background_gray, R.drawable.woman_icon)
+                glide(this, user.profilePath, imgProfile, R.drawable.background_gray, getProfileImage(user))
 
             }
             if (requestCode === WorldWidePhoneNumberEditText.REQUEST_CODE) {

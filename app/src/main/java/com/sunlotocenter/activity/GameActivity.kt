@@ -18,24 +18,15 @@ import com.sunlotocenter.adapter.TabsPagerAdapter
 import com.sunlotocenter.listener.AddGameListener
 import kotlinx.android.synthetic.main.activity_game.*
 import java.util.*
-import androidx.recyclerview.widget.DividerItemDecoration
-import com.github.zawadz88.materialpopupmenu.popupMenu
 import com.sunlotocenter.MyApplication
-import com.sunlotocenter.activity.admin.AdminPersonalInfoActivity
+import com.sunlotocenter.R
 import com.sunlotocenter.adapter.GameScheduleSessionAdapter
 import com.sunlotocenter.dao.*
 import com.sunlotocenter.extensions.enableHome
-import com.sunlotocenter.extensions.gameTypes
 import com.sunlotocenter.model.GameViewModel
-import com.sunlotocenter.model.UserViewModel
-import com.sunlotocenter.utils.ClickListener
-import com.sunlotocenter.utils.DialogType
-import com.sunlotocenter.utils.DividerItemDecorator
-import com.sunlotocenter.utils.randomWithNDigits
+import com.sunlotocenter.utils.*
 import kotlinx.android.synthetic.main.bottom_game_schedule_layout.view.*
 import org.michaelbel.bottomsheet.BottomSheet
-import java.util.stream.Collector
-import java.util.stream.Collectors
 import kotlin.collections.ArrayList
 import kotlin.math.ceil
 
@@ -61,6 +52,7 @@ class GameActivity : ProtectedActivity(),
         super.onCreate(savedInstanceState)
         enableHome(toolbar)
         manageTabs()
+
 
         gameViewModel= ViewModelProvider(this, SavedStateViewModelFactory(application, this))
             .get(GameViewModel::class.java)
@@ -97,9 +89,18 @@ class GameActivity : ProtectedActivity(),
         observe()
         btnTotalPreview.setOnClickListener {
             dialog.show()
-            gameViewModel.getAllActiveGameSchedules()
+            gameViewModel.getAllActiveGameSchedules(MyApplication.getInstance().company.sequence!!.id!!)
+        }
+        //If we copy a recepit let's fill
+        fillCopiedReceipt()
+    }
+
+    private fun fillCopiedReceipt() {
+        (intent.getSerializableExtra(COPIED_GAME_LIST) as ArrayList<Game>?)?.forEach {
+            addGame(it)
         }
     }
+
     private fun showMenu(schedules: List<GameSchedule>) {
         val bottomLayout= LayoutInflater.from(this).inflate(R.layout.bottom_game_schedule_layout, null)
 
@@ -124,8 +125,8 @@ class GameActivity : ProtectedActivity(),
     }
 
     private fun submitSlot(gameSet: TreeSet<Game>) {
+
         if (gameSet.isEmpty() || selectedGameScheduleSession== null)return
-        dialog.show()
 
         val filteredGame= filteredGame(gameSet);
 
@@ -136,10 +137,12 @@ class GameActivity : ProtectedActivity(),
             Sequence(),
             MyApplication.getInstance().connectedUser,
             selectedGameScheduleSession!!.gameSchedule.type!!,
-            selectedGameScheduleSession!!.gameSession, randomWithNDigits(10),
-            true, SlotStatus.ACTIVE,
-            null, total)
-        gameViewModel.play(slot)
+            selectedGameScheduleSession!!.gameSession,
+            randomWithNDigits(10),
+            SlotStatus.ACTIVE,
+            null, total, company = MyApplication.getInstance().company)
+
+        startActivity(Intent(this, ReceiptReviewActivity::class.java).putExtra(SLOT_EXTRA, slot))
     }
 
     private fun observe() {

@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.sunlotocenter.activity.R
+import com.sunlotocenter.R
 import com.sunlotocenter.dao.Borlet
 import com.sunlotocenter.dao.Game
 import kotlinx.android.synthetic.main.game_row_layout.view.*

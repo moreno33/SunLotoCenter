@@ -19,32 +19,35 @@ interface GameApi {
     @POST("/prices")
     fun saveGamePrice(@Body gamePrice: GamePrice): Call<Response<GamePrice>>
 
-    @GET("/schedules/{page}")
-    fun getSchedules(@Path("page") page:Int): Call<Response<ArrayList<GameSchedule>>>
+    @GET("/schedules/{company}/{page}")
+    fun getSchedules(@Path("company") company: Long, @Path("page") page:Int): Call<Response<ArrayList<GameSchedule>>>
 
-    @GET("/schedules")
-    fun getAllSchedules(): Call<Response<ArrayList<GameSchedule>>>
+    @GET("/schedules/{company}")
+    fun getAllSchedules(@Path("company") company: Long): Call<Response<ArrayList<GameSchedule>>>
 
-    @GET("/schedules/active")
-    fun getAllActiveSchedules(): Call<Response<ArrayList<GameSchedule>>>
+    @GET("/schedules/active/{company}")
+    fun getAllActiveSchedules(@Path("company") company: Long): Call<Response<ArrayList<GameSchedule>>>
 
-    @GET("/prices")
-    fun getGamePrice(): Call<Response<GamePrice>>
+    @GET("/prices/{company}")
+    fun getGamePrice(@Path("company") company: Long): Call<Response<GamePrice>>
 
-    @GET("/alerts/blocks")
-    fun getGameArletAndBlock(): Call<Response<GameAlertAndBlock>>
+    @GET("/alerts/blocks/{company}")
+    fun getGameArletAndBlock(@Path("company") company: Long): Call<Response<GameAlertAndBlock>>
 
     @POST("/alerts/blocks")
     fun saveGameAlertAndBlock(@Body gameAlertAndBlock: GameAlertAndBlock): Call<Response<GameAlertAndBlock>>
 
-    @GET("/blocks/{page}")
-    fun getBlockedGames(@Path("page") page: Int): Call<Response<ArrayList<BlockedGame>>>
+    @GET("/blocks/{company}/{page}")
+    fun getBlockedGames(@Path("company") company: Long,
+                        @Path("page") page: Int):
+            Call<Response<ArrayList<BlockedGame>>>
 
     @POST("/blocks")
     fun saveBlockedGame(@Body blockedGame: BlockedGame, @HeaderMap headers: HashMap<String, String>): Call<Response<BlockedGame>>
 
-    @GET("/reports/{page}/{type}/{start}/{end}")
-    fun getReports(@Path("page") page: Int,  @Path("type") type: GameType,
+    @GET("/reports/{company}/{page}/{type}/{start}/{end}")
+    fun getReports(@Path("company") company: Long,
+                   @Path("page") page: Int,  @Path("type") type: GameType,
                    @Path("start") start: String?,
                    @Path("end") end: String?): Call<Response<ArrayList<Report>>>
 
@@ -68,7 +71,11 @@ interface GameApi {
             Call<Response<ArrayList<Slot>>>
 
 
-
     @POST("/results")
     fun saveGameResult(@Body gameResult: GameResult, @HeaderMap headers: HashMap<String, String>): Call<Response<GameResult>>
+
+    @GET("/results/for/{type}/{session}")
+    fun getResultFor(@Path("type") type: GameType, @Path("session") session: GameSession): Call<Response<GameResult>>
+
+
 }

@@ -12,7 +12,7 @@ import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
 import com.sunlotocenter.MyApplication
 import com.sunlotocenter.activity.ProtectedActivity
-import com.sunlotocenter.activity.R
+import com.sunlotocenter.R
 import com.sunlotocenter.dao.*
 import com.sunlotocenter.extensions.enableHome
 import com.sunlotocenter.extensions.gameTypes
@@ -190,7 +190,7 @@ class GameScheduleActivity : ProtectedActivity() {
 
     private fun submit() {
         if(form.isValid()){
-            gameSchedule= GameSchedule(sequence = Sequence(), author = MyApplication.getInstance().connectedUser!!)
+            gameSchedule= GameSchedule(sequence = Sequence(), author = MyApplication.getInstance().connectedUser!!, company = MyApplication.getInstance().company)
             if(gameExtra!= null){
                 ModelMapper().map(gameExtra, gameSchedule)
             }

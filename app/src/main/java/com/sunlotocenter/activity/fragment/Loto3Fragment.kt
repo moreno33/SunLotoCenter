@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.sunlotocenter.activity.R
+import com.sunlotocenter.R
 import com.sunlotocenter.dao.Loto3
 import com.sunlotocenter.listener.AddGameListener
 import com.sunlotocenter.validator.Form

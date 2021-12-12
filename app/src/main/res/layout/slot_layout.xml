@@ -25,15 +25,13 @@
         </androidx.recyclerview.widget.RecyclerView>
 
         <ImageView
-            android:id="@+id/imageView7"
+            android:id="@+id/imgCopy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="16dp"
-            android:paddingEnd="16dp"
-            android:paddingBottom="16dp"
+            android:padding="16dp"
+            android:src="@drawable/content_copy_black_16"
             app:layout_constraintEnd_toEndOf="@id/rclSlotRow"
-            app:layout_constraintTop_toTopOf="@id/rclSlotRow"
-            android:src="@drawable/content_copy_black_24" />
+            app:layout_constraintTop_toTopOf="@id/rclSlotRow" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>

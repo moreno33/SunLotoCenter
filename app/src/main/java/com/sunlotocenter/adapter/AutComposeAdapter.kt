@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.sunlotocenter.activity.R
+import com.sunlotocenter.R
 import com.sunlotocenter.dao.Game
 import kotlinx.android.synthetic.main.compose_row_layout.view.edxAmount
 import kotlinx.android.synthetic.main.compose_row_layout.view.edxNumber

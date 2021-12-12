@@ -8,23 +8,26 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.sunlotocenter.MyApplication
 import com.sunlotocenter.activity.ProtectedActivity
-import com.sunlotocenter.activity.R
+import com.sunlotocenter.R
 import com.sunlotocenter.adapter.BlameAdapter
 import com.sunlotocenter.dao.Blame
+import com.sunlotocenter.dao.Response
 import com.sunlotocenter.dao.User
 import com.sunlotocenter.extensions.enableHome
 import com.sunlotocenter.listener.LoadMoreListener
 import com.sunlotocenter.model.UserViewModel
-import com.sunlotocenter.utils.DividerItemDecorator
-import com.sunlotocenter.utils.REFRESH_REQUEST_CODE
-import com.sunlotocenter.utils.USER_EXTRA
+import com.sunlotocenter.utils.*
+import kotlinx.android.synthetic.main.activity_blame.*
 import kotlinx.android.synthetic.main.activity_blame_list.*
+import kotlinx.android.synthetic.main.activity_blame_list.edxMessage
 import kotlinx.android.synthetic.main.activity_blame_list.progressBar
 import kotlinx.android.synthetic.main.activity_blame_list.swpLayout
 import kotlinx.android.synthetic.main.activity_blame_list.toolbar
 import kotlinx.android.synthetic.main.activity_blame_list.txtInfo
 import kotlinx.android.synthetic.main.activity_employee_list.*
+import kotlinx.android.synthetic.main.blame_layout.*
 
 class BlameListActivity :
     ProtectedActivity(),
@@ -54,15 +57,24 @@ class BlameListActivity :
             userViewModel.loadSaveState()
         }
         setUpAdapter()
-        btnAdd.setOnClickListener {
-            startActivityForResult(Intent(this, BlameActivity::class.java).putExtra(USER_EXTRA, userExtra), REFRESH_REQUEST_CODE)
-        }
         userViewModel.loadBlamesForUser(true, userExtra!!.sequence.id!!)
 
         swpLayout.isRefreshing= true
         swpLayout.setOnRefreshListener {
             userViewModel.loadBlamesForUser(true, userExtra!!.sequence.id!!)
         }
+
+        imgSubmit.setOnClickListener {
+            if(edxMessage.text.trim().isNotEmpty()){
+                submit(edxMessage.text.toString())
+            }
+        }
+    }
+
+    private fun submit(text: String) {
+        dialog.show()
+        edxMessage.text.clear()
+        userViewModel.addBlame(Blame(null, userExtra!!, MyApplication.getInstance().connectedUser, text))
     }
 
     private fun setUpAdapter() {
@@ -93,6 +105,41 @@ class BlameListActivity :
                 progressBar.progressiveStop()
                 swpLayout.isRefreshing= false
             })
+
+        userViewModel.blameData.observe(this,
+            {
+                blameListener(it)
+            })
+    }
+
+    private fun blameListener(it: Response<Blame>?) {
+        dialog.dismiss()
+        if(it== null){
+            showDialog(this,
+                getString(R.string.internet_error_title),
+                getString(
+                    R.string.internet_error_message
+                ),
+                getString(R.string.ok),
+                object : ClickListener {
+                    override fun onClick(): Boolean {
+                        return false
+                    }
+
+                }, true, DialogType.ERROR)
+        }else{
+            showDialog(this,
+                getString(R.string.success_title),
+                getString(R.string.blame_susccess_message),
+                getString(R.string.ok),
+                object : ClickListener {
+                    override fun onClick(): Boolean {
+                        userViewModel.loadBlamesForUser(true, userExtra!!.sequence.id!!)
+                        return false
+                    }
+
+                }, false, DialogType.SUCCESS)
+        }
     }
 
     private fun addBlames(blames: ArrayList<Blame>) {
@@ -132,11 +179,4 @@ class BlameListActivity :
         progressBar.progressiveStart()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode== REFRESH_REQUEST_CODE && resultCode== Activity.RESULT_OK){
-            userViewModel.loadBlamesForUser(true, userExtra!!.sequence.id!!)
-            setResult(Activity.RESULT_OK, Intent())
-        }
-    }
 }

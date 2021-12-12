@@ -5,6 +5,7 @@ import android.view.View
 import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
 import com.sunlotocenter.MyApplication
+import com.sunlotocenter.R
 import com.sunlotocenter.activity.admin.AdminPersonalInfoActivity
 import com.sunlotocenter.dao.Response
 import com.sunlotocenter.dao.User
@@ -155,6 +156,7 @@ class ChangePasswordActivity : ProtectedActivity() {
                 getString(R.string.ok),
                 object : ClickListener {
                     override fun onClick(): Boolean {
+                        setResult(RESULT_OK)
                         finish()
                         return false
                     }

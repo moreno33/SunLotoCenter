@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.sunlotocenter.activity.R
+import com.sunlotocenter.R
 import kotlinx.android.synthetic.main.valid_error_layout.view.*
 
 class ErrorAdapter (var errors: ArrayList<String>) : RecyclerView.Adapter<ErrorAdapter.CustomVH>() {

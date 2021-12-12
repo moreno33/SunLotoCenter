@@ -3,23 +3,23 @@ package com.sunlotocenter.dao
 import org.joda.time.DateTime
 
 class Seller(
-     id:Long=-1,
+     id:Long?= null,
      sequence: Sequence= Sequence(),
-     firstName:String="",
-     lastName: String="",
+     firstName:String?= null,
+     lastName: String?= null,
      phoneNumber:PhoneNumber?= null,
-     address:String="",
-     city:String="",
-     password:String="",
-     profilePath:String= "",
-     createdDateTime: DateTime = DateTime(),
-     updatedDateTime: DateTime = DateTime(),
+     address:String?= null,
+     city:String?= null,
+     password:String?= null,
+     profilePath:String?= null,
+     createdDateTime: DateTime ?= null,
+     updatedDateTime: DateTime?= null,
      status: UserStatus= UserStatus.ACTIVE,
-     current: Boolean= true,
-     accountNumber: String= "",
-     fcmTopic: String= "",
-     sex: Sex= Sex.MALE,
-     actor: User?= null
+     accountNumber: String?= null,
+     fcmTopic: String?= null,
+     sex: Sex ?= null,
+     actor: User?= null,
+     company: Company?= null
 ):
 User(id,
     sequence,
@@ -33,9 +33,7 @@ User(id,
     createdDateTime,
     updatedDateTime,
     status,
-    current,
     accountNumber,
     fcmTopic,
     sex,
-    actor
-)
+    actor, company = company)

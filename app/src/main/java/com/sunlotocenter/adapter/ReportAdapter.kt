@@ -7,13 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.sunlotocenter.activity.R
+import com.sunlotocenter.R
 import com.sunlotocenter.activity.SlotListActivity
 import com.sunlotocenter.dao.GameSession
 import com.sunlotocenter.dao.Report
 import com.sunlotocenter.utils.*
-import kotlinx.android.synthetic.main.activity_admin_dashboard.*
-import kotlinx.android.synthetic.main.employee_layout.view.*
 import kotlinx.android.synthetic.main.report_layout.view.*
 
 class ReportAdapter(var reports: ArrayList<Report>) : RecyclerView.Adapter<ReportAdapter.CustomViewHolder>() {

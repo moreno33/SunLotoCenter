@@ -9,7 +9,6 @@ class Bank(sequence: Sequence= Sequence(),
            var address:String?= null,
            var city:String?= null,
            var author: User?= null,
-           var current: Boolean= true,
-           var worker: User?= null):
-    Entity(sequence = sequence),
+           var worker: User?= null, company: Company):
+    Entity(sequence = sequence, company = company),
     Serializable

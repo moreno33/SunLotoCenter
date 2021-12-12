@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.sunlotocenter.activity.R
+import com.sunlotocenter.R
 import com.sunlotocenter.activity.admin.ResultActivity
 import com.sunlotocenter.dto.Result
 import com.sunlotocenter.utils.*
@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.result_header_layout.view.*
 import kotlinx.android.synthetic.main.result_layout.view.*
 import kotlinx.android.synthetic.main.result_layout.view.txtDateMorning
 import kotlinx.android.synthetic.main.result_layout.view.txtDateNight
+import org.joda.time.DateTimeZone
 
 class ResultListAdapter(var results: ArrayList<Result>) :
     RecyclerView.Adapter<ResultListAdapter.CustomViewHolder>() {
@@ -47,12 +48,12 @@ class ResultListAdapter(var results: ArrayList<Result>) :
             holder.txtLo1Morning.text= result.morning?.lo1?:"-"
             holder.txtLo2Morning.text= result.morning?.lo2?:"-"
             holder.txtLo3Morning.text= result.morning?.  lo3?:"-"
-            holder.txtDateMorning.text= result.morning?.let{ getDateString(result.morning!!.resultDate!!)}?:"-"
+            holder.txtDateMorning.text= result.morning?.let{ getDateString(result.morning!!.resultDate!!, DateTimeZone.forID("America/New_York")) }?:"-"
 
             holder.txtLo1Night.text= result.night?.lo1?:"-"
             holder.txtLo2Night.text= result.night?.lo2?:"-"
             holder.txtLo3Night.text= result.night?.lo3?:"-"
-            holder.txtDateNight.text= result.morning?.let{ getDateString(result.morning!!.resultDate!!)}?:"-"
+            holder.txtDateNight.text= result.night?.let{ getDateString(result.night!!.resultDate!!, DateTimeZone.forID("America/New_York")) }?:"-"
         }
     }
 

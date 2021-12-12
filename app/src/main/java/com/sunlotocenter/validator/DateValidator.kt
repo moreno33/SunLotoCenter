@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat
 
 class DateValidator (errMsg: String): MyValidator(errMsg) {
     override fun isValid(): Boolean {
+        if(editText.text.isEmpty()) return  true
         return try {
             //If there is no exeception, it's fine
             DateTime.parse(editText.text, DateTimeFormat.forPattern("dd-MM-yyyy"))

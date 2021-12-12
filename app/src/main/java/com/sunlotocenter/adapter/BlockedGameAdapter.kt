@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.github.zawadz88.materialpopupmenu.popupMenu
 import com.sunlotocenter.activity.ChangePasswordActivity
-import com.sunlotocenter.activity.R
+import com.sunlotocenter.R
 import com.sunlotocenter.dao.*
 import com.sunlotocenter.extensions.gameTypes
 import com.sunlotocenter.utils.USER_EXTRA

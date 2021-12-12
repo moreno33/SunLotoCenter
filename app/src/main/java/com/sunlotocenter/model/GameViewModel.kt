@@ -3,6 +3,7 @@ package com.sunlotocenter.model
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.sunlotocenter.adapter.GameScheduleSessionAdapter
 import com.sunlotocenter.dao.*
 import com.sunlotocenter.dao.Report
 import com.sunlotocenter.dto.Result
@@ -44,8 +45,9 @@ class GameViewModel (private val savedStateHandle: SavedStateHandle) : ViewModel
     var gameResultData= MutableLiveData<Response<GameResult>>()
 
 
-    fun getGamePrice(){
-        gameApi.getGamePrice().enqueue(object : Callback<Response<GamePrice>>{
+    fun getGamePrice(company: Long){
+
+        gameApi.getGamePrice(company).enqueue(object : Callback<Response<GamePrice>>{
             override fun onResponse(
                 call: Call<Response<GamePrice>>,
                 response: retrofit2.Response<Response<GamePrice>>
@@ -60,8 +62,9 @@ class GameViewModel (private val savedStateHandle: SavedStateHandle) : ViewModel
         })
     }
 
-    fun getGameAlertAndBlock(){
-        gameApi.getGameArletAndBlock().enqueue(object : Callback<Response<GameAlertAndBlock>>{
+    fun getGameAlertAndBlock(company: Long){
+
+        gameApi.getGameArletAndBlock(company).enqueue(object : Callback<Response<GameAlertAndBlock>>{
             override fun onResponse(
                 call: Call<Response<GameAlertAndBlock>>,
                 response: retrofit2.Response<Response<GameAlertAndBlock>>
@@ -76,8 +79,9 @@ class GameViewModel (private val savedStateHandle: SavedStateHandle) : ViewModel
         })
     }
 
-    fun getAllGameSchedules(){
-        gameApi.getAllSchedules().enqueue(object : Callback<Response<ArrayList<GameSchedule>>>{
+    fun getAllGameSchedules(company: Long){
+
+        gameApi.getAllSchedules(company).enqueue(object : Callback<Response<ArrayList<GameSchedule>>>{
             override fun onResponse(
                 call: Call<Response<ArrayList<GameSchedule>>>,
                 response: retrofit2.Response<Response<ArrayList<GameSchedule>>>
@@ -96,8 +100,9 @@ class GameViewModel (private val savedStateHandle: SavedStateHandle) : ViewModel
         })
     }
 
-    fun getAllActiveGameSchedules(){
-        gameApi.getAllActiveSchedules().enqueue(object : Callback<Response<ArrayList<GameSchedule>>>{
+    fun getAllActiveGameSchedules(company: Long){
+
+        gameApi.getAllActiveSchedules(company).enqueue(object : Callback<Response<ArrayList<GameSchedule>>>{
             override fun onResponse(
                 call: Call<Response<ArrayList<GameSchedule>>>,
                 response: retrofit2.Response<Response<ArrayList<GameSchedule>>>
@@ -116,13 +121,13 @@ class GameViewModel (private val savedStateHandle: SavedStateHandle) : ViewModel
         })
     }
 
-    fun loadSchedules(isFirstPage: Boolean) {
+    fun loadSchedules(company: Long, isFirstPage: Boolean) {
         if(!isFirstPage)
             page++
         else
             page= 0
 
-        gameApi.getSchedules(page).enqueue(object :Callback<Response<ArrayList<GameSchedule>>>{
+        gameApi.getSchedules(company, page).enqueue(object :Callback<Response<ArrayList<GameSchedule>>>{
             override fun onResponse(
                 call: Call<Response<ArrayList<GameSchedule>>>,
                 response: retrofit2.Response<Response<ArrayList<GameSchedule>>>
@@ -141,13 +146,13 @@ class GameViewModel (private val savedStateHandle: SavedStateHandle) : ViewModel
         })
     }
 
-    fun loadBlockedGame(isFirstPage: Boolean) {
+    fun loadBlockedGame(company: Long, isFirstPage: Boolean) {
         if(!isFirstPage)
             page++
         else
             page= 0
 
-        gameApi.getBlockedGames(page).enqueue(object: Callback<Response<ArrayList<BlockedGame>>>{
+        gameApi.getBlockedGames(company, page).enqueue(object: Callback<Response<ArrayList<BlockedGame>>>{
             override fun onResponse(
                 call: Call<Response<ArrayList<BlockedGame>>>,
                 response: retrofit2.Response<Response<ArrayList<BlockedGame>>>
@@ -168,13 +173,13 @@ class GameViewModel (private val savedStateHandle: SavedStateHandle) : ViewModel
         })
     }
 
-    fun loadReports(isFirstPage: Boolean, gameType: GameType, start: String, end: String) {
+    fun loadReports(company: Long, isFirstPage: Boolean, gameType: GameType, start: String, end: String) {
         if(!isFirstPage)
             page++
         else
             page= 0
 
-        gameApi.getReports(page, gameType, start, end).enqueue(object: Callback<Response<ArrayList<Report>>>{
+        gameApi.getReports(company, page, gameType, start, end).enqueue(object: Callback<Response<ArrayList<Report>>>{
             override fun onResponse(
                 call: Call<Response<ArrayList<Report>>>,
                 response: retrofit2.Response<Response<ArrayList<Report>>>
@@ -395,6 +400,24 @@ class GameViewModel (private val savedStateHandle: SavedStateHandle) : ViewModel
                 lastAddedSlotsData.postValue(ArrayList())
             }
 
+        })
+    }
+
+    fun getResultFor(gameScheduleSession: GameScheduleSessionAdapter.GameScheduleSession) {
+        val call: Call<Response<GameResult>> = gameApi.getResultFor(gameScheduleSession.gameSchedule.type!!, gameScheduleSession.gameSession)
+        call.enqueue(object : Callback<Response<GameResult>> {
+            override fun onResponse(call: Call<Response<GameResult>>,
+                                    response: retrofit2.Response<Response<GameResult>>) {
+                if(response.code()== 200){
+                    gameResultData.value= response.body()
+                }else{
+                    gameResultData.value= null
+                }
+            }
+
+            override fun onFailure(call: Call<Response<GameResult>>, t: Throwable) {
+                gameResultData.value= null
+            }
         })
     }
 

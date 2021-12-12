@@ -5,9 +5,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.sunlotocenter.MyApplication
-import com.sunlotocenter.activity.R
 import com.sunlotocenter.dao.*
 import com.sunlotocenter.extensions.redirectToDashboard
 import com.sunlotocenter.utils.*
@@ -36,6 +34,7 @@ class UserViewModel (private val savedStateHandle: SavedStateHandle) : ViewModel
     var ACTION= ACTION_SAVE
 
     var  userResponseData= MutableLiveData<Response<User>>()
+    var  companyResponseData= MutableLiveData<Response<Company>>()
 
     fun loadEmployees(isFirstPage: Boolean) {
         if(!isFirstPage)
@@ -43,7 +42,7 @@ class UserViewModel (private val savedStateHandle: SavedStateHandle) : ViewModel
         else
             page= 0
 
-        userApi.getUsers(page).enqueue(object: Callback<Response<ArrayList<User>>>{
+        userApi.getUsers( MyApplication.getInstance().company.sequence!!.id!!, page).enqueue(object: Callback<Response<ArrayList<User>>>{
             override fun onResponse(
                 call: Call<Response<ArrayList<User>>>,
                 response: retrofit2.Response<Response<ArrayList<User>>>
@@ -94,8 +93,9 @@ class UserViewModel (private val savedStateHandle: SavedStateHandle) : ViewModel
         })
     }
 
-    fun loadSellers() {
-        userApi.getSellers().enqueue(object: Callback<Response<ArrayList<Seller>>>{
+    fun loadSellers(company: Long) {
+
+        userApi.getSellers(company).enqueue(object: Callback<Response<ArrayList<Seller>>>{
             override fun onResponse(
                 call: Call<Response<ArrayList<Seller>>>,
                 response: retrofit2.Response<Response<ArrayList<Seller>>>
@@ -128,7 +128,7 @@ class UserViewModel (private val savedStateHandle: SavedStateHandle) : ViewModel
         ACTION= ACTION_SAVE
         var profilePart: MultipartBody.Part?= null
 
-        if (user.profilePath.isNotEmpty()) {
+        if (!user.profilePath.isNullOrEmpty()) {
             if(!user.profilePath!!.contains("http")){
                 var profileFile= File(user.profilePath)
                 val reqBody= RequestBody.create(MediaType.parse(getMimeType(Uri.fromFile(profileFile).toString())), profileFile)
@@ -157,6 +157,46 @@ class UserViewModel (private val savedStateHandle: SavedStateHandle) : ViewModel
 
             override fun onFailure(call: Call<Response<User>>, t: Throwable) {
                 userResponseData.value= null
+            }
+        })
+
+    }
+
+
+    fun saveCompany(company: Company) {
+
+        ACTION= ACTION_SAVE
+        var profilePart: MultipartBody.Part?= null
+
+        if (company.profilePath!!.isNotEmpty()) {
+            if(!company.profilePath!!.contains("http")){
+                var profileFile= File(company.profilePath)
+                val reqBody= RequestBody.create(MediaType.parse(getMimeType(Uri.fromFile(profileFile).toString())), profileFile)
+                profilePart= MultipartBody.Part.createFormData("profile", profileFile.name, reqBody)
+            }
+        }
+
+        /*
+        Here we send the language of the device to the user.
+        */
+        val headers= HashMap<String, String>()
+        headers["accept-language"] = Locale.getDefault().toString()
+
+        val accountBody= RequestBody.create(MediaType.parse("application/json"), getGson().toJson(company))
+
+        val call: Call<Response<Company>> = userApi.saveCompany(profilePart, accountBody, headers)
+        call.enqueue(object : Callback<Response<Company>> {
+            override fun onResponse(call: Call<Response<Company>>,
+                                    response: retrofit2.Response<Response<Company>>) {
+                if(response.code()== 200){
+                    companyResponseData.value= response.body()
+                }else{
+                    companyResponseData.value= null
+                }
+            }
+
+            override fun onFailure(call: Call<Response<Company>>, t: Throwable) {
+                companyResponseData.value= null
             }
         })
 

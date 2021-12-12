@@ -3,6 +3,7 @@ package com.sunlotocenter;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.sunlotocenter.dao.Company;
 import com.sunlotocenter.dao.GameResult;
 import com.sunlotocenter.dao.GameSchedule;
 import com.sunlotocenter.dao.User;
@@ -22,6 +23,12 @@ public class Prefs {
      * For account
      */
     public static final String USER_PREF= "user_pref";
+
+    /**
+     * For company
+     */
+    public static final String COM_PREF= "com_pref";
+
 
     /**
      * For game schedules
@@ -83,6 +90,39 @@ public class Prefs {
             e.printStackTrace();
         }
         return user;
+    }
+
+
+    /**
+     * This helper method allows to save an company into
+     * the shared preferences
+     * @param company
+     */
+    public void setRegisteredCompany(Company company){
+
+        SharedPreferences.Editor editor= prefs.edit();
+
+        try {
+            editor.putString(COM_PREF, ObjectSerializer.serialize(company));
+            editor.apply();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This helper method allows to retrieve the company that
+     * has been saved into the shared preferences
+     * @return
+     */
+    public Company getRegisteredCompany(){
+        Company company= null;
+        try {
+            company = (Company) ObjectSerializer.deserialize(prefs.getString(COM_PREF, null));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return company;
     }
 
     /**

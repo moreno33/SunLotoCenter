@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.github.zawadz88.materialpopupmenu.popupMenu
 import com.sunlotocenter.activity.ChangePasswordActivity
-import com.sunlotocenter.activity.R
+import com.sunlotocenter.R
 import com.sunlotocenter.activity.admin.AdminPersonalInfoActivity
 import com.sunlotocenter.dao.Game
 import com.sunlotocenter.dao.User

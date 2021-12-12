@@ -1,29 +1,31 @@
 package com.sunlotocenter.dao
 
+import com.sunlotocenter.MyApplication
 import com.sunlotocenter.utils.isNotEmpty
 import org.joda.time.DateTime
+import org.joda.time.DateTimeZone
 import java.io.Serializable
 
 abstract class User (
     id: Long?= null,
     sequence: Sequence= Sequence(),
-    var firstName:String= "",
-    var lastName: String= "",
+    var firstName:String?= null,
+    var lastName: String?= null,
     var phoneNumber:PhoneNumber?= null,
-    var address:String= "",
-    var city:String= "",
-    var password:String= "",
-    var profilePath: String= "",
-    createdDateTime:DateTime= DateTime(),
-    updatedDateTime:DateTime= DateTime(),
+    var address:String?= null,
+    var city:String?= null,
+    var password:String?= null,
+    var profilePath: String?= null,
+    createdDateTime:DateTime?= null,
+    updatedDateTime:DateTime?= null,
     var status: UserStatus= UserStatus.ACTIVE,
-    var current: Boolean= true,
-    var accountNumber: String= "",
-    var fcmTopic: String= "",
-    var sex: Sex= Sex.MALE,
+    var accountNumber: String?= null,
+    var fcmTopic: String?= null,
+    var sex: Sex?= null,
     var actor: User?= null,
-    var blames:List<Blame> = ArrayList()
-): Entity(id, sequence, createdDateTime, updatedDateTime), Serializable{
+    var blames:List<Blame>?= null,
+    var fcmToken:String?= null, company: Company?= null
+): Entity(id, sequence, createdDateTime, updatedDateTime, company = company), Serializable{
     override fun toString(): String {
         return "${firstName} ${lastName}" + if(isNotEmpty(accountNumber)) "(${accountNumber})" else ""
     }

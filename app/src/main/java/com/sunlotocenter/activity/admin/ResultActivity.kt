@@ -1,7 +1,6 @@
 package com.sunlotocenter.activity.admin
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,7 +11,7 @@ import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
 import com.sunlotocenter.MyApplication
 import com.sunlotocenter.activity.ProtectedActivity
-import com.sunlotocenter.activity.R
+import com.sunlotocenter.R
 import com.sunlotocenter.dao.*
 import com.sunlotocenter.extensions.enableHome
 import com.sunlotocenter.extensions.gameSessions
@@ -108,7 +107,7 @@ class ResultActivity : ProtectedActivity() {
         resultExtra= intent.extras?.getSerializable(RESULT_EXTRA) as GameResult?
         if (resultExtra!= null){
 
-            edxDate.text= getShortDateString(DateTime.now(), DateTimeFormat.forPattern("dd-MM-yyyy"))!!
+            edxDate.text= getDateString(resultExtra?.resultDate, DateTimeFormat.forPattern("dd-MM-yyyy"), DateTimeZone.forID("America/New_York"))!!
             //Move the spinners to the right value
             gameTypes().forEachIndexed{ index, element->
                 if(element.id == resultExtra!!.type!!.id){
@@ -124,8 +123,9 @@ class ResultActivity : ProtectedActivity() {
             resultExtra?.lo2?.let{edxLo2.text= it }
             resultExtra?.lo3?.let{edxLo3.text= it }
         }else{
-            edxDate.text= getShortDateString(DateTime.now(), DateTimeFormat.forPattern("dd-MM-yyyy"))!!
+            edxDate.text= getDateString(DateTime.now(), DateTimeFormat.forPattern("dd-MM-yyyy"), DateTimeZone.forID("America/New_York"))!!
         }
+
     }
 
     private fun prepareControl() {
@@ -170,12 +170,13 @@ class ResultActivity : ProtectedActivity() {
         })
 
         //Add validator
+        edxDate.addValidator(DateValidator(getString(R.string.date_validator_error)))
         edxLo1.addValidator(LengthValidator(3, getString(R.string.length_validator_error, 3)))
         edxLo2.addValidator(LengthValidator(2, getString(R.string.length_validator_error, 2)))
         edxLo3.addValidator(LengthValidator(2, getString(R.string.length_validator_error, 2)))
 
 
-        form.addInput(edxLo1, edxLo2, edxLo3)
+        form.addInput(edxDate, edxLo1, edxLo2, edxLo3)
 
         //Fill spinners
         val typeAdapter= ArrayAdapter(this, android.R.layout.simple_spinner_item, gameTypes())
@@ -226,7 +227,7 @@ class ResultActivity : ProtectedActivity() {
 
     private fun submit() {
         if(form.isValid()){
-            result= GameResult(sequence = Sequence(), author = MyApplication.getInstance().connectedUser!!)
+            result= GameResult(sequence = Sequence(), author = MyApplication.getInstance().connectedUser!!, company = MyApplication.getInstance().company)
             if(resultExtra!= null){
                 ModelMapper().map(resultExtra, result)
             }
@@ -236,8 +237,7 @@ class ResultActivity : ProtectedActivity() {
             result?.lo2= edxLo2.text
             result?.lo3= edxLo3.text
             result?.author= MyApplication.getInstance().connectedUser
-            result?.resultDate= DateTime.parse(edxText.text.toString(), DateTimeFormat.forPattern("dd-MM-yyyy")).withZone(
-                DateTimeZone.getDefault())
+            result?.resultDate= DateTime.parse(edxText.text.toString(), DateTimeFormat.forPattern("dd-MM-yyyy")).withZone(DateTimeZone.forID("America/New_York"))
 
             dialog.show()
             gameViewModel.saveGameResult(result!!)

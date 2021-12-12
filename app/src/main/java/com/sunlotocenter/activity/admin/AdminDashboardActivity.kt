@@ -12,6 +12,7 @@ import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sunlotocenter.MyApplication
+import com.sunlotocenter.R
 import com.sunlotocenter.activity.*
 import com.sunlotocenter.adapter.GameScheduleSessionAdapter
 import com.sunlotocenter.dao.*
@@ -37,7 +38,6 @@ class AdminDashboardActivity : ProtectedActivity(), GameScheduleSessionAdapter.G
         setSupportActionBar(toolbar)
         gameViewModel= ViewModelProvider(this, SavedStateViewModelFactory(application, this))
             .get(GameViewModel::class.java)
-        loadScreen()
 
         manageClick(mapOf(Pair(clEmployees, EmployeeListActivity::class.java),
             Pair(clReports, AdminReportActivity::class.java),
@@ -51,9 +51,14 @@ class AdminDashboardActivity : ProtectedActivity(), GameScheduleSessionAdapter.G
         }
         btnGame.setOnClickListener {
             dialog.show()
-            gameViewModel.getAllGameSchedules()
+            gameViewModel.getAllGameSchedules(MyApplication.getInstance().company.sequence!!.id!!)
         }
         observe()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadScreen()
     }
 
     private fun observe() {
@@ -61,6 +66,14 @@ class AdminDashboardActivity : ProtectedActivity(), GameScheduleSessionAdapter.G
             dialog.dismiss()
             runOnUiThread {
                 showMenu(schedules)
+            }
+        })
+
+        gameViewModel.gameResultData.observe(this, {resultData ->
+            dialog.dismiss()
+            runOnUiThread {
+                if(resultData== null)loadLot(null)
+                else loadLot(resultData.data)
             }
         })
     }
@@ -93,8 +106,14 @@ class AdminDashboardActivity : ProtectedActivity(), GameScheduleSessionAdapter.G
 
         txtName.text= "${MyApplication.getInstance().connectedUser.firstName} ${MyApplication.getInstance().connectedUser.lastName}"
         txtPosition.text= UserType.ADMIN.id
-        if(MyApplication.getInstance().gameResult!= null){
-            val gameResult= MyApplication.getInstance().gameResult
+
+        val gameResult= MyApplication.getInstance().gameResult
+        loadLot(gameResult)
+    }
+
+    private fun loadLot(gameResult: GameResult?) {
+        if(gameResult!= null){
+
             txtFirst.text= gameResult.lo1
             txtSecond.text= gameResult.lo2
             txtThird.text= gameResult.lo3
@@ -135,15 +154,6 @@ class AdminDashboardActivity : ProtectedActivity(), GameScheduleSessionAdapter.G
         val menuInflater= menuInflater
         menuInflater.inflate(R.menu.mn_admin_dashboard, menu)
 
-//        val view= menu?.findItem(R.id.mnNotification)?.actionView
-
-//        actionViewnotificationBadge= view
-//
-//        initializeBottomViewNavigation()
-//
-//        view?.setOnClickListener {
-//            startActivity(Intent(this, AdminNotificationListActivity::class.java))
-//        }
         return true
     }
 
@@ -168,9 +178,11 @@ class AdminDashboardActivity : ProtectedActivity(), GameScheduleSessionAdapter.G
     }
 
     override fun onClick(gameScheduleSession: GameScheduleSessionAdapter.GameScheduleSession) {
+        dialog.show()
         this.selectedGameScheduleSession= gameScheduleSession
         txtGame.text= gameScheduleSession.gameSchedule.type?.id
         displayGameSessionImage(gameScheduleSession.gameSession)
+        gameViewModel.getResultFor(this.selectedGameScheduleSession!!)
     }
 
     private fun displayGameSessionImage(gameSession: GameSession?) {

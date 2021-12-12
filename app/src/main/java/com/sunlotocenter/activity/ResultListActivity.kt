@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter
 import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.sunlotocenter.R
 import com.sunlotocenter.activity.admin.ResultActivity
 import com.sunlotocenter.adapter.ResultListAdapter
 import com.sunlotocenter.dao.GameType
@@ -23,8 +24,14 @@ import com.sunlotocenter.model.GameViewModel
 import com.sunlotocenter.utils.REFRESH_REQUEST_CODE
 import com.sunlotocenter.validator.DateValidator
 import com.sunlotocenter.validator.Form
+import kotlinx.android.synthetic.main.activity_admin_report.*
 import kotlinx.android.synthetic.main.activity_result_list.*
+import kotlinx.android.synthetic.main.activity_result_list.edxFrom
+import kotlinx.android.synthetic.main.activity_result_list.edxTo
+import kotlinx.android.synthetic.main.activity_result_list.progressBar
+import kotlinx.android.synthetic.main.activity_result_list.spnType
 import kotlinx.android.synthetic.main.activity_result_list.toolbar
+import kotlinx.android.synthetic.main.activity_result_list.txtInfo
 
 class ResultListActivity : ProtectedActivity(),
     LoadMoreListener.OnLoadMoreListener{
@@ -79,6 +86,8 @@ class ResultListActivity : ProtectedActivity(),
                 }else if(s.length>= 5 && before== 0 && !s.substring(3).contains("-")){
                     edxFrom.text= "${s.substring(0,5)}-${s.substring(5)}"
                     edxFrom.setSelection(edxFrom.text.length)
+                }else if(edxFrom.text.isEmpty() && edxTo.text.isEmpty()){
+                    gameType?.let { gameViewModel.loadResults(true, it, "", "") }
                 }
                 if(s.length== 10){
                     if(edxTo.text.length== 10 && form.isValid()){
@@ -106,6 +115,8 @@ class ResultListActivity : ProtectedActivity(),
                 }else if(s.length>= 5 && before== 0 && !s.substring(3).contains("-")){
                     edxTo.text= "${s.substring(0,5)}-${s.substring(5)}"
                     edxTo.setSelection(edxTo.text.length)
+                }else if(edxFrom.text.isEmpty() && edxTo.text.isEmpty()){
+                    gameType?.let { gameViewModel.loadResults(true, it, "", "") }
                 }
                 if(s.length== 10){
                     if(edxFrom.text.length== 10 && form.isValid()){

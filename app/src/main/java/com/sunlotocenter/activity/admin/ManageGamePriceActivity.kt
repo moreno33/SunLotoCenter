@@ -5,7 +5,7 @@ import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
 import com.sunlotocenter.MyApplication
 import com.sunlotocenter.activity.ProtectedActivity
-import com.sunlotocenter.activity.R
+import com.sunlotocenter.R
 import com.sunlotocenter.dao.GamePrice
 import com.sunlotocenter.dao.GameSchedule
 import com.sunlotocenter.extensions.enableHome
@@ -43,7 +43,7 @@ class ManageGamePriceActivity : ProtectedActivity() {
         }
 
         dialog.show()
-        gameViewModel.getGamePrice()
+        gameViewModel.getGamePrice(MyApplication.getInstance().company.sequence!!.id!!)
 
         addValidator()
         observe()
@@ -64,7 +64,7 @@ class ManageGamePriceActivity : ProtectedActivity() {
 
     private fun submit() {
         if(form.isValid()){
-            gamePrice= GamePrice(sequence = com.sunlotocenter.dao.Sequence(), author = MyApplication.getInstance().connectedUser)
+            gamePrice= GamePrice(sequence = com.sunlotocenter.dao.Sequence(), author = MyApplication.getInstance().connectedUser, company = MyApplication.getInstance().company)
             if(gamePriceFromServer!= null){
                 ModelMapper().map(gamePriceFromServer, gamePrice)
             }

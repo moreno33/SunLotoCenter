@@ -10,5 +10,6 @@ class GameResult(sequence: Sequence,
                  var lo1: String? = null,
                  var lo2: String? = null,
                  var lo3: String? = null,
-                 var author: User?= null
-) : Entity(sequence = sequence), Serializable
+                 var author: User?= null,
+                 company: Company
+) : Entity(sequence = sequence, company = company), Serializable

@@ -1,24 +1,26 @@
 package com.sunlotocenter.dao
 
 import org.joda.time.DateTime
+import org.joda.time.DateTimeZone
+
 //var classType: Class<out Account>? = this::class.java
 class Admin(id:Long?=null,
-    sequence: Sequence= Sequence(),
-    firstName:String="",
-    lastName: String="",
-    phoneNumber:PhoneNumber?= null,
-    address:String="",
-    city:String="",
-    password:String="",
-    profilePath:String= "",
-    createdDateTime: DateTime = DateTime(),
-    updatedDateTime: DateTime = DateTime(),
-    status: UserStatus= UserStatus.ACTIVE,
-    current: Boolean= true,
-    accountNumber: String= "",
-    fcmTopic: String= "",
-    sex: Sex= Sex.MALE,
-    actor: User?= null
+            sequence: Sequence= Sequence(),
+            firstName:String?= null,
+            lastName: String?= null,
+            phoneNumber:PhoneNumber?= null,
+            address:String?= null,
+            city:String?= null,
+            password:String?= null,
+            profilePath:String?= null,
+            createdDateTime: DateTime ?= null,
+            updatedDateTime: DateTime ?= null,
+            status: UserStatus= UserStatus.ACTIVE,
+            accountNumber: String?= null,
+            fcmTopic: String?= null,
+            sex: Sex?= null,
+            actor: User?= null,
+            company: Company?= null
 ): User(id,
     sequence,
     firstName,
@@ -31,9 +33,8 @@ class Admin(id:Long?=null,
     createdDateTime,
     updatedDateTime,
     status,
-    current,
     accountNumber,
     fcmTopic,
     sex,
-    actor
-)
+    actor,
+company = company)

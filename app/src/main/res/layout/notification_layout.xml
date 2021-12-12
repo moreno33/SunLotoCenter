@@ -14,12 +14,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/imageView"
+            android:id="@+id/imgAuthor"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
-            android:src="@drawable/woman_icon"
-            app:layout_constraintBottom_toBottomOf="@+id/txtMessage"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/txtName"
             app:riv_corner_radius="30dip"
@@ -31,10 +29,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="Sun Loto Center"
             android:textColor="@color/colorPrimary"
             android:textSize="16sp"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintStart_toEndOf="@+id/imgAuthor"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -43,8 +40,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:layout_marginEnd="16dp"
-            android:text="@string/personal_information"
             android:textColor="@color/colorPrimary"
+            android:textColorLink="@color/blue"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/txtName"
@@ -56,7 +53,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:layout_marginEnd="16dp"
-            android:text="@string/personal_information"
             android:textColor="@color/colorPrimary"
             android:textSize="10sp"
             app:layout_constraintEnd_toEndOf="parent"

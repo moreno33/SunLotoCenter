@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.activity_auto_compose.*
 import kotlinx.android.synthetic.main.activity_auto_compose.rclMarryAll
 
 import android.content.Intent
+import com.sunlotocenter.R
 import java.util.*
 
 

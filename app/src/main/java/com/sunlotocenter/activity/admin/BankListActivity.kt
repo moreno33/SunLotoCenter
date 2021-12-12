@@ -8,7 +8,7 @@ import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sunlotocenter.activity.ProtectedActivity
-import com.sunlotocenter.activity.R
+import com.sunlotocenter.R
 import com.sunlotocenter.adapter.BankListAdapter
 import com.sunlotocenter.dao.Bank
 import com.sunlotocenter.dao.Response
@@ -101,7 +101,7 @@ class BankListActivity : ProtectedActivity(),
                 t->
             if(total!= t || t.toInt()== 0){
                 total= t
-                txtTotal.text= getString(R.string.employee_total, total)
+                txtTotal.text= getString(R.string.bank_total, total)
             }
         })
 

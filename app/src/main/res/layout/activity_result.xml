@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".admin.ResultActivity">
+    tools:context=".activity.admin.ResultActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -133,6 +133,8 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:text_size="@dimen/main_text_size"
                     app:hint="@string/from"
+                    android:inputType="number"
+                    app:max_length="10"
                     app:text_color="@color/colorPrimary"
                     app:drawable_left="@drawable/av_timer_black_18"/>
 
@@ -193,11 +195,26 @@
                     android:inputType="number"
                     app:drawable_left="@drawable/gamepad_circle_outline_black_18"
                     app:hint="@string/lo3"
-                    app:layout_constraintBottom_toTopOf="@+id/btnAdd"
+                    app:layout_constraintBottom_toTopOf="@+id/textView2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:max_length="2"
                     app:text_size="@dimen/main_text_size" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center"
+                    android:text="@string/est_time_remark"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/main_text_size"
+                    app:layout_constraintBottom_toTopOf="@id/btnAdd"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
                 <life.sabujak.roundedbutton.RoundedButton
                     android:id="@+id/btnAdd"

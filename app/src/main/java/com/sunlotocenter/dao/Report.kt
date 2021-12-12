@@ -16,8 +16,7 @@ class Report(sequence: Sequence,
              var winMorning: Double? = null,
              var totalNight: Double? = null,
              var winNight: Double? = null,
-             var current:Boolean= true,
-             var type: GameType): Entity(sequence = sequence) {
+             var type: GameType, company: Company): Entity(sequence = sequence, company = company) {
     fun addSlot(slot: Slot) {
         slots.add(slot)
     }

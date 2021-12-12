@@ -14,7 +14,7 @@ import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
 import com.sunlotocenter.MyApplication
 import com.sunlotocenter.activity.ProtectedActivity
-import com.sunlotocenter.activity.R
+import com.sunlotocenter.R
 import com.sunlotocenter.dao.*
 import com.sunlotocenter.extensions.enableHome
 import com.sunlotocenter.model.BankViewModel
@@ -41,7 +41,7 @@ class CreateBankActivity: ProtectedActivity() {
 
     private lateinit var bankViewModel: BankViewModel
     private lateinit var userViewModel: UserViewModel
-    private var bank: Bank= Bank()
+    private var bank: Bank= Bank(company = MyApplication.getInstance().company)
     var bankExtra: Bank?= null
     var selectedWorker: User?= null
     private var selectedProfilePath:String?= null
@@ -59,7 +59,7 @@ class CreateBankActivity: ProtectedActivity() {
 
         userViewModel= ViewModelProvider(this, SavedStateViewModelFactory(application, this))
             .get(UserViewModel::class.java)
-        userViewModel.loadSellers()
+        userViewModel.loadSellers(MyApplication.getInstance().company.sequence!!.id!!)
 
         prepareControl()
         observe()
@@ -127,7 +127,7 @@ class CreateBankActivity: ProtectedActivity() {
                 val sellerArray= arrayOfNulls<Seller>(employees.size)
                 val sellers= employees as ArrayList<Seller>
 
-                sellers.add(0, Seller(firstName = getString(R.string.choose_a_seller)))
+                sellers.add(0, Seller(firstName = getString(R.string.choose_a_seller), company = MyApplication.getInstance().company))
 
                 val sellerAdapter= ArrayAdapter<Seller>(this, android.R.layout.simple_spinner_dropdown_item,
                     sellers.toArray(sellerArray))
@@ -135,7 +135,7 @@ class CreateBankActivity: ProtectedActivity() {
                 spnWorker.adapter= sellerAdapter
                 spnWorker.setTitle(getString(R.string.seller))
                 spnWorker.setPositiveButton(getString(R.string.ok))
-                if(bankExtra!= null){
+                if(bankExtra!= null && bankExtra!!.worker!= null){
                     sellers.forEachIndexed { index, seller ->
                         if(bankExtra!!.worker!!.sequence.id== seller.sequence.id){
                             spnWorker.setSelection(index)
@@ -229,33 +229,35 @@ class CreateBankActivity: ProtectedActivity() {
 
     private fun submit() {
         if(form.isValid()){
-            if(selectedWorker== null){
-                showDialog(this, getString(R.string.internet_error_title),
-                    getString(R.string.choose_a_seller),
-                    getString(R.string.ok),
-                object :ClickListener{
-                    override fun onClick(): Boolean {
-                        return false
-                    }
+//            if(selectedWorker== null){
+//                showDialog(this, getString(R.string.internet_error_title),
+//                    getString(R.string.choose_a_seller),
+//                    getString(R.string.ok),
+//                object :ClickListener{
+//                    override fun onClick(): Boolean {
+//                        return false
+//                    }
+//
+//                }, false, DialogType.ERROR)
+//            }else{
+//
+//            }
 
-                }, false, DialogType.ERROR)
-            }else{
-                if(bankExtra != null)
-                    ModelMapper().map(bankExtra, bank)
-                bank.apply {
-                    name = edxName.text.trim()
-                    code = edxCode.text.trim()
-                    address = edxAddress.text.trim()
-                    city = edxCity.text.trim()
-                    author= MyApplication.getInstance().connectedUser
-                    worker= selectedWorker
-                }
-                if(selectedProfilePath!= null)
-                    bank.profilePath= selectedProfilePath
-
-                dialog.show()
-                bankViewModel.save(bank)
+            if(bankExtra != null)
+                ModelMapper().map(bankExtra, bank)
+            bank.apply {
+                name = edxName.text.trim()
+                code = edxCode.text.trim()
+                address = edxAddress.text.trim()
+                city = edxCity.text.trim()
+                author= MyApplication.getInstance().connectedUser
+                worker= selectedWorker
             }
+            if(selectedProfilePath!= null)
+                bank.profilePath= selectedProfilePath
+
+            dialog.show()
+            bankViewModel.save(bank)
         }
     }
 

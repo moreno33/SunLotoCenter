@@ -52,6 +52,7 @@ class ConfigurationService : IntentService(TAG) {
                             updateUserInfo(configuration.connectedUser)
                             updateGameSchedules(configuration.gameSchedules)
                             updateLatestResult(configuration.latestGameResult)
+                            updateCompany(configuration.company)
                         }
                     }
                 }
@@ -69,18 +70,23 @@ class ConfigurationService : IntentService(TAG) {
         })
     }
 
-    private fun updateLatestResult(gameResult: GameResult) {
+    private fun updateCompany(company: Company?) {
+        MyApplication.getInstance().company= company
+    }
+
+    private fun updateLatestResult(gameResult: GameResult?) {
         MyApplication.getInstance().gameResult= gameResult
     }
 
-    private fun updateGameSchedules(gameSchedules: ArrayList<GameSchedule>) {
+    private fun updateGameSchedules(gameSchedules: ArrayList<GameSchedule>?) {
         MyApplication.getInstance().gameSchedules= gameSchedules
     }
 
-    private fun updateUserInfo(connectedUser: User) {
+    private fun updateUserInfo(connectedUser: User?) {
         if (!MyApplication.getInstance().connectedUser.phoneNumber?.number
-                .equals(connectedUser.phoneNumber?.number) ||
-            !connectedUser.status.equals(UserStatus.ACTIVE)) {
+                .equals(connectedUser?.phoneNumber?.number) ||
+            connectedUser?.status != UserStatus.ACTIVE
+        ) {
             MyApplication.getInstance().logout()
         } else {
             MyApplication.getInstance().connectedUser= connectedUser

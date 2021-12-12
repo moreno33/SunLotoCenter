@@ -1,18 +1,32 @@
 package com.sunlotocenter;
 
+import com.sunlotocenter.dao.Company;
+import com.sunlotocenter.utils.AnyExtensionsKt;
+import com.sunlotocenter.utils.AnyExtensionsKt;
+
 import android.app.Activity;
 import android.app.Application;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.SavedStateViewModelFactory;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.multidex.MultiDexApplication;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.ktx.Firebase;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sunlotocenter.activity.LoginActivity;
+import com.sunlotocenter.R;
 import com.sunlotocenter.adapter.ClassTypeAdapter;
 import com.sunlotocenter.adapter.ClassTypeAdapterFactory;
 import com.sunlotocenter.adapter.DateTimeTypeAdapter;
@@ -22,8 +36,11 @@ import com.sunlotocenter.adapter.UserTypeAdapter;
 import com.sunlotocenter.dao.Game;
 import com.sunlotocenter.dao.GameResult;
 import com.sunlotocenter.dao.GameSchedule;
+import com.sunlotocenter.dao.Response;
 import com.sunlotocenter.dao.User;
+import com.sunlotocenter.model.UserViewModel;
 import com.sunlotocenter.service.ConfigurationService;
+import com.sunlotocenter.utils.AnyExtensionsKt;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalTime;
@@ -37,9 +54,14 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -64,6 +86,7 @@ public class MyApplication extends MultiDexApplication implements Application.Ac
 
 
     private static String APP_PROPERTIES_PATH= "/app.properties";
+    private final String TAG= "MyApplication";
 
     /**
      * This is the base URL for the whole app
@@ -97,6 +120,7 @@ public class MyApplication extends MultiDexApplication implements Application.Ac
     public void onCreate() {
         super.onCreate();
 
+
 //        registerActivityLifecycleCallbacks(this);
 
         registerActivityLifecycleCallbacks(this);
@@ -104,6 +128,7 @@ public class MyApplication extends MultiDexApplication implements Application.Ac
         //Temporary
 
         instance= this;
+        FirebaseApp.initializeApp(this);
 
 //        JodaTimeAndroid.init(this);
 
@@ -209,15 +234,15 @@ public class MyApplication extends MultiDexApplication implements Application.Ac
     public Retrofit getClientNetworking(){
         if(retrofit!= null) return retrofit;
 
-        OkHttpClient ok= new OkHttpClient.Builder()
-                .readTimeout(60, TimeUnit.SECONDS)
-                .connectTimeout(60, TimeUnit.SECONDS)
-                .writeTimeout(60, TimeUnit.SECONDS)
-                .build();
+//        OkHttpClient ok= new OkHttpClient.Builder()
+//                .readTimeout(60, TimeUnit.SECONDS)
+//                .connectTimeout(60, TimeUnit.SECONDS)
+//                .writeTimeout(60, TimeUnit.SECONDS)
+//                .build();
 
         retrofit= new Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .client(ok)
+//                .client(ok)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
@@ -281,90 +306,54 @@ public class MyApplication extends MultiDexApplication implements Application.Ac
 
     public void login(User user) {
         //We need to call this any time we are logged the user in.
-//        FirebaseInstanceId.getInstance().getInstanceId()
-//                .addOnCompleteListener(task -> {
-//                    if (!task.isSuccessful()) {
-//                        Log.w(TAG, "getInstanceId failed", task.getException());
-//                        return;
-//                    }
-//                    // Get new Instance ID token
-//                    String token = task.getResult().getToken();
-//
-//                    //Let's check if the token is different from what we have in file.
-//                    if(token!= null && !token.equals(account.getFcmToken())){
-//                        sendTokenToServer(token);
-//                    }
-//
-//                    startService(new Intent(this, ConfigurationService.class)
-//                            .setAction(ConfigurationService.ACTION_USER_META_DATA_INFO));
-//                });
+        FirebaseMessaging.getInstance().getToken()
+        .addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                return;
+            }
+
+            // Get new FCM registration token
+            String token = task.getResult();
+
+
+            //Let's check if the token is different from what we have in file.
+            if(token!= null && !token.equals(user.getFcmToken())){
+                user.setFcmToken(token);
+                sendTokenToServer(user);
+            }
+
+            startService(new Intent(MyApplication.this, ConfigurationService.class)
+                    .setAction(ConfigurationService.ACTION_CONFIG_DATA));
+        });
 
         setConnectedUser(user);
     }
 
-    private void sendTokenToServer(String token) {
-//        Account account= MyApp.getInstance().getConnectedAccount();
-//        account.setFcmToken(token);
-//
-//        MultipartBody.Part profilePart= null;
-//
-//        /*
-//        If it contains http, that means it doesn't come for update
-//        we need to send it to the server with null value.
-//         */
-//        if (account.getProfilePicture()!= null) {
-//            if(!account.getProfilePicture().contains("http")){
-//                File profileFile= new File(account.getProfilePicture());
-//
-//                RequestBody reqBody= RequestBody.create(MediaType.parse(getMimeType(Uri.fromFile(profileFile).toString())), profileFile);
-//                profilePart= MultipartBody.Part.createFormData("profile", profileFile.getName(), reqBody);
-//            }
-//        }
-//
-//        ArrayList<MultipartBody.Part> documentParts = new ArrayList<>();
-//
-//        for(Document document:account.getDocuments()){
-//            if (Utils.INSTANCE.isNotEmpty(document.getImagePath())
-//                    && !document.getImagePath().contains("http")) {
-//                documentParts.add(createPart(document.getImagePath(), "documents"));
-//            }
-//        }
-//
-//        /*
-//       Here we send the language of the device to the user.
-//        */
-//        HashMap<String, String> headers= new HashMap<>();
-//        headers.put("accept-language", Locale.getDefault().toString());
-//
-//        RequestBody accountBody= RequestBody.create(MediaType.parse("application/json"), Utils.INSTANCE.getGson().toJson(account));
-//
-//        getClientNetworking().create(IAccountRequest.class).saveAccount(documentParts, profilePart, accountBody, headers).enqueue(new Callback<com.woolib.domain.dto.Response<Account>>() {
-//            @Override
-//            public void onResponse(Call<com.woolib.domain.dto.Response<Account>> call, retrofit2.Response<com.woolib.domain.dto.Response<Account>> response) {
-//
-//            }
-//            @Override
-//            public void onFailure(Call<com.woolib.domain.dto.Response<Account>> call, Throwable t) {
-//
-//            }
-//        });
+    private void sendTokenToServer(User user) {
+        MultipartBody.Part profilePart= null;
+        if (AnyExtensionsKt.isNotEmpty(user.getProfilePath())) {
+            if(!user.getProfilePath().contains("http")){
+                File profileFile= new File(user.getProfilePath());
+                RequestBody reqBody= RequestBody.create(MediaType.parse(AnyExtensionsKt.getMimeType(Uri.fromFile(profileFile).toString())), profileFile);
+                profilePart= MultipartBody.Part.createFormData("profile", profileFile.getName(), reqBody);
+            }
+        }
+        /*
+        Here we send the language of the device to the user.
+        */
+        HashMap<String, String> headers= new HashMap<>();
+        headers.put("accept-language", Locale.getDefault().toString());
 
-    }
+        RequestBody accountBody= RequestBody.create(MediaType.parse("application/json"), AnyExtensionsKt.getGson().toJson(user));
 
-    private String getMimeType(String url){
-        String type= null;
-//        String extension= Utils.INSTANCE.getFileExtensionFromUrl(url);
-//        if(extension != null){
-//            type= MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
-//        }
-        return type;
-    }
-
-    private MultipartBody.Part createPart(String url, String name){
-        File file= new File(url);
-        RequestBody reqBody= RequestBody.create(MediaType.parse(getMimeType(url)), file);
-        MultipartBody.Part part= MultipartBody.Part.createFormData(name, file.getName(), reqBody);
-        return part;
+        retrofit2.Call<Response<User>> call= AnyExtensionsKt.getUserApi().saveUser(profilePart, accountBody, headers);
+        call.enqueue(new retrofit2.Callback<Response<User>>() {
+            @Override
+            public void onResponse(retrofit2.Call<Response<User>> call, retrofit2.Response<Response<User>> response) { }
+            @Override
+            public void onFailure(retrofit2.Call<Response<User>> call, Throwable t) { }
+        });
     }
 
     /**
@@ -393,6 +382,26 @@ public class MyApplication extends MultiDexApplication implements Application.Ac
         //Initialize the customer session.
         prefs= new Prefs(this, PreferenceType.PERMANENT);
         prefs.setRegisteredUser(connectedUser);
+    }
+
+
+    /**
+     * Return a company
+     * @returnx
+     */
+    public Company getCompany() {
+        prefs= new Prefs(this, PreferenceType.PERMANENT);
+        return prefs.getRegisteredCompany();
+    }
+
+    /**
+     * Set a company
+     * @param company
+     */
+    public void setCompany(Company company){
+        //Initialize the customer session.
+        prefs= new Prefs(this, PreferenceType.PERMANENT);
+        prefs.setRegisteredCompany(company);
     }
 
 

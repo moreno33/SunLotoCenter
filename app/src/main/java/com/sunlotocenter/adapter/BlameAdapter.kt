@@ -1,15 +1,11 @@
 package com.sunlotocenter.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.github.zawadz88.materialpopupmenu.popupMenu
-import com.sunlotocenter.activity.ChangePasswordActivity
-import com.sunlotocenter.activity.R
+import com.sunlotocenter.R
 import com.sunlotocenter.dao.*
 import com.sunlotocenter.utils.*
 import kotlinx.android.synthetic.main.blame_layout.view.*

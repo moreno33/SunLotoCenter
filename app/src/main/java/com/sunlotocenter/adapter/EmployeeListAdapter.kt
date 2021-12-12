@@ -14,7 +14,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.github.zawadz88.materialpopupmenu.popupMenu
 import com.sunlotocenter.MyApplication
 import com.sunlotocenter.activity.ChangePasswordActivity
-import com.sunlotocenter.activity.R
+import com.sunlotocenter.R
 import com.sunlotocenter.activity.admin.AdminPersonalInfoActivity
 import com.sunlotocenter.activity.admin.BlameListActivity
 import com.sunlotocenter.dao.Sex
@@ -41,9 +41,9 @@ class EmployeeListAdapter(var employees: ArrayList<User>, var saveUserListener: 
         holder.txtName.text= "${employee.firstName} ${employee.lastName}"
         holder.txtStartDate.text= context.getString(R.string.since, getDateString(employee.createdDateTime!!))
         holder.txtAlert.text= context.getString(R.string.reprimand_count, employee.blames?.size)
-        if(employee.status== UserStatus.ACTIVE && employee.blames.isEmpty())
+        if(employee.status== UserStatus.ACTIVE && employee.blames.isNullOrEmpty())
             holder.vwStatus.background= ContextCompat.getDrawable(context, R.drawable.green_circle_background)
-        else if(employee.status== UserStatus.INACTIVE || (employee.blames.isNotEmpty() && employee.status!= UserStatus.BLOCKED))
+        else if(employee.status== UserStatus.INACTIVE || (!employee.blames.isNullOrEmpty() && employee.status!= UserStatus.BLOCKED))
             holder.vwStatus.background= ContextCompat.getDrawable(context, R.drawable.yellow_circle_background)
         else
             holder.vwStatus.background= ContextCompat.getDrawable(context, R.drawable.red_circle_background)
@@ -92,8 +92,8 @@ class EmployeeListAdapter(var employees: ArrayList<User>, var saveUserListener: 
                     labelRes = R.string.addOrChangePassword
                     icon = R.drawable.lock_outline_18
                     callback = {
-                        context.startActivity(Intent(context, ChangePasswordActivity::class.java).putExtra(
-                            USER_EXTRA, employee))
+                        (context as AppCompatActivity).startActivityForResult(Intent(context, ChangePasswordActivity::class.java).putExtra(
+                            USER_EXTRA, employee), REFRESH_REQUEST_CODE)
                     }
                 }
                 item {

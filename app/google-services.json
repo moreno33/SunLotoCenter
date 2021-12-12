@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "298311316800",
+    "project_id": "sunlotocenter-e43dd",
+    "storage_bucket": "sunlotocenter-e43dd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:298311316800:android:4c190c300ab7b9289b76a5",
+        "android_client_info": {
+          "package_name": "com.sunlotocenter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "298311316800-of0vi2shmv4en49vkaah992556nccg6p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sunlotocenter",
+            "certificate_hash": "9b2367e81158515009c977c7164f4e323f5b8e07"
+          }
+        },
+        {
+          "client_id": "298311316800-hl13h1jna325f1arol823hn3hult1s4g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNckv1IHnm5mmdMq7-ZYe8mGr7HkkAFMc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "298311316800-hl13h1jna325f1arol823hn3hult1s4g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

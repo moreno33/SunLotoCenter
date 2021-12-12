@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sunlotocenter.MyApplication
 import com.sunlotocenter.activity.ProtectedActivity
-import com.sunlotocenter.activity.R
+import com.sunlotocenter.R
 import com.sunlotocenter.adapter.BlockedGameAdapter
 import com.sunlotocenter.adapter.GameScheduleAdapter
 import com.sunlotocenter.dao.BlockedGame
@@ -68,12 +68,12 @@ class PreventTroubleActivity : ProtectedActivity(),
         }
 
         dialog.show()
-        gameViewModel.getGameAlertAndBlock()
+        gameViewModel.getGameAlertAndBlock(MyApplication.getInstance().company.sequence!!.id!!)
 
         addValidator()
         observe()
 
-        gameViewModel.loadBlockedGame(true)
+        gameViewModel.loadBlockedGame(MyApplication.getInstance().company.sequence!!.id!!, true)
     }
 
     private fun prefill(gameAlertAndBlock: GameAlertAndBlock?) {
@@ -94,7 +94,7 @@ class PreventTroubleActivity : ProtectedActivity(),
 
     private fun addAlertAndBlock() {
         if(form.isValid()){
-            gameArletAndBlock= GameAlertAndBlock(sequence = com.sunlotocenter.dao.Sequence(), author = MyApplication.getInstance().connectedUser)
+            gameArletAndBlock= GameAlertAndBlock(sequence = com.sunlotocenter.dao.Sequence(), author = MyApplication.getInstance().connectedUser, company = MyApplication.getInstance().company)
             if(gameArletAndBlockFromServer!= null){
                 ModelMapper().map(gameArletAndBlockFromServer, gameArletAndBlock)
             }
@@ -187,7 +187,7 @@ class PreventTroubleActivity : ProtectedActivity(),
                 addBlockedGames(blockedGames)
         })
         gameViewModel.blockedGameData.observe(this, {
-            gameViewModel.loadBlockedGame(true)
+            gameViewModel.loadBlockedGame(MyApplication.getInstance().company.sequence!!.id!!,true)
         })
     }
 
@@ -244,14 +244,14 @@ class PreventTroubleActivity : ProtectedActivity(),
     }
 
     override fun onLoadMore() {
-        gameViewModel.loadBlockedGame(false)
+        gameViewModel.loadBlockedGame(MyApplication.getInstance().company.sequence!!.id!!,false)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode== REFRESH_REQUEST_CODE && resultCode== Activity.RESULT_OK){
             dialog.show()
-            gameViewModel.loadBlockedGame(true)
+            gameViewModel.loadBlockedGame(MyApplication.getInstance().company.sequence!!.id!!,true)
         }
     }
 

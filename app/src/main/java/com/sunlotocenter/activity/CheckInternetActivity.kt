@@ -7,6 +7,7 @@ import android.content.IntentFilter
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.kaopiz.kprogresshud.KProgressHUD
+import com.sunlotocenter.R
 import com.sunlotocenter.extensions.isConnected
 import com.sunlotocenter.extensions.toast
 import com.sunlotocenter.utils.getDialog

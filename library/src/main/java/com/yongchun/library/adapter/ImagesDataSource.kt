@@ -2,6 +2,8 @@ package com.yongchun.library.adapter
 
 import android.content.ContentResolver
 import android.database.Cursor
+import android.os.Build
+import android.os.Bundle
 import android.provider.MediaStore
 import com.yongchun.library.model.AlbumItem
 import com.yongchun.library.model.ImageItem
@@ -54,29 +56,64 @@ internal class ImagesDataSource(private val contentResolver: ContentResolver){
         val list: ArrayList<ImageItem> = arrayListOf()
         var photoCursor: Cursor? = null
         try {
-            if (albumItem == null || albumItem.isAll) {
-                photoCursor = contentResolver.query(
-                    cursorUri,
-                    arrayOf(
-                        ID_COLUMN,
-                        PATH_COLUMN
-                    ),
-                    null,
-                    null,
-                    "$ORDER_BY LIMIT $pageSize OFFSET $offset"
-                )
-            } else {
-                photoCursor = contentResolver.query(
-                    cursorUri,
-                    arrayOf(
-                        ID_COLUMN,
-                        PATH_COLUMN
-                    ),
-                    "${MediaStore.Images.ImageColumns.BUCKET_ID} =?",
-                    arrayOf(albumItem.bucketId),
-                    "$ORDER_BY LIMIT $pageSize OFFSET $offset"
-                )
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val bundle = Bundle().apply {
+                    putInt(ContentResolver.QUERY_ARG_OFFSET, offset)
+                    putInt(ContentResolver.QUERY_ARG_LIMIT, pageSize)
+                }
+
+                if (albumItem == null || albumItem.isAll) {
+                    photoCursor = contentResolver.query(
+                        cursorUri,
+                        arrayOf(
+                            ID_COLUMN,
+                            PATH_COLUMN
+                        ),
+                        bundle,
+                        null
+                    )
+                } else {
+
+                    photoCursor = contentResolver.query(
+                        cursorUri,
+                        arrayOf(
+                            ID_COLUMN,
+                            PATH_COLUMN
+                        ),
+                        "${MediaStore.Images.ImageColumns.BUCKET_ID} =?",
+                        arrayOf(albumItem.bucketId),
+                        "$ORDER_BY LIMIT $pageSize OFFSET $offset"
+                    )
+                }
+            }else{
+                if (albumItem == null || albumItem.isAll) {
+                    photoCursor = contentResolver.query(
+                        cursorUri,
+                        arrayOf(
+                            ID_COLUMN,
+                            PATH_COLUMN
+                        ),
+                        null,
+                        null,
+                        null
+                    )
+                } else {
+                    photoCursor = contentResolver.query(
+                        cursorUri,
+                        arrayOf(
+                            ID_COLUMN,
+                            PATH_COLUMN
+                        ),
+                        "${MediaStore.Images.ImageColumns.BUCKET_ID} =?",
+                        arrayOf(albumItem.bucketId),
+                        "$ORDER_BY LIMIT $pageSize OFFSET $offset"
+                    )
+                }
             }
+
+
+
             photoCursor?.isAfterLast ?: return list
             photoCursor.doWhile {
                 val image = photoCursor.getString((photoCursor.getColumnIndex(PATH_COLUMN)))

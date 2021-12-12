@@ -15,7 +15,8 @@ import com.bumptech.glide.request.RequestOptions
 import com.github.zawadz88.materialpopupmenu.popupMenu
 import com.sunlotocenter.MyApplication
 import com.sunlotocenter.activity.ChangePasswordActivity
-import com.sunlotocenter.activity.R
+import com.sunlotocenter.R
+import com.sunlotocenter.activity.GameActivity
 import com.sunlotocenter.activity.admin.AdminPersonalInfoActivity
 import com.sunlotocenter.activity.admin.BlameListActivity
 import com.sunlotocenter.activity.admin.ResultActivity
@@ -59,6 +60,14 @@ class SlotListAdapter(var slots: ArrayList<Slot>) :
             layoutManager= LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter= gameAdapter
         }
+        holder.imgCopy.setOnClickListener {
+            val filteredGameList= getFilteredGameList(slot.games)
+            context.startActivity(Intent(context, GameActivity::class.java).putExtra(COPIED_GAME_LIST, filteredGameList))
+        }
+    }
+
+    private fun getFilteredGameList(games: List<Game>): ArrayList<Game> {
+        return ArrayList(games.filter { g->g.type== 1 })
     }
 
 
@@ -73,5 +82,6 @@ class SlotListAdapter(var slots: ArrayList<Slot>) :
 
     class CustomViewHolder(var item: View) : RecyclerView.ViewHolder(item){
         val rclSlotRow by lazy { item.rclSlotRow }
+        val imgCopy by lazy { item.imgCopy }
     }
 }

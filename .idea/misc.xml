@@ -24,6 +24,7 @@
         <entry key="app/src/main/res/drawable/blue_corner_radius.xml" value="0.20986842105263157" />
         <entry key="app/src/main/res/drawable/blue_corner_radius_default.xml" value="0.20986842105263157" />
         <entry key="app/src/main/res/drawable/blue_corner_radius_pressed.xml" value="0.2" />
+        <entry key="app/src/main/res/drawable/bottom_background.xml" value="0.22401315789473683" />
         <entry key="app/src/main/res/drawable/camera_outline_white_18.xml" value="0.20855263157894738" />
         <entry key="app/src/main/res/drawable/chevron_down_black_18.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/chevron_down_white_18.xml" value="0.2" />
@@ -44,6 +45,7 @@
         <entry key="app/src/main/res/drawable/green_corner_radius.xml" value="0.20986842105263157" />
         <entry key="app/src/main/res/drawable/green_corner_radius_default.xml" value="0.20986842105263157" />
         <entry key="app/src/main/res/drawable/green_corner_radius_pressed.xml" value="0.20230263157894737" />
+        <entry key="app/src/main/res/drawable/main_edit_text_background.xml" value="0.22401315789473683" />
         <entry key="app/src/main/res/drawable/marry_all_background.xml" value="0.20986842105263157" />
         <entry key="app/src/main/res/drawable/marry_all_background_default.xml" value="0.20986842105263157" />
         <entry key="app/src/main/res/drawable/marry_all_background_disabled.xml" value="0.17401315789473684" />
@@ -54,11 +56,13 @@
         <entry key="app/src/main/res/drawable/pencil_outline_black_24.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/pencil_outline_white_24.xml" value="0.21414473684210528" />
         <entry key="app/src/main/res/drawable/picker_done.xml" value="0.20230263157894737" />
+        <entry key="app/src/main/res/drawable/play_background.xml" value="0.21414473684210528" />
         <entry key="app/src/main/res/drawable/plus_white_24.xml" value="0.1819078947368421" />
         <entry key="app/src/main/res/drawable/progress.xml" value="0.1450657894736842" />
         <entry key="app/src/main/res/drawable/red_corner_radius.xml" value="0.20230263157894737" />
         <entry key="app/src/main/res/drawable/red_corner_radius_default.xml" value="0.20230263157894737" />
         <entry key="app/src/main/res/drawable/red_corner_radius_pressed.xml" value="0.20230263157894737" />
+        <entry key="app/src/main/res/drawable/round_edit_text_background.xml" value="0.22401315789473683" />
         <entry key="app/src/main/res/drawable/send_outline_black_24.xml" value="0.20986842105263157" />
         <entry key="app/src/main/res/drawable/send_outline_white_24.xml" value="0.20986842105263157" />
         <entry key="app/src/main/res/drawable/tabs_background.xml" value="0.20986842105263157" />
@@ -74,6 +78,7 @@
         <entry key="app/src/main/res/drawable/wallet_outline_black_18.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/white_balance_sunny.xml" value="0.21414473684210528" />
         <entry key="app/src/main/res/drawable/white_corner_radius.xml" value="0.2" />
+        <entry key="app/src/main/res/drawable/window_close.xml" value="0.22401315789473683" />
         <entry key="app/src/main/res/layout/activity_admin_dashboard.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_admin_personal_info.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_admin_report.xml" value="0.21744012119771697" />
@@ -81,6 +86,7 @@
         <entry key="app/src/main/res/layout/activity_blame.xml" value="0.18980263157894736" />
         <entry key="app/src/main/res/layout/activity_blame_list.xml" value="0.18980263157894736" />
         <entry key="app/src/main/res/layout/activity_blocked_game.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_broadcast.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_change_password.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_company_info.xml" value="0.12773224043715847" />
         <entry key="app/src/main/res/layout/activity_create_bank.xml" value="0.11475409836065574" />
@@ -91,7 +97,9 @@
         <entry key="app/src/main/res/layout/activity_manage_game.xml" value="0.13524590163934427" />
         <entry key="app/src/main/res/layout/activity_manage_game_price.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_marry_all.xml" value="0.18157894736842106" />
+        <entry key="app/src/main/res/layout/activity_notification.xml" value="0.18388157894736842" />
         <entry key="app/src/main/res/layout/activity_prevent_trouble.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_receipt_review.xml" value="0.20394736842105263" />
         <entry key="app/src/main/res/layout/activity_result.xml" value="0.1871584699453552" />
         <entry key="app/src/main/res/layout/activity_result_list.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_seller_dashboard.xml" value="0.19967105263157894" />
@@ -111,6 +119,9 @@
         <entry key="app/src/main/res/layout/fragment_marriage.xml" value="0.18980263157894736" />
         <entry key="app/src/main/res/layout/game_header_layout.xml" value="0.16776315789473684" />
         <entry key="app/src/main/res/layout/game_layout.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/game_receipt_footer_layout.xml" value="0.20394736842105263" />
+        <entry key="app/src/main/res/layout/game_receipt_header_layout.xml" value="0.20394736842105263" />
+        <entry key="app/src/main/res/layout/game_receipt_row_layout.xml" value="0.20394736842105263" />
         <entry key="app/src/main/res/layout/game_row_layout.xml" value="0.335" />
         <entry key="app/src/main/res/layout/game_schedule_layout.xml" value="0.165" />
         <entry key="app/src/main/res/layout/game_schedule_session_layout.xml" value="0.1837431693989071" />
@@ -119,7 +130,7 @@
         <entry key="app/src/main/res/layout/game_slot_row_layout.xml" value="0.335" />
         <entry key="app/src/main/res/layout/marry_all_layout.xml" value="0.16537638329846163" />
         <entry key="app/src/main/res/layout/marry_all_row_layout.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/notification_layout.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/notification_layout.xml" value="0.24273858921161826" />
         <entry key="app/src/main/res/layout/option_price_layout.xml" value="0.18886612021857924" />
         <entry key="app/src/main/res/layout/report_layout.xml" value="0.375" />
         <entry key="app/src/main/res/layout/report_motion_layout.xml" value="0.1" />
@@ -130,6 +141,8 @@
         <entry key="app/src/main/res/layout/valid_error_layout.xml" value="0.25" />
         <entry key="app/src/main/res/layout/validatable_edit_text_layout.xml" value="0.1" />
         <entry key="app/src/main/res/menu/date_time_range_picker.xml" value="0.19210526315789472" />
+        <entry key="app/src/main/res/menu/mn_admin_dashboard.xml" value="0.16319444444444445" />
+        <entry key="app/src/main/res/menu/mn_broadcast.xml" value="0.2138157894736842" />
         <entry key="app/src/main/res/menu/mn_employee_action.xml" value="0.18980263157894736" />
         <entry key="app/src/main/res/menu/mn_user_type.xml" value="0.1" />
         <entry key="library/src/main/res/drawable/item_divider.xml" value="0.2" />
@@ -139,17 +152,10 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
-  </component>
-  <component name="VisualizationToolProject">
-    <option name="state">
-      <ProjectState>
-        <option name="scale" value="0.375" />
-      </ProjectState>
-    </option>
   </component>
 </project>

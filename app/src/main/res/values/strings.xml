@@ -53,7 +53,7 @@
     <string name="to">jj-mm-aaaa</string>
     <string name="result">Tiraj</string>
     <string name="bank">Bank</string>
-    <string name="bank_total">Total: %s bank</string>
+    <string name="bank_total">Total: %1$d bank</string>
     <string name="since">Depi: %s</string>
     <string name="seller">Vandè</string>
     <string name="submit">Soumèt</string>
@@ -156,6 +156,19 @@
     <string name="lost">Pèt</string>
     <string name="receipt">Fich %1$s</string>
     <string name="total_amount">%1.0f HTG - %2.0f HTG = %3.0f</string>
+    <string name="enter_message">Antre mesaj ou vle pataje an</string>
+    <string name="send_broadcast">Voye yon mesaj jeneral bay itilizatè yo</string>
+    <string name="broadcast">Emisyon</string>
+    <string name="broadcast_susccess_message">Ou emèt mesaj lan avèk siksè!</string>
+    <string name="you">Ou menm</string>
+    <string name="author_system">Sistèm</string>
+    <string name="admin">Admin</string>
+    <string name="est_time_remark">N:B: Lè ak dat ou chwazi nan sistèm nan, sistèm nan konsiderel kòm lè Nouyòk</string>
+    <string name="message_not_empty">Ou poko voye notifikasyon an ale. Siw fè bak wap pèdi tout done yo. Ou si ou vle fè bak?</string>
+    <string name="price_currency">%1.0f HTG</string>
+    <string name="update_company_success_message">Ou chanje enfòmasyon konpayi an avèk siksè!</string>
+    <string name="create_company">Kreye konpayi</string>
+    <string name="profile_picture_required">Ou dwe mete yon logo pou konpayi an.</string>
     <string-array name="employee_category">
         <item>Vandè</item>
         <item>Administratè</item>

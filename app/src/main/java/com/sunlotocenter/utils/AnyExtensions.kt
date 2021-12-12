@@ -30,13 +30,14 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.gson.GsonBuilder
 import com.kaopiz.kprogresshud.KProgressHUD
 import com.sunlotocenter.MyApplication
-import com.sunlotocenter.activity.R
+import com.sunlotocenter.R
 import com.sunlotocenter.adapter.ClassTypeAdapter
 import com.sunlotocenter.adapter.ClassTypeAdapterFactory
 import com.sunlotocenter.adapter.DateTimeTypeAdapter
 import com.sunlotocenter.adapter.UserTypeAdapter
 import com.sunlotocenter.api.BankApi
 import com.sunlotocenter.api.GameApi
+import com.sunlotocenter.api.NotificationApi
 import com.sunlotocenter.api.UserApi
 import com.sunlotocenter.dao.Entity
 import kotlinx.android.synthetic.main.dialog_layout.view.*
@@ -73,11 +74,16 @@ val RESULT_EXTRA= "RESULT_EXTRA"
 val SLOT_LIST_EXTRA= "SLOT_LIST_EXTRA"
 val GAME_SESSION_EXTRA= "GAME_SESSION_EXTRA"
 val REPORT_EXTRA= "REPORT_EXTRA"
+val BROADCAST_NOTIF_EXTRA= "BROADCAST_NOTIF_EXTRA"
+val COPIED_GAME_LIST= "COPIED_GAME_LIST"
+val SLOT_EXTRA= "SLOT_EXTRA"
+val COMPANY_EXTRA= "COMPANY_EXTRA"
 
 val userApi =
     MyApplication.getInstance().clientNetworking.create(UserApi::class.java)
 val gameApi= MyApplication.getInstance().clientNetworking.create(GameApi::class.java)
 val bankApi= MyApplication.getInstance().clientNetworking.create(BankApi::class.java)
+val notificationApi= MyApplication.getInstance().clientNetworking.create(NotificationApi::class.java)
 
 fun createPart(url:String, name:String): MultipartBody.Part{
     val file= File(url)
@@ -90,9 +96,7 @@ fun createPart(url:String, name:String): MultipartBody.Part{
 fun getMimeType(url:String):String{
     var type:String?= null
     val extension:String= getFileExtensionFromUrl(url)
-    if(extension != null){
-        type= MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
-    }
+    type= MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
     return type!!
 }
 
@@ -172,14 +176,12 @@ fun getDateString(date: DateTime): String {
     //This is the formatter to get a right format for the date
     val formatter = DateTimeFormat.mediumDate().withLocale(Locale.getDefault()).withZone(DateTimeZone.getDefault())
     return formatter.print(date)
-
 }
 
 fun getDateString(date: DateTime, zone:DateTimeZone): String {
     //This is the formatter to get a right format for the date
     val formatter = DateTimeFormat.mediumDate().withZone(zone).withLocale(Locale.getDefault())
     return formatter.print(date)
-
 }
 
 fun getTimeString(time: LocalTime, zone:DateTimeZone): String {
@@ -206,13 +208,22 @@ fun getDateString(dateString: String, zone: DateTimeZone): String {
 
 }
 
-fun getShortDateString(date: DateTime?, formatter: DateTimeFormatter): String? {
+fun getDateString(date: DateTime?, formatter: DateTimeFormatter): String? {
     //This is the formatter to get a right format for the date
     if(date== null) return null
 
     val formatter = formatter.withZone(DateTimeZone.getDefault())
     return formatter.print(date)
 }
+
+fun getDateString(date: DateTime?, formatter: DateTimeFormatter, timeZone: DateTimeZone): String? {
+    //This is the formatter to get a right format for the date
+    if(date== null) return null
+
+    val formatter = formatter.withZone(timeZone)
+    return formatter.print(date)
+}
+
 
 fun getShortDateString(date: DateTime?): String? {
     //This is the formatter to get a right format for the date

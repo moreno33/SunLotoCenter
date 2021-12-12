@@ -13,7 +13,7 @@ import android.util.TypedValue
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.emarkall.worldwidephonenumberedittext.Validable
-import com.sunlotocenter.activity.R
+import com.sunlotocenter.R
 import com.sunlotocenter.adapter.ErrorAdapter
 import kotlinx.android.synthetic.main.validatable_edit_text_layout.view.*
 import android.view.inputmethod.EditorInfo
@@ -159,6 +159,13 @@ class ValidatableEditText : LinearLayout, Validable {
 
     fun addTextChangedListener (textWatcher: TextWatcher){
         this.edxText.addTextChangedListener(textWatcher)
+    }
+
+    override fun setEnabled(boolean: Boolean){
+        this.edxText.isEnabled= boolean
+    }
+    override fun isEnabled(): Boolean{
+        return edxText.isEnabled
     }
 
     fun setSelection(position:Int){

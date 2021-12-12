@@ -12,7 +12,7 @@ import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
 import com.sunlotocenter.MyApplication
 import com.sunlotocenter.activity.ProtectedActivity
-import com.sunlotocenter.activity.R
+import com.sunlotocenter.R
 import com.sunlotocenter.dao.*
 import com.sunlotocenter.extensions.enableHome
 import com.sunlotocenter.extensions.gameCategories
@@ -297,7 +297,7 @@ class BlockedGameActivity : ProtectedActivity() {
 
     private fun submit() {
         if(form.isValid()){
-            blockedGame= BlockedGame(sequence = Sequence(), number = edxGame.text, author = MyApplication.getInstance().connectedUser!!)
+            blockedGame= BlockedGame(sequence = Sequence(), number = edxGame.text, author = MyApplication.getInstance().connectedUser!!, company = MyApplication.getInstance().company)
             if(blockedGameExtra!= null){
                 ModelMapper().map(blockedGameExtra, blockedGame)
             }
