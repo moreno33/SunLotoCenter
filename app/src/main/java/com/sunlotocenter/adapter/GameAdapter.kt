@@ -72,8 +72,8 @@ class GameAdapter(var gameSet: TreeSet<Game>, var onGameRemoveListener: OnGameRe
             ITEM->{
                 var game= gameSet.elementAt(position)
                 holder.txtGame.text= game.number
-                holder.txtOption.text= game.opt.toString()
-                holder.txtAmount.text= game.amount.toString()
+                holder.txtOption.text= game.opt
+                holder.txtAmount.text= context.getString(R.string.price_currency, game.amount)
                 //Click to open menu
                 holder.imgAction.setOnClickListener {
                     deleteGame(game, position)

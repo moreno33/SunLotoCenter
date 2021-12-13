@@ -134,8 +134,8 @@ class GameSlotAdapter(gameSet: TreeSet<Game>) : RecyclerView.Adapter<GameSlotAda
                 var game= games.elementAt(position)
                 holder.txtGame.text= game.number
                 holder.txtOption.text= game.opt
-                holder.txtAmount.text= String.format("%.0f", game.amount)
-                holder.txtLost.text= String.format("%.0f", game.amountWin)
+                holder.txtAmount.text= context.getString(R.string.price_currency, game.amount)
+                holder.txtLost.text= context.getString(R.string.price_currency, game.amountWin)
                 if(game.amountWin > 0){
                     holder.txtGame.setTextColor(ContextCompat.getColor(context, R.color.main_red))
                     holder.txtOption.setTextColor(ContextCompat.getColor(context, R.color.main_red))

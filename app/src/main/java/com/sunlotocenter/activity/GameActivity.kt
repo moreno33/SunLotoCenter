@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
@@ -146,40 +147,6 @@ class GameActivity : ProtectedActivity(),
     }
 
     private fun observe() {
-        gameViewModel.slotResponseData.observe(this,
-            {
-                dialog.dismiss()
-                if(it== null){
-                    com.sunlotocenter.utils.showDialog(this@GameActivity,
-                        getString(R.string.internet_error_title),
-                        getString(
-                            R.string.internet_error_message
-                        ),
-                        getString(R.string.ok),
-                        object : ClickListener {
-                            override fun onClick(): Boolean {
-                                return false
-                            }
-                        }, true, DialogType.ERROR)
-                }else{
-                    com.sunlotocenter.utils.showDialog(this@GameActivity,
-                        getString(
-                            if(it.success)R.string.success_title else R.string.internet_error_title
-                        ),
-                        if (it.success) getString(R.string.game_success_message) else it.message!!
-                        ,
-                        getString(
-                            if(it.success)R.string.print_receipt else R.string.ok
-                        ),
-                        object : ClickListener {
-                            override fun onClick(): Boolean {
-                                return false
-                            }
-
-                        }, false, if(it.success) DialogType.SUCCESS else DialogType.ERROR)
-                }
-            })
-
         gameViewModel.lastAddedSchedulesData.observe(this, { schedules ->
             dialog.dismiss()
             runOnUiThread {
@@ -247,7 +214,16 @@ class GameActivity : ProtectedActivity(),
         var intent= Intent(this, AutoComposeActivity::class.java)
         intent.putExtra(AutoComposeActivity.GAMES_EXTRA, lot4Set)
         intent.putExtra(AutoComposeActivity.TITLE_EXTRA, getString(R.string.auto_loto_4))
-        startActivityForResult(intent, AutoComposeActivity.REQUEST_CODE)
+
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            if(it.resultCode== Activity.RESULT_OK){
+                (it.data?.getSerializableExtra(AutoComposeActivity.GAMES_EXTRA) as TreeSet<Game>).forEach {
+                    if(it.amount> 0)
+                        addGame(it)
+                }
+                gameAdapter.notifyDataSetChanged()
+            }
+        }.launch(intent)
     }
 
     private fun autoMarry(gameSet: TreeSet<Game>) {

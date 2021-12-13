@@ -21,6 +21,9 @@
         android:theme="@style/AppTheme.NoActionBar.Blank"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activity.seller.SellerReportActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.ReceiptReviewActivity"
             android:exported="false" />
         <activity

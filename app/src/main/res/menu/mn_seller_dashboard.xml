@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/mnNotification"
+        android:title="@string/notification"
+        android:icon="@drawable/bell_outline"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/mnSettings"
+        android:title="@string/setting"
+        android:icon="@drawable/cog_outline"
+        app:showAsAction="always"/>
+</menu>

@@ -14,7 +14,7 @@ import com.sunlotocenter.dao.Report
 import com.sunlotocenter.utils.*
 import kotlinx.android.synthetic.main.report_layout.view.*
 
-class ReportAdapter(var reports: ArrayList<Report>) : RecyclerView.Adapter<ReportAdapter.CustomViewHolder>() {
+class SellerReportAdapter(var reports: ArrayList<Report>) : RecyclerView.Adapter<SellerReportAdapter.CustomViewHolder>() {
 
     lateinit var context: Context
 
@@ -42,7 +42,7 @@ class ReportAdapter(var reports: ArrayList<Report>) : RecyclerView.Adapter<Repor
         val resultNight= if(report.winNight!= null) report.totalNight!! - report.winNight!! else null
 
         if(resultMorning!= null){
-            holder.txtAmountMorning.text= resultMorning.toInt().toString() +"HTG"
+            holder.txtAmountMorning.text= context.getString(R.string.price_currency, resultMorning)
             if(resultMorning>0){
                 holder.txtAmountMorning.setTextColor(ContextCompat.getColor(context, R.color.main_green))
             }else{
@@ -55,7 +55,7 @@ class ReportAdapter(var reports: ArrayList<Report>) : RecyclerView.Adapter<Repor
         }
 
         if(resultNight!= null){
-            holder.txtAmountNight.text= resultNight.toInt().toString() +"HTG"
+            holder.txtAmountNight.text= context.getString(R.string.price_currency, resultNight)
             if(resultNight>=0){
                 holder.txtAmountNight.setTextColor(ContextCompat.getColor(context, R.color.main_green))
             }else{

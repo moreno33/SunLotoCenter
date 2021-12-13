@@ -26,6 +26,7 @@
         <entry key="app/src/main/res/drawable/blue_corner_radius_pressed.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/bottom_background.xml" value="0.22401315789473683" />
         <entry key="app/src/main/res/drawable/camera_outline_white_18.xml" value="0.20855263157894738" />
+        <entry key="app/src/main/res/drawable/check_outline_black.xml" value="0.21414473684210528" />
         <entry key="app/src/main/res/drawable/chevron_down_black_18.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/chevron_down_white_18.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/chevron_right_black_18.xml" value="0.22302631578947368" />
@@ -79,9 +80,11 @@
         <entry key="app/src/main/res/drawable/white_balance_sunny.xml" value="0.21414473684210528" />
         <entry key="app/src/main/res/drawable/white_corner_radius.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/window_close.xml" value="0.22401315789473683" />
-        <entry key="app/src/main/res/layout/activity_admin_dashboard.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_admin_dashboard.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_admin_personal_info.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_admin_report.xml" value="0.21744012119771697" />
+        <entry key="app/src/main/res/layout/activity_admin_setting.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_auto_compose.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_bank_list.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_blame.xml" value="0.18980263157894736" />
         <entry key="app/src/main/res/layout/activity_blame_list.xml" value="0.18980263157894736" />
@@ -102,8 +105,10 @@
         <entry key="app/src/main/res/layout/activity_receipt_review.xml" value="0.20394736842105263" />
         <entry key="app/src/main/res/layout/activity_result.xml" value="0.1871584699453552" />
         <entry key="app/src/main/res/layout/activity_result_list.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/activity_seller_dashboard.xml" value="0.19967105263157894" />
+        <entry key="app/src/main/res/layout/activity_seller_dashboard.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_seller_report.xml" value="0.1319078947368421" />
         <entry key="app/src/main/res/layout/activity_slot_list.xml" value="0.20394736842105263" />
+        <entry key="app/src/main/res/layout/alert_list_layout.xml" value="0.20394736842105263" />
         <entry key="app/src/main/res/layout/bank_layout.xml" value="0.45" />
         <entry key="app/src/main/res/layout/blame_layout.xml" value="0.22699386503067484" />
         <entry key="app/src/main/res/layout/block_list_layout.xml" value="0.375" />
@@ -144,6 +149,8 @@
         <entry key="app/src/main/res/menu/mn_admin_dashboard.xml" value="0.16319444444444445" />
         <entry key="app/src/main/res/menu/mn_broadcast.xml" value="0.2138157894736842" />
         <entry key="app/src/main/res/menu/mn_employee_action.xml" value="0.18980263157894736" />
+        <entry key="app/src/main/res/menu/mn_receipt.xml" value="0.20394736842105263" />
+        <entry key="app/src/main/res/menu/mn_seller_dashboard.xml" value="0.17222222222222222" />
         <entry key="app/src/main/res/menu/mn_user_type.xml" value="0.1" />
         <entry key="library/src/main/res/drawable/item_divider.xml" value="0.2" />
         <entry key="phone/src/main/res/drawable/account_cancel_outline_black_1i.xml" value="0.2" />

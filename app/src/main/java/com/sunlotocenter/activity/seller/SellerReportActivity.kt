@@ -1,57 +1,54 @@
-package com.sunlotocenter.activity
+package com.sunlotocenter.activity.seller
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sunlotocenter.MyApplication
+import com.sunlotocenter.activity.ProtectedActivity
 import com.sunlotocenter.R
-import com.sunlotocenter.activity.admin.ResultActivity
-import com.sunlotocenter.adapter.ResultListAdapter
+import com.sunlotocenter.adapter.AdminReportAdapter
+import com.sunlotocenter.adapter.SellerReportAdapter
 import com.sunlotocenter.dao.GameType
-import com.sunlotocenter.dto.Result
+import com.sunlotocenter.dao.Report
+import com.sunlotocenter.dao.User
 import com.sunlotocenter.extensions.enableHome
 import com.sunlotocenter.extensions.gameTypes
 import com.sunlotocenter.listener.LoadMoreListener
 import com.sunlotocenter.model.GameViewModel
-import com.sunlotocenter.utils.REFRESH_REQUEST_CODE
+import com.sunlotocenter.utils.USER_EXTRA
 import com.sunlotocenter.validator.DateValidator
 import com.sunlotocenter.validator.Form
-import kotlinx.android.synthetic.main.activity_admin_report.*
-import kotlinx.android.synthetic.main.activity_result_list.*
-import kotlinx.android.synthetic.main.activity_result_list.edxFrom
-import kotlinx.android.synthetic.main.activity_result_list.edxTo
-import kotlinx.android.synthetic.main.activity_result_list.progressBar
-import kotlinx.android.synthetic.main.activity_result_list.spnType
-import kotlinx.android.synthetic.main.activity_result_list.toolbar
-import kotlinx.android.synthetic.main.activity_result_list.txtInfo
+import kotlinx.android.synthetic.main.activity_seller_report.*
 
-class ResultListActivity : ProtectedActivity(),
+class SellerReportActivity : ProtectedActivity(),
     LoadMoreListener.OnLoadMoreListener{
 
     private var loadMoreListener: LoadMoreListener?= null
-    private lateinit var resultListAdapter: ResultListAdapter
+    private lateinit var reportAdapter: SellerReportAdapter
     private lateinit var gameViewModel: GameViewModel
     private var isSaveState= false
     private var gameType: GameType?= null
     private var form= Form()
+    private lateinit var user:User
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_result_list
+        return R.layout.activity_seller_report
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableHome(toolbar)
         gameViewModel= ViewModelProvider(this, SavedStateViewModelFactory(application, this))
             .get(GameViewModel::class.java)
+
+        user= intent.getSerializableExtra(USER_EXTRA) as User
 
         if(savedInstanceState!=  null){
             isSaveState= true
@@ -61,12 +58,15 @@ class ResultListActivity : ProtectedActivity(),
         setUpAdapter()
         prepareControl()
 
-        gameType?.let { gameViewModel.loadResults(MyApplication.getInstance().company.sequence!!.id!!, true, it, "", "") }
 
-        swpLayout.isRefreshing= true
-        swpLayout.setOnRefreshListener {
-            gameType?.let { gameViewModel.loadResults(MyApplication.getInstance().company.sequence!!.id!!, true, it, edxFrom.text, edxTo.text) }
-        }
+
+        gameType?.let { gameViewModel.loadIndReports(
+            user.sequence.id!!,
+            user.company!!.sequence!!.id!!, true, it, "", "") }
+        gameType?.let{ gameViewModel.getIndTotalReport(
+            user.sequence.id!!,
+            user.company!!.sequence!!.id!!, gameType!!, "", "") }
+
     }
 
     private fun prepareControl() {
@@ -75,7 +75,7 @@ class ResultListActivity : ProtectedActivity(),
         edxTo.addValidator(DateValidator(getString(R.string.date_validator_error)))
         form.addInput(edxFrom, edxTo)
 
-        edxFrom.addTextChangedListener(object :TextWatcher{
+        edxFrom.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -88,11 +88,21 @@ class ResultListActivity : ProtectedActivity(),
                     edxFrom.text= "${s.substring(0,5)}-${s.substring(5)}"
                     edxFrom.setSelection(edxFrom.text.length)
                 }else if(edxFrom.text.isEmpty() && edxTo.text.isEmpty()){
-                    gameType?.let { gameViewModel.loadResults(MyApplication.getInstance().company.sequence!!.id!!, true, it, "", "") }
+                    gameType?.let { gameViewModel.loadIndReports(
+                        user.sequence.id!!,
+                        user.company!!.sequence!!.id!!, true, it, "", "") }
+                    gameType?.let{ gameViewModel.getIndTotalReport(
+                        user.sequence.id!!,
+                        user.company!!.sequence!!.id!!, gameType!!, "", "") }
                 }
                 if(s.length== 10){
                     if(edxTo.text.length== 10 && form.isValid()){
-                        gameType?.let { gameViewModel.loadResults(MyApplication.getInstance().company.sequence!!.id!!, true, it, edxFrom.text, edxTo.text) }
+                        gameType?.let { gameViewModel.loadIndReports(
+                            user.sequence.id!!,
+                            user.company!!.sequence!!.id!!, true, it, edxFrom.text, edxTo.text) }
+                        gameType?.let { gameViewModel.getIndTotalReport(
+                            user.sequence.id!!,
+                            user.company!!.sequence!!.id!!, it, edxFrom.text, edxTo.text) }
                     }else if(edxTo.text.length<10){
                         edxTo.focus()
                     }
@@ -104,7 +114,7 @@ class ResultListActivity : ProtectedActivity(),
 
         })
 
-        edxTo.addTextChangedListener(object :TextWatcher{
+        edxTo.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -117,11 +127,23 @@ class ResultListActivity : ProtectedActivity(),
                     edxTo.text= "${s.substring(0,5)}-${s.substring(5)}"
                     edxTo.setSelection(edxTo.text.length)
                 }else if(edxFrom.text.isEmpty() && edxTo.text.isEmpty()){
-                    gameType?.let { gameViewModel.loadResults(MyApplication.getInstance().company.sequence!!.id!!, true, it, "", "") }
+                    gameType?.let { gameViewModel.loadIndReports(
+                        user.sequence.id!!,
+                        user.company!!.sequence!!.id!!,
+                        true, it, "", "") }
+                    gameType?.let{ gameViewModel.getIndTotalReport(
+                        user.sequence.id!!,
+                        user.company!!.sequence!!.id!!, gameType!!, "", "") }
                 }
                 if(s.length== 10){
                     if(edxFrom.text.length== 10 && form.isValid()){
-                        gameType?.let { gameViewModel.loadResults(MyApplication.getInstance().company.sequence!!.id!!, true, it, edxFrom.text, edxTo.text) }
+                        gameType?.let { gameViewModel.loadIndReports(
+                            user.sequence.id!!,
+                            user.company!!.sequence!!.id!!,
+                            true, it, edxFrom.text, edxTo.text) }
+                        gameType?.let { gameViewModel.getIndTotalReport(
+                            user.sequence.id!!,
+                            user.company!!.sequence!!.id!!, it, edxFrom.text, edxTo.text) }
                     }else if (edxFrom.text.length<10){
                         edxFrom.focus()
                     }
@@ -151,7 +173,15 @@ class ResultListActivity : ProtectedActivity(),
                 GameType.values().forEach {
                     if(it.id == dataAdapter.getItem(position)!!.id){
                         gameType= it
-                        gameViewModel.loadResults(MyApplication.getInstance().company.sequence!!.id!!, true, gameType!!, edxFrom.text, edxTo.text)
+                        if (form.isValid()){
+                            gameViewModel.loadIndReports(
+                                user.sequence.id!!,
+                                user.company!!.sequence!!.id!!,
+                                true, gameType!!, edxFrom.text, edxTo.text)
+                            gameType?.let{ gameViewModel.getIndTotalReport(
+                                user.sequence.id!!,
+                                user.company!!.sequence!!.id!!, gameType!!, edxFrom.text, edxTo.text) }
+                        }
                     }
                 }
             }
@@ -160,43 +190,44 @@ class ResultListActivity : ProtectedActivity(),
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
-//        gameViewModel.saveState()
-        super.onSaveInstanceState(outState, outPersistentState)
-    }
-
     private fun setUpAdapter() {
-        rclResult.setHasFixedSize(true)
-        rclResult.layoutManager= LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        rclReport.setHasFixedSize(true)
+        rclReport.layoutManager= LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        resultListAdapter= ResultListAdapter(if(isSaveState) gameViewModel.results else arrayListOf())
-        gameViewModel.results.clear()
+        reportAdapter= SellerReportAdapter(
+            if(isSaveState) gameViewModel.reports else arrayListOf()
+        )
+        gameViewModel.reports.clear()
 
-        rclResult.adapter= resultListAdapter
-
+        rclReport.adapter= reportAdapter
         observe()
         setLoadMoreListener()
-
-        fltAdd.setOnClickListener {
-            startActivityForResult(Intent(this, ResultActivity::class.java), REFRESH_REQUEST_CODE)
-        }
     }
 
     private fun observe() {
-        gameViewModel.lastAddedResultsData.observe(this,
-            { results ->
-                addResults(results)
+        gameViewModel.lastAddedReportsData.observe(this,
+            { reports ->
+                addReports(reports)
                 progressBar.progressiveStop()
-                swpLayout.isRefreshing= false
+//                swpLayout.isRefreshing= false
             })
+        gameViewModel.totalReportData.observe(this, {
+                totalReport->
+            txtEnter.text= getString(R.string.enter_value, if(totalReport!= null) totalReport.data?.entry?.toFloat() else 0f)
+            txtOut.text= getString(R.string.out_value, if(totalReport!= null) totalReport.data?.out?.toFloat() else 0f)
+            txtAmount.text= if(totalReport!= null) String.format("%.0f", (totalReport.data?.entry!!-totalReport.data.out)) else "0"
+            pgbReport.visibility= GONE
+            header_content.visibility= VISIBLE
+        })
+
     }
 
-    private fun addResults(results: ArrayList<Result>) {
+    private fun addReports(reports: ArrayList<Report>) {
         loadMoreListener?.setFinished(false)
-        if(results.isEmpty()){
+        if(reports.isEmpty()){
             if(gameViewModel.page== 0){
-                resultListAdapter.results.clear()
-                resultListAdapter.notifyDataSetChanged()
+                reportAdapter.reports.clear()
+                reportAdapter.notifyDataSetChanged()
                 txtInfo.visibility= View.VISIBLE
             }else{
                 txtInfo.visibility= View.GONE
@@ -206,48 +237,37 @@ class ResultListActivity : ProtectedActivity(),
             return
         }else{
             txtInfo.visibility= View.GONE
-            if(gameViewModel.page== 0){
-                if(results[0].night== null){
-                    results.add(0, Result(results[0].morning, null))
-                }else{
-                    results.add(0, Result(null, results[0].night))
-                }
-            }
         }
         val isFirstPage= gameViewModel.page== 0
-        if(results.size< LoadMoreListener.SIZE_PER_PAGE)
+        if(reports.size< LoadMoreListener.SIZE_PER_PAGE)
             loadMoreListener?.setFinished(true)
-        val lastPosition= resultListAdapter.results.size
+        val lastPosition= reportAdapter.reports.size
         if(isFirstPage)
-            resultListAdapter.results.clear()
+            reportAdapter.reports.clear()
 
-        resultListAdapter.results.addAll(results)
+        reportAdapter.reports.addAll(reports)
 
         if(isFirstPage){
-            resultListAdapter.notifyDataSetChanged()
+            reportAdapter.notifyDataSetChanged()
         } else{
-            resultListAdapter.notifyItemRangeInserted(lastPosition, results.size)
+            reportAdapter.notifyItemRangeInserted(lastPosition, reports.size)
         }
         loadMoreListener?.setLoaded()
 
     }
 
     private fun setLoadMoreListener() {
-        loadMoreListener?.let { rclResult.removeOnScrollListener(loadMoreListener!!) }
-        loadMoreListener=  LoadMoreListener(rclResult.layoutManager as LinearLayoutManager)
+        loadMoreListener?.let { rclReport.removeOnScrollListener(loadMoreListener!!) }
+        loadMoreListener=  LoadMoreListener(rclReport.layoutManager as LinearLayoutManager)
         loadMoreListener?.setOnLoadMoreListener(this)
-        rclResult.addOnScrollListener(loadMoreListener!!)
+        rclReport.addOnScrollListener(loadMoreListener!!)
     }
 
     override fun onLoadMore() {
-        gameType?.let { gameViewModel.loadResults(MyApplication.getInstance().company.sequence!!.id!!, false, it, edxFrom.text, edxTo.text) }
+        gameType?.let { gameViewModel.loadIndReports(
+            user.sequence.id!!,
+            user.company!!.sequence!!.id!!,
+            false, it, edxFrom.text, edxTo.text) }
         progressBar.progressiveStart()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode== REFRESH_REQUEST_CODE && resultCode== Activity.RESULT_OK){
-            gameType?.let { gameViewModel.loadResults(MyApplication.getInstance().company.sequence!!.id!!, true, it, edxFrom.text, edxTo.text) }
-        }
     }
 }

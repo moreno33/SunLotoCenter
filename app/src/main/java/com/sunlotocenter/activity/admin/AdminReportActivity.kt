@@ -1,5 +1,4 @@
 package com.sunlotocenter.activity.admin
-import android.opengl.Visibility
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -14,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.sunlotocenter.MyApplication
 import com.sunlotocenter.activity.ProtectedActivity
 import com.sunlotocenter.R
-import com.sunlotocenter.adapter.ReportAdapter
+import com.sunlotocenter.adapter.AdminReportAdapter
 import com.sunlotocenter.dao.GameType
 import com.sunlotocenter.dao.Report
 import com.sunlotocenter.extensions.enableHome
@@ -36,7 +35,7 @@ class AdminReportActivity : ProtectedActivity(),
     LoadMoreListener.OnLoadMoreListener{
 
     private var loadMoreListener: LoadMoreListener?= null
-    private lateinit var reportAdapter: ReportAdapter
+    private lateinit var adminReportAdapter: AdminReportAdapter
     private lateinit var gameViewModel: GameViewModel
     private var isSaveState= false
     private var gameType: GameType?= null
@@ -60,7 +59,7 @@ class AdminReportActivity : ProtectedActivity(),
         prepareControl()
 
         gameType?.let { gameViewModel.loadReports(MyApplication.getInstance().company.sequence!!.id!!, true, it, "", "") }
-        gameType?.let{ gameViewModel.getTotalReport(gameType!!, "", "") }
+        gameType?.let{ gameViewModel.getTotalReport(MyApplication.getInstance().company.sequence!!.id!!, gameType!!, "", "") }
 //        swpLayout.isRefreshing= true
 //        swpLayout.setOnRefreshListener {
 //            gameType?.let { gameViewModel.loadReports(true, it, edxFrom.text, edxTo.text) }
@@ -87,12 +86,12 @@ class AdminReportActivity : ProtectedActivity(),
                     edxFrom.setSelection(edxFrom.text.length)
                 }else if(edxFrom.text.isEmpty() && edxTo.text.isEmpty()){
                     gameType?.let { gameViewModel.loadReports(MyApplication.getInstance().company.sequence!!.id!!, true, it, "", "") }
-                    gameType?.let{ gameViewModel.getTotalReport(gameType!!, "", "") }
+                    gameType?.let{ gameViewModel.getTotalReport(MyApplication.getInstance().company.sequence!!.id!!, gameType!!, "", "") }
                 }
                 if(s.length== 10){
                     if(edxTo.text.length== 10 && form.isValid()){
                         gameType?.let { gameViewModel.loadReports(MyApplication.getInstance().company.sequence!!.id!!, true, it, edxFrom.text, edxTo.text) }
-                        gameType?.let { gameViewModel.getTotalReport(it, edxFrom.text, edxTo.text) }
+                        gameType?.let { gameViewModel.getTotalReport(MyApplication.getInstance().company.sequence!!.id!!, it, edxFrom.text, edxTo.text) }
                     }else if(edxTo.text.length<10){
                         edxTo.focus()
                     }
@@ -119,13 +118,13 @@ class AdminReportActivity : ProtectedActivity(),
                 }else if(edxFrom.text.isEmpty() && edxTo.text.isEmpty()){
                     gameType?.let { gameViewModel.loadReports(MyApplication.getInstance().company.sequence!!.id!!,
                         true, it, "", "") }
-                    gameType?.let{ gameViewModel.getTotalReport(gameType!!, "", "") }
+                    gameType?.let{ gameViewModel.getTotalReport(MyApplication.getInstance().company.sequence!!.id!!, gameType!!, "", "") }
                 }
                 if(s.length== 10){
                     if(edxFrom.text.length== 10 && form.isValid()){
                         gameType?.let { gameViewModel.loadReports(MyApplication.getInstance().company.sequence!!.id!!,
                             true, it, edxFrom.text, edxTo.text) }
-                        gameType?.let { gameViewModel.getTotalReport(it, edxFrom.text, edxTo.text) }
+                        gameType?.let { gameViewModel.getTotalReport(MyApplication.getInstance().company.sequence!!.id!!, it, edxFrom.text, edxTo.text) }
                     }else if (edxFrom.text.length<10){
                         edxFrom.focus()
                     }
@@ -158,7 +157,7 @@ class AdminReportActivity : ProtectedActivity(),
                         if (form.isValid()){
                             gameViewModel.loadReports(MyApplication.getInstance().company.sequence!!.id!!,
                                 true, gameType!!, edxFrom.text, edxTo.text)
-                            gameType?.let{ gameViewModel.getTotalReport(gameType!!, edxFrom.text, edxTo.text) }
+                            gameType?.let{ gameViewModel.getTotalReport(MyApplication.getInstance().company.sequence!!.id!!, gameType!!, edxFrom.text, edxTo.text) }
                         }
                     }
                 }
@@ -172,12 +171,12 @@ class AdminReportActivity : ProtectedActivity(),
         rclReport.setHasFixedSize(true)
         rclReport.layoutManager= LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        reportAdapter= ReportAdapter(
+        adminReportAdapter= AdminReportAdapter(
             if(isSaveState) gameViewModel.reports else arrayListOf()
         )
         gameViewModel.reports.clear()
 
-        rclReport.adapter= reportAdapter
+        rclReport.adapter= adminReportAdapter
         observe()
         setLoadMoreListener()
     }
@@ -204,8 +203,8 @@ class AdminReportActivity : ProtectedActivity(),
         loadMoreListener?.setFinished(false)
         if(reports.isEmpty()){
             if(gameViewModel.page== 0){
-                reportAdapter.reports.clear()
-                reportAdapter.notifyDataSetChanged()
+                adminReportAdapter.reports.clear()
+                adminReportAdapter.notifyDataSetChanged()
                 txtInfo.visibility= View.VISIBLE
             }else{
                 txtInfo.visibility= View.GONE
@@ -219,16 +218,16 @@ class AdminReportActivity : ProtectedActivity(),
         val isFirstPage= gameViewModel.page== 0
         if(reports.size< LoadMoreListener.SIZE_PER_PAGE)
             loadMoreListener?.setFinished(true)
-        val lastPosition= reportAdapter.reports.size
+        val lastPosition= adminReportAdapter.reports.size
         if(isFirstPage)
-            reportAdapter.reports.clear()
+            adminReportAdapter.reports.clear()
 
-        reportAdapter.reports.addAll(reports)
+        adminReportAdapter.reports.addAll(reports)
 
         if(isFirstPage){
-            reportAdapter.notifyDataSetChanged()
+            adminReportAdapter.notifyDataSetChanged()
         } else{
-            reportAdapter.notifyItemRangeInserted(lastPosition, reports.size)
+            adminReportAdapter.notifyItemRangeInserted(lastPosition, reports.size)
         }
         loadMoreListener?.setLoaded()
 

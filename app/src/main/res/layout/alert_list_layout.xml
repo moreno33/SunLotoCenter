@@ -17,28 +17,28 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            android:text="10"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/main_text_size"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/txtGame"
+            app:layout_constraintEnd_toStartOf="@+id/txtPrice"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:gravity="center"/>
 
         <TextView
-            android:id="@+id/txtGame"
+            android:id="@+id/txtPrice"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            android:text="Bòlèt"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/main_text_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/txtType"
             app:layout_constraintStart_toEndOf="@id/txtCode"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:gravity="center"/>
 
         <TextView
             android:id="@+id/txtType"
@@ -46,39 +46,27 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            android:text="NEW YORK"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/main_text_size"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/txtCreationDate"
-            app:layout_constraintStart_toEndOf="@id/txtGame"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toStartOf="@id/txtSession"
+            app:layout_constraintStart_toEndOf="@id/txtPrice"
+            app:layout_constraintTop_toTopOf="parent"
+            android:gravity="center"/>
 
         <TextView
-            android:id="@+id/txtCreationDate"
+            android:id="@+id/txtSession"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            android:text="Aug 10, 2021:20h50"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/main_text_size"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/imgDelete"
-            app:layout_constraintStart_toEndOf="@+id/txtType"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/imgDelete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:paddingEnd="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/txtCreationDate"
+            app:layout_constraintStart_toEndOf="@+id/txtType"
             app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/delete_outline_black_16" />
+            android:gravity="center"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -39,4 +39,8 @@
         <item name="colorAccent">@color/white</item>
     </style>
 
+    <style name="AppTheme.NoActionBar.Blank.BlackAccent">
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
 </resources>

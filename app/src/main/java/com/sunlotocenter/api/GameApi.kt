@@ -2,6 +2,7 @@ package com.sunlotocenter.api
 
 import com.sunlotocenter.dao.*
 import com.sunlotocenter.dao.Report
+import com.sunlotocenter.dto.GametDto
 import com.sunlotocenter.dto.Result
 import com.sunlotocenter.dto.TotalReport
 import org.joda.time.DateTime
@@ -42,6 +43,11 @@ interface GameApi {
                         @Path("page") page: Int):
             Call<Response<ArrayList<BlockedGame>>>
 
+    @GET("/alerts/{company}/{page}")
+    fun getGamesUnderAlert(@Path("company") company: Long,
+                        @Path("page") page: Int):
+            Call<Response<ArrayList<GametDto>>>
+
     @POST("/blocks")
     fun saveBlockedGame(@Body blockedGame: BlockedGame, @HeaderMap headers: HashMap<String, String>): Call<Response<BlockedGame>>
 
@@ -51,31 +57,51 @@ interface GameApi {
                    @Path("start") start: String?,
                    @Path("end") end: String?): Call<Response<ArrayList<Report>>>
 
-    @GET("/reports/total/{type}/{start}/{end}")
-    fun getTotalReport(@Path("type") type: GameType,
+    @GET("/reports/ind/{ind}/{company}/{page}/{type}/{start}/{end}")
+    fun getIndReports(@Path("ind") ind: Long,
+                      @Path("company") company: Long,
+                      @Path("page") page: Int,  @Path("type") type: GameType,
+                      @Path("start") start: String?,
+                      @Path("end") end: String?): Call<Response<ArrayList<Report>>>
+
+    @GET("/reports/total/{company}/{type}/{start}/{end}")
+    fun getTotalReport(@Path("company") company: Long,
+                       @Path("type") type: GameType,
                        @Path("start") start: String?= null,
                        @Path("end") end: String?= null): Call<Response<TotalReport>>
 
-    @GET("/results/{page}/{type}/{start}/{end}")
-    fun getResults(@Path("page") page: Int,
+    @GET("/reports/total/ind/{ind}/{company}/{type}/{start}/{end}")
+    fun getIndTotalReport(@Path("ind") ind: Long,
+                          @Path("company") company: Long,
+                          @Path("type") type: GameType,
+                          @Path("start") start: String?= null,
+                          @Path("end") end: String?= null): Call<Response<TotalReport>>
+
+    @GET("/results/{company}/{page}/{type}/{start}/{end}")
+    fun getResults(@Path("company") company: Long,
+                   @Path("page") page: Int,
                    @Path("type") type: GameType,
                    @Path("start") start: String?,
                    @Path("end") end: String?):
             Call<Response<ArrayList<Result>>>
 
 
-    @GET("/slots/{page}/{sequenceId}/{session}")
-    fun getSlots(@Path("page") page: Int,
-                   @Path("sequenceId") sequenceId: Long,
-                   @Path("session") session: GameSession):
+    @GET("/slots/{company}/{page}/{sequenceId}/{session}")
+    fun getSlots(@Path("company") company: Long,
+                 @Path("page") page: Int,
+                 @Path("sequenceId") sequenceId: Long,
+                 @Path("session") session: GameSession):
             Call<Response<ArrayList<Slot>>>
 
 
     @POST("/results")
     fun saveGameResult(@Body gameResult: GameResult, @HeaderMap headers: HashMap<String, String>): Call<Response<GameResult>>
 
-    @GET("/results/for/{type}/{session}")
-    fun getResultFor(@Path("type") type: GameType, @Path("session") session: GameSession): Call<Response<GameResult>>
+    @GET("/results/for/{company}/{type}/{session}")
+    fun getResultFor(@Path("company") company: Long,
+                     @Path("type") type: GameType,
+                     @Path("session") session: GameSession):
+            Call<Response<GameResult>>
 
 
 }

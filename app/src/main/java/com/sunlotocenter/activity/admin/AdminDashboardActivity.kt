@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -14,8 +15,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.sunlotocenter.MyApplication
 import com.sunlotocenter.R
 import com.sunlotocenter.activity.*
+import com.sunlotocenter.adapter.AlertedGameAdapter
+import com.sunlotocenter.adapter.BlockedGameAdapter
 import com.sunlotocenter.adapter.GameScheduleSessionAdapter
 import com.sunlotocenter.dao.*
+import com.sunlotocenter.dto.GametDto
+import com.sunlotocenter.listener.LoadMoreListener
 import com.sunlotocenter.model.GameViewModel
 import com.sunlotocenter.utils.DividerItemDecorator
 import com.sunlotocenter.utils.glide
@@ -24,10 +29,15 @@ import kotlinx.android.synthetic.main.activity_admin_dashboard.toolbar
 import kotlinx.android.synthetic.main.bottom_game_schedule_layout.view.*
 import org.michaelbel.bottomsheet.BottomSheet
 
-class AdminDashboardActivity : ProtectedActivity(), GameScheduleSessionAdapter.GameScheduleSessionListener {
+class AdminDashboardActivity : ProtectedActivity(),
+    GameScheduleSessionAdapter.GameScheduleSessionListener,
+    LoadMoreListener.OnLoadMoreListener{
 
     private lateinit var gameViewModel: GameViewModel
     private var selectedGameScheduleSession: GameScheduleSessionAdapter.GameScheduleSession?= null
+    private var loadMoreListener: LoadMoreListener?= null
+    private var isSaveState= false
+    private lateinit var alertedGameAdapter: AlertedGameAdapter
 
     override fun getLayoutId(): Int {
         return R.layout.activity_admin_dashboard
@@ -43,7 +53,6 @@ class AdminDashboardActivity : ProtectedActivity(), GameScheduleSessionAdapter.G
             Pair(clReports, AdminReportActivity::class.java),
             Pair(clResults, ResultListActivity::class.java),
             Pair(clBanks, BankListActivity::class.java)
-//            Pair(clLimit, PreventTroubleActivity::class.java)
             ))
 
         btnPlay.setOnClickListener {
@@ -54,11 +63,39 @@ class AdminDashboardActivity : ProtectedActivity(), GameScheduleSessionAdapter.G
             gameViewModel.getAllGameSchedules(MyApplication.getInstance().company.sequence!!.id!!)
         }
         observe()
+
+        setUpAdapter()
     }
 
     override fun onResume() {
         super.onResume()
         loadScreen()
+        loadAlert()
+    }
+
+    private fun setUpAdapter() {
+        alertedGameAdapter= AlertedGameAdapter(if(isSaveState) gameViewModel.alertedGames else arrayListOf())
+
+        rclAlert.apply {
+            setHasFixedSize(true)
+            layoutManager= LinearLayoutManager(this@AdminDashboardActivity, LinearLayoutManager.VERTICAL, false)
+            addItemDecoration(DividerItemDecorator(ContextCompat.getDrawable(this@AdminDashboardActivity, R.drawable.game_row_divider)))
+            adapter= alertedGameAdapter
+        }
+        gameViewModel.blockedGames.clear()
+
+        setLoadMoreListener()
+    }
+
+    private fun loadAlert() {
+        gameViewModel.getGamesUnderAlert(MyApplication.getInstance().connectedUser.company!!.sequence!!.id!!, true)
+    }
+
+    private fun setLoadMoreListener() {
+        loadMoreListener?.let { rclAlert.removeOnScrollListener(loadMoreListener!!) }
+        loadMoreListener=  LoadMoreListener(rclAlert.layoutManager as LinearLayoutManager)
+        loadMoreListener?.setOnLoadMoreListener(this)
+        rclAlert.addOnScrollListener(loadMoreListener!!)
     }
 
     private fun observe() {
@@ -69,6 +106,10 @@ class AdminDashboardActivity : ProtectedActivity(), GameScheduleSessionAdapter.G
             }
         })
 
+        gameViewModel.lastAddedGameUnderAlertData.observe(this, { games ->
+            addAlertedGames(games)
+        })
+
         gameViewModel.gameResultData.observe(this, {resultData ->
             dialog.dismiss()
             runOnUiThread {
@@ -76,6 +117,38 @@ class AdminDashboardActivity : ProtectedActivity(), GameScheduleSessionAdapter.G
                 else loadLot(resultData.data)
             }
         })
+    }
+
+    private fun addAlertedGames(alertedGames: List<GametDto>) {
+        loadMoreListener?.setFinished(false)
+        pgbAlert.visibility= View.GONE
+        if(alertedGames.isEmpty()){
+            loadMoreListener?.setFinished(true)
+            loadMoreListener?.setLoaded()
+            if(gameViewModel.page== 0) {
+                txtInfo.visibility= View.VISIBLE
+                alertedGameAdapter.alertedGames.clear()
+                alertedGameAdapter.notifyDataSetChanged()
+            }else{
+                txtInfo.visibility= View.GONE
+            }
+            return
+        }
+        val isFirstPage= gameViewModel.page== 0
+        if(alertedGames.size< LoadMoreListener.SIZE_PER_PAGE)
+            loadMoreListener?.setFinished(true)
+        val lastPosition= alertedGameAdapter.alertedGames.size
+        if(isFirstPage)
+            alertedGameAdapter.alertedGames.clear()
+
+        alertedGameAdapter.alertedGames.addAll(alertedGames)
+
+        if(isFirstPage){
+            alertedGameAdapter.notifyDataSetChanged()
+        } else{
+            alertedGameAdapter.notifyItemRangeInserted(lastPosition, alertedGames.size)
+        }
+        loadMoreListener?.setLoaded()
     }
 
     private fun showMenu(schedules: List<GameSchedule>) {
@@ -182,7 +255,7 @@ class AdminDashboardActivity : ProtectedActivity(), GameScheduleSessionAdapter.G
         this.selectedGameScheduleSession= gameScheduleSession
         txtGame.text= gameScheduleSession.gameSchedule.type?.id
         displayGameSessionImage(gameScheduleSession.gameSession)
-        gameViewModel.getResultFor(this.selectedGameScheduleSession!!)
+        gameViewModel.getResultFor(MyApplication.getInstance().company.sequence!!.id!!, this.selectedGameScheduleSession!!)
     }
 
     private fun displayGameSessionImage(gameSession: GameSession?) {
@@ -191,6 +264,10 @@ class AdminDashboardActivity : ProtectedActivity(), GameScheduleSessionAdapter.G
         }else{
             imgTime.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.moon_waning_crescent))
         }
+    }
+
+    override fun onLoadMore() {
+        gameViewModel.getGamesUnderAlert(MyApplication.getInstance().company.sequence!!.id!!,false)
     }
 
 }

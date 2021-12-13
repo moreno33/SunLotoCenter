@@ -17,6 +17,7 @@ import com.sunlotocenter.activity.ChangePasswordActivity
 import com.sunlotocenter.R
 import com.sunlotocenter.activity.admin.AdminPersonalInfoActivity
 import com.sunlotocenter.activity.admin.BlameListActivity
+import com.sunlotocenter.activity.seller.SellerReportActivity
 import com.sunlotocenter.dao.Sex
 import com.sunlotocenter.dao.User
 import com.sunlotocenter.dao.UserStatus
@@ -61,6 +62,11 @@ class EmployeeListAdapter(var employees: ArrayList<User>, var saveUserListener: 
         holder.imgMenu.setOnClickListener {
             showMenu(it, employee)
         }
+
+        if (position== itemCount)
+            holder.view.visibility= View.GONE
+        else
+            holder.view.visibility= View.VISIBLE
 
     }
 
@@ -124,10 +130,11 @@ class EmployeeListAdapter(var employees: ArrayList<User>, var saveUserListener: 
                     }
                 }
                 item {
-                    labelRes = R.string.balance
+                    labelRes = R.string.report
                     icon = R.drawable.wallet_outline_black_18
                     callback = {
-
+                        context.startActivity(Intent(context, SellerReportActivity::class.java).putExtra(
+                            USER_EXTRA, employee))
                     }
                 }
             }
@@ -147,5 +154,6 @@ class EmployeeListAdapter(var employees: ArrayList<User>, var saveUserListener: 
         val vwStatus by lazy { item.vwStatus }
         val imgProfile by lazy { item.imgProfile }
         val imgMenu by lazy { item.imgMenu }
+        val view by lazy { item.view }
     }
 }

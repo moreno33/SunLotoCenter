@@ -132,7 +132,7 @@ class GameReceiptAdapter(gameSet: Set<Game>) : RecyclerView.Adapter<GameReceiptA
                 var game= games.elementAt(position)
                 holder.txtGame.text= game.number
                 holder.txtOption.text= game.opt
-                holder.txtAmount.text= String.format("%.0f", game.amount)
+                holder.txtAmount.text= context.getString(R.string.price_currency, game.amount)
             }
             BORLET_HEADER->{
                 holder.txtGame.text= context.getString(R.string.borlet)

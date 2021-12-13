@@ -6,6 +6,7 @@ import android.view.View
 import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.sunlotocenter.MyApplication
 import com.sunlotocenter.R
 import com.sunlotocenter.adapter.SlotListAdapter
 import com.sunlotocenter.dao.GameSession
@@ -55,7 +56,7 @@ class SlotListActivity : ProtectedActivity(),
         supportActionBar?.title= getString(R.string.receipt, "${getDateString(report!!.reportDate!!)} (${gameSession!!.id})")
 
         setUpAdapter()
-        gameViewModel.loadSlots(true, report!!.sequence.id!!, gameSession!!)
+        gameViewModel.loadSlots(MyApplication.getInstance().company.sequence!!.id!!, true, report!!.sequence.id!!, gameSession!!)
 //        swpLayout.isRefreshing= true
 //        swpLayout.setOnRefreshListener {
 //            gameViewModel.loadSlots(true, report!!.sequence.id!!, gameSession!!)
@@ -133,7 +134,7 @@ class SlotListActivity : ProtectedActivity(),
     }
 
     override fun onLoadMore() {
-        gameViewModel.loadSlots(false, report!!.sequence.id!!, gameSession!!)
+        gameViewModel.loadSlots(MyApplication.getInstance().company.sequence!!.id!!, false, report!!.sequence.id!!, gameSession!!)
         progressBar.progressiveStart()
     }
 }
