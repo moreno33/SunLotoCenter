@@ -32,7 +32,7 @@ class ConfigurationService : IntentService(TAG) {
         val headers: MutableMap<String, String> = HashMap()
         headers["accept-language"] = Locale.getDefault().toString()
         val getAccountCall: Call<Response<Configuration>> = userApi
-            .getConfigurationData(MyApplication.getInstance().connectedUser.sequence.id)
+            .getConfigurationData(MyApplication.getInstance().connectedUser.sequence!!.id)
 
         getAccountCall.enqueue(object : Callback<Response<Configuration>> {
             /*

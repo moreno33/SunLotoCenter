@@ -51,7 +51,7 @@ class ChangePasswordActivity : ProtectedActivity() {
         )
         form.addInput(edxNewPassword, edxRepeatPasssword)
 
-        if(userExtra!!.sequence.id== MyApplication.getInstance().connectedUser.sequence.id){
+        if(userExtra!!.sequence!!.id== MyApplication.getInstance().connectedUser.sequence!!.id){
             edxOldPassword.addValidator(
                 MinLengthValidator(8, getString(R.string.min_length_validator_error, 8)),
                 MaxLengthValidator(20,getString(R.string.max_lenght_validator_error, 20))
@@ -66,7 +66,7 @@ class ChangePasswordActivity : ProtectedActivity() {
         if(form.isValid()){
             //Now we need to check if the old password is valid
             dialog.show()
-            if(userExtra!!.sequence.id== MyApplication.getInstance().connectedUser.sequence.id)
+            if(userExtra!!.sequence!!.id== MyApplication.getInstance().connectedUser.sequence!!.id)
                 userViewModel.login(userExtra!!.phoneNumber!!.number, edxOldPassword.text)
             else{
                 val user= userExtra
@@ -103,7 +103,7 @@ class ChangePasswordActivity : ProtectedActivity() {
 
                 }, true, DialogType.ERROR)
         }else{
-            if(userExtra!!.sequence.id== MyApplication.getInstance().connectedUser.sequence.id){
+            if(userExtra!!.sequence!!.id== MyApplication.getInstance().connectedUser.sequence!!.id){
                 if(it.success){
                     val user= userExtra
                     user!!.password= edxNewPassword.text.trim()
@@ -142,13 +142,13 @@ class ChangePasswordActivity : ProtectedActivity() {
                 }, true, DialogType.ERROR)
         }else{
             //Update the local data is connected user is changed
-            if(userExtra!!.sequence.id== MyApplication.getInstance().connectedUser.sequence.id)
+            if(userExtra!!.sequence!!.id== MyApplication.getInstance().connectedUser.sequence!!.id)
                 MyApplication.getInstance().connectedUser= it.data
 
             com.sunlotocenter.utils.showDialog(this,
                 getString(R.string.success_title),
                 getString(
-                    if (userExtra!!.sequence.id== MyApplication.getInstance().connectedUser.sequence.id)
+                    if (userExtra!!.sequence!!.id== MyApplication.getInstance().connectedUser.sequence!!.id)
                         R.string.password_change_success
                     else
                         R.string.update_user_password_success_message

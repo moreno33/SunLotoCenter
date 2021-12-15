@@ -429,7 +429,7 @@ class GameViewModel (private val savedStateHandle: SavedStateHandle) : ViewModel
         })
     }
 
-    fun loadSlots(company: Long, isFirstPage: Boolean, sequenceId: Long, gameSession: GameSession) {
+    fun loadIndSlots(company: Long, isFirstPage: Boolean, sequenceId: Long, gameSession: GameSession) {
         if(!isFirstPage)
             page++
         else
@@ -452,6 +452,32 @@ class GameViewModel (private val savedStateHandle: SavedStateHandle) : ViewModel
             }
 
         })
+    }
+
+    fun loadSlots(company: Long, isFirstPage: Boolean, reportDate: String, gameSession: GameSession) {
+        if (!isFirstPage)
+            page++
+        else
+            page = 0
+
+        gameApi.getSlots(company, page, reportDate, gameSession)
+            .enqueue(object : Callback<Response<ArrayList<Slot>>> {
+                override fun onResponse(
+                    call: Call<Response<ArrayList<Slot>>>,
+                    response: retrofit2.Response<Response<ArrayList<Slot>>>
+                ) {
+                    if (response.body() == null) {
+                        lastAddedSlotsData.postValue(ArrayList())
+                    } else {
+                        lastAddedSlotsData.postValue(response.body()!!.data)
+                    }
+                }
+
+                override fun onFailure(call: Call<Response<ArrayList<Slot>>>, t: Throwable) {
+                    lastAddedSlotsData.postValue(ArrayList())
+                }
+
+            })
     }
 
     fun getResultFor(company: Long, gameScheduleSession: GameScheduleSessionAdapter.GameScheduleSession) {

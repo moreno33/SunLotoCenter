@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
@@ -47,6 +48,22 @@ class GameActivity : ProtectedActivity(),
 
     override fun getLayoutId(): Int {
         return R.layout.activity_game
+    }
+
+    private lateinit var activityResult:
+            ActivityResultLauncher<Intent>
+
+    override fun onStart() {
+        super.onStart()
+        activityResult= registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            if(it.resultCode== Activity.RESULT_OK){
+                (it.data?.getSerializableExtra(AutoComposeActivity.GAMES_EXTRA) as TreeSet<Game>).forEach {
+                    if(it.amount> 0)
+                        addGame(it)
+                }
+                gameAdapter.notifyDataSetChanged()
+            }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -215,15 +232,7 @@ class GameActivity : ProtectedActivity(),
         intent.putExtra(AutoComposeActivity.GAMES_EXTRA, lot4Set)
         intent.putExtra(AutoComposeActivity.TITLE_EXTRA, getString(R.string.auto_loto_4))
 
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-            if(it.resultCode== Activity.RESULT_OK){
-                (it.data?.getSerializableExtra(AutoComposeActivity.GAMES_EXTRA) as TreeSet<Game>).forEach {
-                    if(it.amount> 0)
-                        addGame(it)
-                }
-                gameAdapter.notifyDataSetChanged()
-            }
-        }.launch(intent)
+        activityResult.launch(intent)
     }
 
     private fun autoMarry(gameSet: TreeSet<Game>) {
@@ -252,7 +261,7 @@ class GameActivity : ProtectedActivity(),
         var intent= Intent(this, AutoComposeActivity::class.java)
         intent.putExtra(AutoComposeActivity.GAMES_EXTRA, marriedSet)
         intent.putExtra(AutoComposeActivity.TITLE_EXTRA, getString(R.string.marry_all))
-        startActivityForResult(intent, AutoComposeActivity.REQUEST_CODE)
+        activityResult.launch(intent)
     }
 
     private fun manageTabs() {
@@ -344,19 +353,6 @@ class GameActivity : ProtectedActivity(),
             btnTotalPreview.text= getString(R.string.total_preview, size, total)
         }else{
             btnTotalPreview.text= "${getString(R.string.total_preview, size, total)} (${selectedGameScheduleSession!!.gameSchedule.type!!.id}-${selectedGameScheduleSession!!.gameSession.id})"
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == AutoComposeActivity.REQUEST_CODE) {
-            if(resultCode == Activity.RESULT_OK){
-                (data?.getSerializableExtra(AutoComposeActivity.GAMES_EXTRA) as TreeSet<Game>).forEach {
-                    if(it.amount> 0)
-                        addGame(it)
-                }
-                gameAdapter.notifyDataSetChanged()
-            }
         }
     }
 

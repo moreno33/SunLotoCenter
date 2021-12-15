@@ -4,13 +4,17 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sunlotocenter.activity.ProtectedActivity
 import com.sunlotocenter.R
+import com.sunlotocenter.activity.AutoComposeActivity
 import com.sunlotocenter.adapter.BankListAdapter
 import com.sunlotocenter.dao.Bank
+import com.sunlotocenter.dao.Game
 import com.sunlotocenter.dao.Response
 import com.sunlotocenter.extensions.enableHome
 import com.sunlotocenter.listener.LoadMoreListener
@@ -22,6 +26,8 @@ import com.sunlotocenter.utils.REFRESH_REQUEST_CODE
 import kotlinx.android.synthetic.main.activity_bank_list.*
 import kotlinx.android.synthetic.main.activity_bank_list.toolbar
 import kotlinx.android.synthetic.main.activity_prevent_trouble.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class BankListActivity : ProtectedActivity(),
     LoadMoreListener.OnLoadMoreListener,
@@ -36,6 +42,19 @@ class BankListActivity : ProtectedActivity(),
     override fun getLayoutId(): Int {
         return R.layout.activity_bank_list
     }
+
+    lateinit var activityResult:
+            ActivityResultLauncher<Intent>
+
+    override fun onStart() {
+        super.onStart()
+        activityResult= registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            if(it.resultCode== Activity.RESULT_OK){
+                bankViewModel.loadBanks(true)
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableHome(toolbar)
@@ -81,7 +100,7 @@ class BankListActivity : ProtectedActivity(),
         setLoadMoreListener()
 
         fltAdd.setOnClickListener {
-            startActivityForResult(Intent(this, CreateBankActivity::class.java), REFRESH_REQUEST_CODE)
+            activityResult.launch(Intent(this, CreateBankActivity::class.java))
         }
     }
 
@@ -192,12 +211,5 @@ class BankListActivity : ProtectedActivity(),
     override fun save(bank: Bank) {
         dialog.show()
         bankViewModel.save(bank)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode== REFRESH_REQUEST_CODE && resultCode== Activity.RESULT_OK){
-            bankViewModel.loadBanks(true)
-        }
     }
 }

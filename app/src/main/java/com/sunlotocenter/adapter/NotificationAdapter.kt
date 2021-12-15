@@ -31,7 +31,7 @@ class NotificationAdapter(var notifications: ArrayList<Notification>) : Recycler
                 holder.txtName.text= context.getString(R.string.author_system)
                 profilePicture= ""
             }else{
-                if(connetedUser.sequence.id== notification.author!!.sequence.id) {
+                if(connetedUser.sequence!!.id== notification.author!!.sequence!!.id) {
                     holder.txtName.text= context.getString(R.string.you)
                     profilePicture= notification.author!!.profilePath
                 }
@@ -45,7 +45,7 @@ class NotificationAdapter(var notifications: ArrayList<Notification>) : Recycler
                 holder.txtName.text= context.getString(R.string.admin)
                 profilePicture= ""
             }else{
-                if(connetedUser.sequence.id== notification.author!!.sequence.id) {
+                if(connetedUser.sequence!!.id== notification.author!!.sequence!!.id) {
                     holder.txtName.text= context.getString(R.string.you)
                     profilePicture= notification.author!!.profilePath
                 } else {

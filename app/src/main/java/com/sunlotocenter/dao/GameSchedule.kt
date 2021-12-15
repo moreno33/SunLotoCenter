@@ -18,7 +18,7 @@ class GameSchedule (sequence: Sequence,
                 var gameSchedule: GameSchedule = try {
                     super.clone() as GameSchedule
                 } catch (e: CloneNotSupportedException) {
-                    GameSchedule(this.sequence, this.type, this.morningTime, this.nightTime, this.secInterval, this.author, this.status, company = company)
+                    GameSchedule(this.sequence!!, this.type, this.morningTime, this.nightTime, this.secInterval, this.author, this.status, company = company)
                 }
                 return gameSchedule
             }

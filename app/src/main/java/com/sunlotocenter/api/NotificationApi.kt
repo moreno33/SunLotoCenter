@@ -12,6 +12,8 @@ interface NotificationApi {
     @GET("/broadcasts/{id}")
     fun getNotificationById(@Path("id") notificationId: Long): Call<Response<Notification>>
 
-    @GET("/broadcasts/pages/{company}/{page}")
-    fun loadNotifications(@Path("company") company: Long, @Path("page") page: Int): Call<Response<ArrayList<Notification>>>
+    @GET("/broadcasts/pages/{user}/{company}/{page}")
+    fun loadNotifications(@Path("user") user: Long,
+        @Path("company") company: Long,
+        @Path("page") page: Int): Call<Response<ArrayList<Notification>>>
 }

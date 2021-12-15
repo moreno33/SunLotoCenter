@@ -86,10 +86,17 @@ interface GameApi {
             Call<Response<ArrayList<Result>>>
 
 
-    @GET("/slots/{company}/{page}/{sequenceId}/{session}")
+    @GET("/slots/ind/{company}/{page}/{sequenceId}/{session}")
     fun getSlots(@Path("company") company: Long,
                  @Path("page") page: Int,
                  @Path("sequenceId") sequenceId: Long,
+                 @Path("session") session: GameSession):
+            Call<Response<ArrayList<Slot>>>
+
+    @GET("/slots/{company}/{page}/{reportDate}/{session}")
+    fun getSlots(@Path("company") company: Long,
+                 @Path("page") page: Int,
+                 @Path("reportDate") reportDate: String,
                  @Path("session") session: GameSession):
             Call<Response<ArrayList<Slot>>>
 

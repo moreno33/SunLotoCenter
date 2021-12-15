@@ -6,9 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.sunlotocenter.MyApplication
 import com.sunlotocenter.R
+import com.sunlotocenter.activity.ResultListActivity
 import com.sunlotocenter.activity.admin.ResultActivity
+import com.sunlotocenter.dao.Admin
 import com.sunlotocenter.dto.Result
 import com.sunlotocenter.utils.*
 import kotlinx.android.synthetic.main.result_header_layout.view.*
@@ -38,10 +42,14 @@ class ResultListAdapter(var results: ArrayList<Result>) :
             holder.txtFirst.text= resultHeader?.lo1
             holder.txtSecond.text= resultHeader?.lo2
             holder.txtThird.text= resultHeader?.lo3
+            if(MyApplication.getInstance().connectedUser is Admin){
+                holder.imgEdit.visibility= View.VISIBLE
+            }else{
+                holder.imgEdit.visibility= View.GONE
+            }
             holder.imgEdit.setOnClickListener {
-                (context as AppCompatActivity).startActivityForResult(
-                    Intent(context, ResultActivity::class.java).putExtra(RESULT_EXTRA, resultHeader),
-                    REFRESH_REQUEST_CODE)
+                (context as ResultListActivity).activityResult.launch(
+                    Intent(context, ResultActivity::class.java).putExtra(RESULT_EXTRA, resultHeader))
             }
         }
         else{

@@ -58,6 +58,7 @@ class AdminReportActivity : ProtectedActivity(),
         setUpAdapter()
         prepareControl()
 
+        dialog.show()
         gameType?.let { gameViewModel.loadReports(MyApplication.getInstance().company.sequence!!.id!!, true, it, "", "") }
         gameType?.let{ gameViewModel.getTotalReport(MyApplication.getInstance().company.sequence!!.id!!, gameType!!, "", "") }
 //        swpLayout.isRefreshing= true
@@ -85,11 +86,13 @@ class AdminReportActivity : ProtectedActivity(),
                     edxFrom.text= "${s.substring(0,5)}-${s.substring(5)}"
                     edxFrom.setSelection(edxFrom.text.length)
                 }else if(edxFrom.text.isEmpty() && edxTo.text.isEmpty()){
+                    dialog.show()
                     gameType?.let { gameViewModel.loadReports(MyApplication.getInstance().company.sequence!!.id!!, true, it, "", "") }
                     gameType?.let{ gameViewModel.getTotalReport(MyApplication.getInstance().company.sequence!!.id!!, gameType!!, "", "") }
                 }
                 if(s.length== 10){
                     if(edxTo.text.length== 10 && form.isValid()){
+                        dialog.show()
                         gameType?.let { gameViewModel.loadReports(MyApplication.getInstance().company.sequence!!.id!!, true, it, edxFrom.text, edxTo.text) }
                         gameType?.let { gameViewModel.getTotalReport(MyApplication.getInstance().company.sequence!!.id!!, it, edxFrom.text, edxTo.text) }
                     }else if(edxTo.text.length<10){
@@ -116,12 +119,14 @@ class AdminReportActivity : ProtectedActivity(),
                     edxTo.text= "${s.substring(0,5)}-${s.substring(5)}"
                     edxTo.setSelection(edxTo.text.length)
                 }else if(edxFrom.text.isEmpty() && edxTo.text.isEmpty()){
+                    dialog.show()
                     gameType?.let { gameViewModel.loadReports(MyApplication.getInstance().company.sequence!!.id!!,
                         true, it, "", "") }
                     gameType?.let{ gameViewModel.getTotalReport(MyApplication.getInstance().company.sequence!!.id!!, gameType!!, "", "") }
                 }
                 if(s.length== 10){
                     if(edxFrom.text.length== 10 && form.isValid()){
+                        dialog.show()
                         gameType?.let { gameViewModel.loadReports(MyApplication.getInstance().company.sequence!!.id!!,
                             true, it, edxFrom.text, edxTo.text) }
                         gameType?.let { gameViewModel.getTotalReport(MyApplication.getInstance().company.sequence!!.id!!, it, edxFrom.text, edxTo.text) }
@@ -155,6 +160,7 @@ class AdminReportActivity : ProtectedActivity(),
                     if(it.id == dataAdapter.getItem(position)!!.id){
                         gameType= it
                         if (form.isValid()){
+                            dialog.show()
                             gameViewModel.loadReports(MyApplication.getInstance().company.sequence!!.id!!,
                                 true, gameType!!, edxFrom.text, edxTo.text)
                             gameType?.let{ gameViewModel.getTotalReport(MyApplication.getInstance().company.sequence!!.id!!, gameType!!, edxFrom.text, edxTo.text) }
@@ -184,8 +190,9 @@ class AdminReportActivity : ProtectedActivity(),
     private fun observe() {
         gameViewModel.lastAddedReportsData.observe(this,
             { reports ->
-                addReports(reports)
+                dialog.dismiss()
                 progressBar.progressiveStop()
+                addReports(reports)
 //                swpLayout.isRefreshing= false
             })
         gameViewModel.totalReportData.observe(this, {
@@ -205,15 +212,15 @@ class AdminReportActivity : ProtectedActivity(),
             if(gameViewModel.page== 0){
                 adminReportAdapter.reports.clear()
                 adminReportAdapter.notifyDataSetChanged()
-                txtInfo.visibility= View.VISIBLE
+                txtInfo.visibility= VISIBLE
             }else{
-                txtInfo.visibility= View.GONE
+                txtInfo.visibility= GONE
             }
             loadMoreListener?.setFinished(true)
             loadMoreListener?.setLoaded()
             return
         }else{
-            txtInfo.visibility= View.GONE
+            txtInfo.visibility= GONE
         }
         val isFirstPage= gameViewModel.page== 0
         if(reports.size< LoadMoreListener.SIZE_PER_PAGE)

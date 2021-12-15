@@ -131,7 +131,7 @@ class NotificationService: FirebaseMessagingService(){
                                                     }
 
                                                 }else{
-                                                    if(MyApplication.getInstance().connectedUser.sequence.id!! != notification.author!!.sequence.id!!){
+                                                    if(MyApplication.getInstance().connectedUser.sequence!!.id!! != notification.author!!.sequence!!.id!!){
                                                         val bigImage: String = MyApplication.BASE_URL + "/users/profile/picture/0"
                                                         val intent: Intent = Intent(
                                                             this@NotificationService,

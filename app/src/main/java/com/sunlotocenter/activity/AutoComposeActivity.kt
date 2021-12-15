@@ -34,7 +34,7 @@ class AutoComposeActivity :  ProtectedActivity() {
         setupAdapter(gamesExtra)
 
         //Control all amount
-        edxMarryAll.addTextChangedListener(object :TextWatcher{
+        edxAllAmount.addTextChangedListener(object :TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 

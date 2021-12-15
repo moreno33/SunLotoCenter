@@ -1,11 +1,13 @@
 package com.sunlotocenter.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.View
 import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.application.isradeleon.thermalprinter.ConnectBluetoothActivity
 import com.sunlotocenter.MyApplication
 import com.sunlotocenter.R
 import com.sunlotocenter.adapter.SlotListAdapter
@@ -22,9 +24,11 @@ import kotlinx.android.synthetic.main.activity_slot_list.progressBar
 //import kotlinx.android.synthetic.main.activity_slot_list.swpLayout
 import kotlinx.android.synthetic.main.activity_slot_list.toolbar
 import kotlinx.android.synthetic.main.activity_slot_list.txtInfo
+import org.joda.time.DateTimeZone
+import org.joda.time.format.DateTimeFormat
 
 class SlotListActivity : ProtectedActivity(),
-    LoadMoreListener.OnLoadMoreListener{
+    LoadMoreListener.OnLoadMoreListener, SlotListAdapter.OnUpdateSlot{
 
     private var loadMoreListener: LoadMoreListener?= null
     private lateinit var slotListAdapter: SlotListAdapter
@@ -56,7 +60,14 @@ class SlotListActivity : ProtectedActivity(),
         supportActionBar?.title= getString(R.string.receipt, "${getDateString(report!!.reportDate!!)} (${gameSession!!.id})")
 
         setUpAdapter()
-        gameViewModel.loadSlots(MyApplication.getInstance().company.sequence!!.id!!, true, report!!.sequence.id!!, gameSession!!)
+
+        if(report!!.sequence == null)
+            gameViewModel.loadSlots(MyApplication.getInstance().company.sequence!!.id!!, true,
+                getDateString(report!!.reportDate, DateTimeFormat.forPattern("MM-dd-yyyy"),
+                    DateTimeZone.forID("America/New_York"))!!, gameSession!!)
+        else
+            gameViewModel.loadIndSlots(MyApplication.getInstance().company.sequence!!.id!!, true, report!!.sequence!!.id!!, gameSession!!)
+
 //        swpLayout.isRefreshing= true
 //        swpLayout.setOnRefreshListener {
 //            gameViewModel.loadSlots(true, report!!.sequence.id!!, gameSession!!)
@@ -70,7 +81,7 @@ class SlotListActivity : ProtectedActivity(),
 
     private fun setUpAdapter() {
         slotListAdapter= SlotListAdapter(
-            if(isSaveState) gameViewModel.slots else arrayListOf())
+            if(isSaveState) gameViewModel.slots else arrayListOf(), this)
         gameViewModel.slots.clear()
 
         rclSlot.apply {
@@ -89,6 +100,44 @@ class SlotListActivity : ProtectedActivity(),
                 progressBar.progressiveStop()
 //                swpLayout.isRefreshing= false
             })
+
+        gameViewModel.slotResponseData.observe(this,
+            {
+                dialog.dismiss()
+                if(it== null){
+                    showDialog(this@SlotListActivity,
+                        getString(R.string.internet_error_title),
+                        getString(
+                            R.string.internet_error_message
+                        ),
+                        getString(R.string.ok),
+                        object : ClickListener {
+                            override fun onClick(): Boolean {
+                                return false
+                            }
+                        }, true, DialogType.ERROR)
+                }else{
+                    showDialog(this@SlotListActivity,
+                        getString(
+                            if(it.success)R.string.success_title else R.string.internet_error_title
+                        ),
+                        if (it.success) getString(R.string.game_update_success_message) else it.message!!
+                        ,
+                        getString(
+                            if(it.success)R.string.print_receipt else R.string.ok
+                        ),
+                        object : ClickListener {
+                            override fun onClick(): Boolean {
+                                return false
+                            }
+
+                        },
+                        false,
+                        if(it.success) DialogType.SUCCESS else DialogType.ERROR)
+                }
+            })
+
+
     }
 
     private fun addResults(slots: ArrayList<Slot>) {
@@ -134,7 +183,16 @@ class SlotListActivity : ProtectedActivity(),
     }
 
     override fun onLoadMore() {
-        gameViewModel.loadSlots(MyApplication.getInstance().company.sequence!!.id!!, false, report!!.sequence.id!!, gameSession!!)
+        if(report!!.sequence== null)
+            gameViewModel.loadSlots(MyApplication.getInstance().company.sequence!!.id!!, true,
+                getDateString(report!!.reportDate, DateTimeFormat.forPattern("MM-dd-yyyy"),
+                    DateTimeZone.forID("America/New_York"))!!, gameSession!!)
+        else
+            gameViewModel.loadIndSlots(MyApplication.getInstance().company.sequence!!.id!!, true, report!!.sequence!!.id!!, gameSession!!)
         progressBar.progressiveStart()
+    }
+
+    override fun onUpdate(slot: Slot) {
+        gameViewModel.play(slot)
     }
 }

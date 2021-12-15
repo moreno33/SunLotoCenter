@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.provider.BlockedNumberContract.unblock
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
@@ -11,12 +13,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.sunlotocenter.MyApplication
 import com.sunlotocenter.activity.ProtectedActivity
 import com.sunlotocenter.R
+import com.sunlotocenter.activity.AutoComposeActivity
 import com.sunlotocenter.adapter.BlockedGameAdapter
 import com.sunlotocenter.adapter.GameScheduleAdapter
-import com.sunlotocenter.dao.BlockedGame
-import com.sunlotocenter.dao.GameAlertAndBlock
-import com.sunlotocenter.dao.GamePrice
-import com.sunlotocenter.dao.GameSchedule
+import com.sunlotocenter.dao.*
 import com.sunlotocenter.extensions.enableHome
 import com.sunlotocenter.listener.LoadMoreListener
 import com.sunlotocenter.model.GameViewModel
@@ -26,6 +26,8 @@ import com.sunlotocenter.validator.GreaterThanZeroValidator
 import kotlinx.android.synthetic.main.activity_prevent_trouble.*
 import kotlinx.android.synthetic.main.activity_prevent_trouble.toolbar
 import org.modelmapper.ModelMapper
+import java.util.*
+import kotlin.collections.ArrayList
 
 class PreventTroubleActivity : ProtectedActivity(),
     LoadMoreListener.OnLoadMoreListener,
@@ -44,6 +46,20 @@ class PreventTroubleActivity : ProtectedActivity(),
     override fun getLayoutId(): Int {
         return R.layout.activity_prevent_trouble
     }
+
+    private lateinit var activityResult:
+            ActivityResultLauncher<Intent>
+
+    override fun onStart() {
+        super.onStart()
+        activityResult= registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            if(it.resultCode== Activity.RESULT_OK){
+                dialog.show()
+                gameViewModel.loadBlockedGame(MyApplication.getInstance().company.sequence!!.id!!,true)
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableHome(toolbar)
@@ -64,7 +80,7 @@ class PreventTroubleActivity : ProtectedActivity(),
         setUpAdapter()
 
         btnAddBlock.setOnClickListener {
-            startActivityForResult(Intent(this, BlockedGameActivity::class.java), REFRESH_REQUEST_CODE)
+            activityResult.launch(Intent(this, BlockedGameActivity::class.java))
         }
 
         dialog.show()
@@ -245,14 +261,6 @@ class PreventTroubleActivity : ProtectedActivity(),
 
     override fun onLoadMore() {
         gameViewModel.loadBlockedGame(MyApplication.getInstance().company.sequence!!.id!!,false)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode== REFRESH_REQUEST_CODE && resultCode== Activity.RESULT_OK){
-            dialog.show()
-            gameViewModel.loadBlockedGame(MyApplication.getInstance().company.sequence!!.id!!,true)
-        }
     }
 
     override fun onChange(blockedGame: BlockedGame) {

@@ -17,21 +17,54 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/main_edit_text_background"
-            android:paddingTop="32dp"
+            android:paddingTop="70dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent" />
 
-        </androidx.recyclerview.widget.RecyclerView>
 
-        <ImageView
-            android:id="@+id/imgCopy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageButton
+            android:id="@+id/imgCancel"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/round_button"
             android:padding="16dp"
-            android:src="@drawable/content_copy_black_16"
+            android:src="@drawable/window_close_black_10"
+            app:layout_constraintEnd_toEndOf="@id/rclSlotRow"
+            app:layout_constraintEnd_toStartOf="@id/imgCopy"
+            app:layout_constraintTop_toTopOf="@id/rclSlotRow" />
+
+        <ImageButton
+            android:id="@+id/imgCopy"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/round_button"
+            android:padding="16dp"
+            android:src="@drawable/content_copy_black_10"
             app:layout_constraintEnd_toEndOf="@id/rclSlotRow"
             app:layout_constraintTop_toTopOf="@id/rclSlotRow" />
+
+        <TextView
+            android:id="@+id/txtNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="TextView"
+            android:textColor="@color/white"
+            android:textSize="@dimen/main_text_size"
+            app:layout_constraintBottom_toBottomOf="@+id/imgCancel"
+            app:layout_constraintStart_toStartOf="@+id/rclSlotRow"
+            app:layout_constraintTop_toTopOf="@+id/imgCancel"
+            android:background="@drawable/blue_round_background"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:paddingRight="16dp"
+            android:paddingLeft="16dp"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>

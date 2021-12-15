@@ -80,13 +80,13 @@ class NotificationViewModel (private val savedStateHandle: SavedStateHandle) : V
         })
     }
 
-    fun loadNotifications(company: Long, isFirstPage: Boolean) {
+    fun loadNotifications(user: Long, company: Long, isFirstPage: Boolean) {
         if(!isFirstPage)
             page++
         else
             page= 0
 
-        notificationApi.loadNotifications(company, page).enqueue(object: Callback<Response<ArrayList<Notification>>>{
+        notificationApi.loadNotifications(user, company, page).enqueue(object: Callback<Response<ArrayList<Notification>>>{
             override fun onResponse(
                 call: Call<Response<ArrayList<Notification>>>,
                 response: retrofit2.Response<Response<ArrayList<Notification>>>

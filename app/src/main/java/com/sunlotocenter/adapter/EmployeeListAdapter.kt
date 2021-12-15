@@ -17,6 +17,7 @@ import com.sunlotocenter.activity.ChangePasswordActivity
 import com.sunlotocenter.R
 import com.sunlotocenter.activity.admin.AdminPersonalInfoActivity
 import com.sunlotocenter.activity.admin.BlameListActivity
+import com.sunlotocenter.activity.admin.EmployeeListActivity
 import com.sunlotocenter.activity.seller.SellerReportActivity
 import com.sunlotocenter.dao.Sex
 import com.sunlotocenter.dao.User
@@ -90,16 +91,16 @@ class EmployeeListAdapter(var employees: ArrayList<User>, var saveUserListener: 
                     labelRes = R.string.update_user
                     icon = R.drawable.account_outline_18
                     callback = {
-                        (context as AppCompatActivity).startActivityForResult(Intent(context, AdminPersonalInfoActivity::class.java).putExtra(
-                            USER_EXTRA, employee), REFRESH_REQUEST_CODE)
+                        (context as EmployeeListActivity).activityResult.launch(Intent(context, AdminPersonalInfoActivity::class.java).putExtra(
+                            USER_EXTRA, employee))
                     }
                 }
                 item {
                     labelRes = R.string.addOrChangePassword
                     icon = R.drawable.lock_outline_18
                     callback = {
-                        (context as AppCompatActivity).startActivityForResult(Intent(context, ChangePasswordActivity::class.java).putExtra(
-                            USER_EXTRA, employee), REFRESH_REQUEST_CODE)
+                        (context as EmployeeListActivity).activityResult.launch(Intent(context, ChangePasswordActivity::class.java).putExtra(
+                            USER_EXTRA, employee))
                     }
                 }
                 item {
@@ -125,8 +126,8 @@ class EmployeeListAdapter(var employees: ArrayList<User>, var saveUserListener: 
                     labelRes = R.string.reprimand
                     icon = R.drawable.account_alert_outline_black_18
                     callback = {
-                        (context as AppCompatActivity).startActivityForResult(Intent(context, BlameListActivity::class.java).putExtra(
-                            USER_EXTRA, employee), REFRESH_REQUEST_CODE)
+                        (context as EmployeeListActivity).activityResult.launch(Intent(context, BlameListActivity::class.java).putExtra(
+                            USER_EXTRA, employee))
                     }
                 }
                 item {

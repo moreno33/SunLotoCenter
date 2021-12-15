@@ -61,6 +61,9 @@ internal class ImagesDataSource(private val contentResolver: ContentResolver){
                 val bundle = Bundle().apply {
                     putInt(ContentResolver.QUERY_ARG_OFFSET, offset)
                     putInt(ContentResolver.QUERY_ARG_LIMIT, pageSize)
+                    putString(ContentResolver.QUERY_ARG_SQL_SORT_ORDER, ORDER_BY)
+                    putInt(ContentResolver.QUERY_ARG_LIMIT, pageSize)
+                    putInt(ContentResolver.QUERY_ARG_OFFSET, offset)
                 }
 
                 if (albumItem == null || albumItem.isAll) {
@@ -75,15 +78,24 @@ internal class ImagesDataSource(private val contentResolver: ContentResolver){
                     )
                 } else {
 
+                    val bundle = Bundle().apply {
+                        putInt(ContentResolver.QUERY_ARG_OFFSET, offset)
+                        putInt(ContentResolver.QUERY_ARG_LIMIT, pageSize)
+                        putString(ContentResolver.QUERY_ARG_SQL_SORT_ORDER, ORDER_BY)
+                        putInt(ContentResolver.QUERY_ARG_LIMIT, pageSize)
+                        putInt(ContentResolver.QUERY_ARG_OFFSET, offset)
+                        putString(ContentResolver.QUERY_ARG_SQL_SELECTION, "${MediaStore.Images.ImageColumns.BUCKET_ID} =?")
+                        putStringArray(ContentResolver.QUERY_ARG_SQL_SELECTION_ARGS, arrayOf(albumItem.bucketId))
+                    }
+
                     photoCursor = contentResolver.query(
                         cursorUri,
                         arrayOf(
                             ID_COLUMN,
                             PATH_COLUMN
                         ),
-                        "${MediaStore.Images.ImageColumns.BUCKET_ID} =?",
-                        arrayOf(albumItem.bucketId),
-                        "$ORDER_BY LIMIT $pageSize OFFSET $offset"
+                        bundle,
+                        null
                     )
                 }
             }else{

@@ -302,6 +302,12 @@ public class WorldWidePhoneNumberEditText extends LinearLayout implements Valida
 
     }
 
+    @Override
+    public void setEnabled(boolean isEnabled){
+        edxNumber.setEnabled(isEnabled);
+        imgCountryFlag.setEnabled(false);
+    }
+
     public boolean isValid(){
         try {
             if(phoneNumberUtil.isValidNumber(phoneNumberUtil.parse(country.getDialCode()+edxNumber.getUnMaskedText(),

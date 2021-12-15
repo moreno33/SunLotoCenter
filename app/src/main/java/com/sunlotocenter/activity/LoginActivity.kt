@@ -10,6 +10,7 @@ import com.sunlotocenter.MyApplication
 import com.sunlotocenter.R
 import com.sunlotocenter.dao.Response
 import com.sunlotocenter.dao.User
+import com.sunlotocenter.dao.UserStatus
 import com.sunlotocenter.extensions.isConnected
 import com.sunlotocenter.extensions.neutralDialog
 import com.sunlotocenter.extensions.redirectToDashboard
@@ -86,9 +87,24 @@ class LoginActivity : BasicActivity() {
 
                 dialog.dismiss()
                 var user= response.body()?.data
-                if(user!= null){
-                    MyApplication.getInstance().login(user)
-                    redirectToDashboard(user)
+                if(user!= null) {
+                    if (user.status == UserStatus.BLOCKED) {
+                        showDialog(this@LoginActivity,
+                            getString(R.string.internet_error_title),
+                            getString(R.string.blocked_account),
+                            getString(R.string.ok),
+                            object : ClickListener {
+                                override fun onClick(): Boolean {
+                                    return false
+                                }
+
+                            },
+                            true, DialogType.ERROR)
+                    } else{
+                        MyApplication.getInstance().login(user)
+                        redirectToDashboard(user)
+                    }
+
                 }else{
                     showDialog(this@LoginActivity,
                       getString(R.string.internet_error_title),

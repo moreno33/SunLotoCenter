@@ -24,6 +24,7 @@ import com.sunlotocenter.utils.REFRESH_REQUEST_CODE
 import com.sunlotocenter.validator.*
 import kotlinx.android.synthetic.main.activity_game_sechedule.*
 import kotlinx.android.synthetic.main.activity_game_sechedule.btnAdd
+import org.joda.time.DateTimeZone
 import org.joda.time.LocalTime
 import org.joda.time.format.DateTimeFormat
 import org.modelmapper.ModelMapper
@@ -195,8 +196,15 @@ class GameScheduleActivity : ProtectedActivity() {
                 ModelMapper().map(gameExtra, gameSchedule)
             }
             gameSchedule?.type= gameType
-            gameSchedule?.morningTime= LocalTime.parse(edxMorning.text, DateTimeFormat.forPattern("HH:mm"))
-            gameSchedule?.nightTime= LocalTime.parse(edxNight.text, DateTimeFormat.forPattern("HH:mm"))
+            val mornings= edxMorning.text.split(":")
+            val nights= edxNight.text.split(":")
+
+            gameSchedule?.morningTime= LocalTime.now(DateTimeZone.forID("America/New_York"))
+                .withHourOfDay(mornings[0].toInt()).withMinuteOfHour(mornings[1].toInt())
+
+            gameSchedule?.nightTime= LocalTime.now(DateTimeZone.forID("America/New_York"))
+                .withHourOfDay(nights[0].toInt()).withMinuteOfHour(nights[1].toInt())
+
             gameSchedule?.secInterval= edxInterval.text.toLong()
             gameSchedule?.author = MyApplication.getInstance().connectedUser!!
 

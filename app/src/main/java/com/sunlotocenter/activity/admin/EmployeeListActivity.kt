@@ -4,12 +4,16 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sunlotocenter.activity.ProtectedActivity
 import com.sunlotocenter.R
+import com.sunlotocenter.activity.AutoComposeActivity
 import com.sunlotocenter.adapter.EmployeeListAdapter
+import com.sunlotocenter.dao.Game
 import com.sunlotocenter.dao.Response
 import com.sunlotocenter.dao.User
 import com.sunlotocenter.dao.UserStatus
@@ -21,6 +25,8 @@ import com.sunlotocenter.utils.ClickListener
 import com.sunlotocenter.utils.DialogType
 import com.sunlotocenter.utils.REFRESH_REQUEST_CODE
 import kotlinx.android.synthetic.main.activity_employee_list.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class EmployeeListActivity : ProtectedActivity(),
     LoadMoreListener.OnLoadMoreListener,
@@ -35,6 +41,19 @@ SaveUserListener{
     override fun getLayoutId(): Int {
         return R.layout.activity_employee_list
     }
+
+    lateinit var activityResult:
+            ActivityResultLauncher<Intent>
+
+    override fun onStart() {
+        super.onStart()
+        activityResult= registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            if(it.resultCode== Activity.RESULT_OK){
+                userViewModel.loadEmployees(true)
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableHome(toolbar)
@@ -78,7 +97,7 @@ SaveUserListener{
         setLoadMoreListener()
 
         fltAdd.setOnClickListener {
-            startActivityForResult(Intent(this, AdminPersonalInfoActivity::class.java), REFRESH_REQUEST_CODE)
+            activityResult.launch(Intent(this, AdminPersonalInfoActivity::class.java))
         }
     }
 
@@ -194,12 +213,5 @@ SaveUserListener{
     override fun save(user: User) {
         dialog.show()
         userViewModel.save(user)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode== REFRESH_REQUEST_CODE && resultCode== Activity.RESULT_OK){
-            userViewModel.loadEmployees(true)
-        }
     }
 }

@@ -137,7 +137,7 @@ class CreateBankActivity: ProtectedActivity() {
                 spnWorker.setPositiveButton(getString(R.string.ok))
                 if(bankExtra!= null && bankExtra!!.worker!= null){
                     sellers.forEachIndexed { index, seller ->
-                        if(bankExtra!!.worker!!.sequence.id== seller.sequence.id){
+                        if(bankExtra!!.worker!!.sequence!!.id== seller.sequence!!.id){
                             spnWorker.setSelection(index)
                         }
                     }

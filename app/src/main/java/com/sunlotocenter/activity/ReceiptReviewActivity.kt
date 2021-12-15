@@ -11,6 +11,8 @@ import android.telephony.PhoneNumberUtils
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
@@ -42,6 +44,7 @@ import kotlinx.android.synthetic.main.activity_slot_list.rclSlot
 //import kotlinx.android.synthetic.main.activity_slot_list.swpLayout
 import kotlinx.android.synthetic.main.activity_slot_list.toolbar
 import kotlinx.android.synthetic.main.activity_slot_list.txtInfo
+import java.util.*
 
 class ReceiptReviewActivity : ProtectedActivity() {
     private lateinit var gameReceiptAdapter: GameReceiptAdapter
@@ -53,6 +56,20 @@ class ReceiptReviewActivity : ProtectedActivity() {
     override fun getLayoutId(): Int {
         return R.layout.activity_receipt_review
     }
+
+    private lateinit var activityResult:
+            ActivityResultLauncher<Intent>
+
+    override fun onStart() {
+        super.onStart()
+        activityResult= registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            if(it.resultCode== Activity.RESULT_OK){
+                print()
+            }
+        }
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableHome(toolbar)
@@ -130,7 +147,7 @@ class ReceiptReviewActivity : ProtectedActivity() {
             {
                 dialog.dismiss()
                 if(it== null){
-                    com.sunlotocenter.utils.showDialog(this@ReceiptReviewActivity,
+                    showDialog(this@ReceiptReviewActivity,
                         getString(R.string.internet_error_title),
                         getString(
                             R.string.internet_error_message
@@ -142,7 +159,7 @@ class ReceiptReviewActivity : ProtectedActivity() {
                             }
                         }, true, DialogType.ERROR)
                 }else{
-                    com.sunlotocenter.utils.showDialog(this@ReceiptReviewActivity,
+                    showDialog(this@ReceiptReviewActivity,
                         getString(
                             if(it.success)R.string.success_title else R.string.internet_error_title
                         ),
@@ -153,10 +170,7 @@ class ReceiptReviewActivity : ProtectedActivity() {
                         ),
                         object : ClickListener {
                             override fun onClick(): Boolean {
-                                startActivityForResult(
-                                    Intent(this@ReceiptReviewActivity, ConnectBluetoothActivity::class.java),
-                                    ConnectBluetoothActivity.CONNECT_BLUETOOTH
-                                )
+                                activityResult.launch(Intent(this@ReceiptReviewActivity, ConnectBluetoothActivity::class.java))
                                 return false
                             }
 
@@ -216,13 +230,5 @@ class ReceiptReviewActivity : ProtectedActivity() {
         }
 
         print.print()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if(resultCode == Activity.RESULT_OK && requestCode == ConnectBluetoothActivity.CONNECT_BLUETOOTH){
-           print()
-        }
     }
 }

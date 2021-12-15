@@ -61,10 +61,10 @@ class SellerReportActivity : ProtectedActivity(),
 
 
         gameType?.let { gameViewModel.loadIndReports(
-            user.sequence.id!!,
+            user.sequence!!.id!!,
             user.company!!.sequence!!.id!!, true, it, "", "") }
         gameType?.let{ gameViewModel.getIndTotalReport(
-            user.sequence.id!!,
+            user.sequence!!.id!!,
             user.company!!.sequence!!.id!!, gameType!!, "", "") }
 
     }
@@ -89,19 +89,19 @@ class SellerReportActivity : ProtectedActivity(),
                     edxFrom.setSelection(edxFrom.text.length)
                 }else if(edxFrom.text.isEmpty() && edxTo.text.isEmpty()){
                     gameType?.let { gameViewModel.loadIndReports(
-                        user.sequence.id!!,
+                        user.sequence!!.id!!,
                         user.company!!.sequence!!.id!!, true, it, "", "") }
                     gameType?.let{ gameViewModel.getIndTotalReport(
-                        user.sequence.id!!,
+                        user.sequence!!.id!!,
                         user.company!!.sequence!!.id!!, gameType!!, "", "") }
                 }
                 if(s.length== 10){
                     if(edxTo.text.length== 10 && form.isValid()){
                         gameType?.let { gameViewModel.loadIndReports(
-                            user.sequence.id!!,
+                            user.sequence!!.id!!,
                             user.company!!.sequence!!.id!!, true, it, edxFrom.text, edxTo.text) }
                         gameType?.let { gameViewModel.getIndTotalReport(
-                            user.sequence.id!!,
+                            user.sequence!!.id!!,
                             user.company!!.sequence!!.id!!, it, edxFrom.text, edxTo.text) }
                     }else if(edxTo.text.length<10){
                         edxTo.focus()
@@ -128,21 +128,21 @@ class SellerReportActivity : ProtectedActivity(),
                     edxTo.setSelection(edxTo.text.length)
                 }else if(edxFrom.text.isEmpty() && edxTo.text.isEmpty()){
                     gameType?.let { gameViewModel.loadIndReports(
-                        user.sequence.id!!,
+                        user.sequence!!.id!!,
                         user.company!!.sequence!!.id!!,
                         true, it, "", "") }
                     gameType?.let{ gameViewModel.getIndTotalReport(
-                        user.sequence.id!!,
+                        user.sequence!!.id!!,
                         user.company!!.sequence!!.id!!, gameType!!, "", "") }
                 }
                 if(s.length== 10){
                     if(edxFrom.text.length== 10 && form.isValid()){
                         gameType?.let { gameViewModel.loadIndReports(
-                            user.sequence.id!!,
+                            user.sequence!!.id!!,
                             user.company!!.sequence!!.id!!,
                             true, it, edxFrom.text, edxTo.text) }
                         gameType?.let { gameViewModel.getIndTotalReport(
-                            user.sequence.id!!,
+                            user.sequence!!.id!!,
                             user.company!!.sequence!!.id!!, it, edxFrom.text, edxTo.text) }
                     }else if (edxFrom.text.length<10){
                         edxFrom.focus()
@@ -175,11 +175,11 @@ class SellerReportActivity : ProtectedActivity(),
                         gameType= it
                         if (form.isValid()){
                             gameViewModel.loadIndReports(
-                                user.sequence.id!!,
+                                user.sequence!!.id!!,
                                 user.company!!.sequence!!.id!!,
                                 true, gameType!!, edxFrom.text, edxTo.text)
                             gameType?.let{ gameViewModel.getIndTotalReport(
-                                user.sequence.id!!,
+                                user.sequence!!.id!!,
                                 user.company!!.sequence!!.id!!, gameType!!, edxFrom.text, edxTo.text) }
                         }
                     }
@@ -265,7 +265,7 @@ class SellerReportActivity : ProtectedActivity(),
 
     override fun onLoadMore() {
         gameType?.let { gameViewModel.loadIndReports(
-            user.sequence.id!!,
+            user.sequence!!.id!!,
             user.company!!.sequence!!.id!!,
             false, it, edxFrom.text, edxTo.text) }
         progressBar.progressiveStart()

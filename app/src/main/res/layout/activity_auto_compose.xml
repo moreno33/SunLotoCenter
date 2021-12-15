@@ -25,20 +25,40 @@
             android:id="@+id/layout1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/dashboard_top_background"
+            android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            android:background="@color/col_light_gray"
-            android:padding="16dp">
-            <com.sunlotocenter.validator.ValidatableEditText
-                android:id="@+id/edxMarryAll"
-                android:layout_width="150dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <EditText
+                android:id="@+id/edxPH"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/edit_text_height"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/edxAllAmount"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:hint="@string/all_amount"
-                app:text_size="@dimen/main_text_size"/>
+                android:visibility= "invisible"
+                app:layout_constraintHorizontal_weight="50" />
+
+            <EditText
+                android:id="@+id/edxAllAmount"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/edit_text_height"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/main_edit_text_background"
+                android:hint="@string/all_amount"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:textSize="@dimen/main_text_size"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_weight="50"
+                app:layout_constraintStart_toEndOf="@+id/edxPH"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
@@ -90,29 +110,33 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/main_text_size"
                 app:buttonCornerRadius="@dimen/main_corner"
-                app:buttonGradientStartColor="@color/main_green"
-                app:buttonGradientEndColor="@color/main_green"
+                app:buttonGradientStartColor="@color/colorPrimary"
+                app:buttonGradientEndColor="@color/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btnCancel"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:background="@drawable/blue_corner_radius"/>
+                android:background="@drawable/blue_corner_radius"
+                app:layout_constraintHorizontal_weight="50"/>
+
             <life.sabujak.roundedbutton.RoundedButton
                 android:id="@+id/btnCancel"
-                android:layout_width="100dp"
+                android:layout_width="0dp"
                 android:layout_height="60dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:text="@string/cancel"
+                android:layout_marginEnd="16dp"
                 android:gravity="center"
-                app:textAllCaps="true"
+                android:text="@string/cancel"
                 android:textColor="@color/white"
                 android:textSize="@dimen/main_text_size"
                 app:buttonCornerRadius="@dimen/main_corner"
-                app:buttonGradientStartColor="@color/main_red"
-                app:buttonGradientEndColor="@color/main_red"
-                app:layout_constraintTop_toTopOf="@id/btnAdd"
+                app:buttonGradientEndColor="@color/colorPrimary"
+                app:buttonGradientStartColor="@color/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="@id/btnAdd"
-                android:layout_marginEnd="16dp"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_weight="50"
+                app:layout_constraintStart_toEndOf="@+id/btnAdd"
+                app:layout_constraintTop_toTopOf="@id/btnAdd"
+                app:textAllCaps="true" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

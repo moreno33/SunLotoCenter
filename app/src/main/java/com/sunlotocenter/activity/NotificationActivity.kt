@@ -42,11 +42,13 @@ class NotificationActivity :
             notificationViewModel.loadSaveState()
         }
         setUpAdapter()
-        notificationViewModel.loadNotifications(MyApplication.getInstance().company.sequence!!.id!!, true)
+        notificationViewModel.loadNotifications(MyApplication.getInstance().connectedUser.sequence!!.id!!,
+            MyApplication.getInstance().company.sequence!!.id!!, true)
 
         swpLayout.isRefreshing= true
         swpLayout.setOnRefreshListener {
-            notificationViewModel.loadNotifications(MyApplication.getInstance().company.sequence!!.id!!,true)
+            notificationViewModel.loadNotifications(MyApplication.getInstance().connectedUser.sequence!!.id!!,
+                MyApplication.getInstance().company.sequence!!.id!!,true)
         }
 
     }
@@ -113,7 +115,8 @@ class NotificationActivity :
     }
 
     override fun onLoadMore() {
-        notificationViewModel.loadNotifications(MyApplication.getInstance().company.sequence!!.id!!,false)
+        notificationViewModel.loadNotifications(MyApplication.getInstance().connectedUser.sequence!!.id!!,
+            MyApplication.getInstance().company.sequence!!.id!!,false)
         progressBar.progressiveStart()
     }
 

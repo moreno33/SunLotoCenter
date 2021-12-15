@@ -17,12 +17,12 @@
             android:id="@+id/txtEntryMorning"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="16dp"
             android:textAllCaps="false"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/main_text_size"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/img1"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -79,6 +79,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/img1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:src="@drawable/balance_sunny_black_18"
+            app:layout_constraintBottom_toTopOf="@id/view1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <View
             android:id="@+id/view1"
             android:layout_width="0dp"
@@ -94,12 +104,12 @@
             android:id="@+id/txtEntryNight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="16dp"
             android:textAllCaps="false"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/main_text_size"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/img2"
             app:layout_constraintTop_toBottomOf="@+id/view1" />
 
         <TextView
@@ -157,6 +167,16 @@
             android:src="@drawable/chevron_right_black_18"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view1" />
+
+        <ImageView
+            android:id="@+id/img2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:src="@drawable/moon_waning_crescent_black_18"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -136,9 +136,10 @@ LoadMoreListener.OnLoadMoreListener{
         })
     }
 
-    private fun addAlertedGames(alertedGames: List<GametDto>) {
+    private fun addAlertedGames(alertedGames: ArrayList<GametDto>) {
         loadMoreListener?.setFinished(false)
         pgbAlert.visibility= View.GONE
+        alertedGames.clear()
         if(alertedGames.isEmpty()){
             loadMoreListener?.setFinished(true)
             loadMoreListener?.setLoaded()
@@ -150,6 +151,8 @@ LoadMoreListener.OnLoadMoreListener{
                 txtInfo.visibility= View.GONE
             }
             return
+        }else{
+            txtInfo.visibility= View.GONE
         }
         val isFirstPage= gameViewModel.page== 0
         if(alertedGames.size< LoadMoreListener.SIZE_PER_PAGE)

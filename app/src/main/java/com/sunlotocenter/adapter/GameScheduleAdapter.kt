@@ -12,6 +12,7 @@ import com.github.zawadz88.materialpopupmenu.popupMenu
 import com.sunlotocenter.activity.ChangePasswordActivity
 import com.sunlotocenter.R
 import com.sunlotocenter.activity.admin.GameScheduleActivity
+import com.sunlotocenter.activity.admin.ManageGameActivity
 import com.sunlotocenter.dao.*
 import com.sunlotocenter.extensions.gameTypes
 import com.sunlotocenter.utils.*
@@ -59,7 +60,7 @@ class GameScheduleAdapter(var schedules: ArrayList<GameSchedule>, var onGameSche
                     label = context.getString(R.string.change)
                     icon = R.drawable.pencil_outline_black_18
                     callback = {
-                        (context as AppCompatActivity).startActivityForResult(Intent(context, GameScheduleActivity::class.java).putExtra(GAME_SCHEDULE_EXTRA, schedule), REFRESH_REQUEST_CODE)
+                        (context as ManageGameActivity).activityResult.launch(Intent(context, GameScheduleActivity::class.java).putExtra(GAME_SCHEDULE_EXTRA, schedule))
                     }
                 }
                 item {

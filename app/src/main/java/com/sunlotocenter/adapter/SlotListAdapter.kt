@@ -35,8 +35,8 @@ import kotlinx.android.synthetic.main.slot_layout.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class SlotListAdapter(var slots: ArrayList<Slot>) :
-    RecyclerView.Adapter<SlotListAdapter.CustomViewHolder>() {
+class SlotListAdapter(var slots: ArrayList<Slot>, var onUpdatelot: OnUpdateSlot) :
+    RecyclerView.Adapter<SlotListAdapter.CustomViewHolder>(){
 
     private val HEADER= 0
     private val ITEM= 1
@@ -55,6 +55,8 @@ class SlotListAdapter(var slots: ArrayList<Slot>) :
         var slot= slots[position]
         var gameAdapter= GameSlotAdapter(TreeSet(slot.games))
 
+        holder.txtNumber.text= context.getString(R.string.receipt_number, slot.uniq)
+
         holder.rclSlotRow.apply {
             setHasFixedSize(true)
             layoutManager= LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -63,6 +65,17 @@ class SlotListAdapter(var slots: ArrayList<Slot>) :
         holder.imgCopy.setOnClickListener {
             val filteredGameList= getFilteredGameList(slot.games)
             context.startActivity(Intent(context, GameActivity::class.java).putExtra(COPIED_GAME_LIST, filteredGameList))
+        }
+
+        holder.imgCancel.setOnClickListener {
+            var slotCopy= slot.clone() as Slot
+
+            if(slot.status== SlotStatus.ACTIVE){
+                slotCopy.status= SlotStatus.CANCELLED
+            }else{
+                slotCopy.status= SlotStatus.ACTIVE
+            }
+            onUpdatelot.onUpdate(slotCopy)
         }
     }
 
@@ -83,5 +96,11 @@ class SlotListAdapter(var slots: ArrayList<Slot>) :
     class CustomViewHolder(var item: View) : RecyclerView.ViewHolder(item){
         val rclSlotRow by lazy { item.rclSlotRow }
         val imgCopy by lazy { item.imgCopy }
+        val imgCancel by lazy { item.imgCancel }
+        val txtNumber by lazy { item.txtNumber }
+    }
+
+    interface OnUpdateSlot{
+        fun onUpdate(slot: Slot)
     }
 }

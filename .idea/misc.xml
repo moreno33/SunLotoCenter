@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.121875" />
+        <entry key="../../Library/Android/sdk/platforms/android-31/data/res/layout/simple_spinner_item.xml" value="0.13217213114754098" />
         <entry key="app/src/main/res/drawable/account_alert_outline_black_18.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/account_cancel_outline_black_18.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/account_group_outline.xml" value="0.20855263157894738" />
@@ -17,6 +18,7 @@
         <entry key="app/src/main/res/drawable/av_timer_black_18.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/av_timer_black_24.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/background_gray.xml" value="0.1819078947368421" />
+        <entry key="app/src/main/res/drawable/balance_sunny_black_24.xml" value="0.13355263157894737" />
         <entry key="app/src/main/res/drawable/black_corner_radius.xml" value="0.15" />
         <entry key="app/src/main/res/drawable/black_corner_radius_default.xml" value="0.15" />
         <entry key="app/src/main/res/drawable/black_corner_radius_pressed.xml" value="0.15" />
@@ -24,6 +26,7 @@
         <entry key="app/src/main/res/drawable/blue_corner_radius.xml" value="0.20986842105263157" />
         <entry key="app/src/main/res/drawable/blue_corner_radius_default.xml" value="0.20986842105263157" />
         <entry key="app/src/main/res/drawable/blue_corner_radius_pressed.xml" value="0.2" />
+        <entry key="app/src/main/res/drawable/blue_round_background.xml" value="0.22401315789473683" />
         <entry key="app/src/main/res/drawable/bottom_background.xml" value="0.22401315789473683" />
         <entry key="app/src/main/res/drawable/camera_outline_white_18.xml" value="0.20855263157894738" />
         <entry key="app/src/main/res/drawable/check_outline_black.xml" value="0.21414473684210528" />
@@ -31,7 +34,9 @@
         <entry key="app/src/main/res/drawable/chevron_down_white_18.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/chevron_right_black_18.xml" value="0.22302631578947368" />
         <entry key="app/src/main/res/drawable/clickable_background.xml" value="0.20986842105263157" />
+        <entry key="app/src/main/res/drawable/content_copy_black_16.xml" value="0.21414473684210528" />
         <entry key="app/src/main/res/drawable/content_copy_black_24.xml" value="0.22401315789473683" />
+        <entry key="app/src/main/res/drawable/content_copy_white_10.xml" value="0.21414473684210528" />
         <entry key="app/src/main/res/drawable/dashboard_top_background.xml" value="0.20986842105263157" />
         <entry key="app/src/main/res/drawable/day_background.xml" value="0.20230263157894737" />
         <entry key="app/src/main/res/drawable/day_text_color.xml" value="0.20230263157894737" />
@@ -46,6 +51,7 @@
         <entry key="app/src/main/res/drawable/green_corner_radius.xml" value="0.20986842105263157" />
         <entry key="app/src/main/res/drawable/green_corner_radius_default.xml" value="0.20986842105263157" />
         <entry key="app/src/main/res/drawable/green_corner_radius_pressed.xml" value="0.20230263157894737" />
+        <entry key="app/src/main/res/drawable/green_round_background.xml" value="0.22401315789473683" />
         <entry key="app/src/main/res/drawable/main_edit_text_background.xml" value="0.22401315789473683" />
         <entry key="app/src/main/res/drawable/marry_all_background.xml" value="0.20986842105263157" />
         <entry key="app/src/main/res/drawable/marry_all_background_default.xml" value="0.20986842105263157" />
@@ -53,6 +59,7 @@
         <entry key="app/src/main/res/drawable/marry_all_background_enabled.xml" value="0.17401315789473684" />
         <entry key="app/src/main/res/drawable/marry_all_background_pressed.xml" value="0.17401315789473684" />
         <entry key="app/src/main/res/drawable/moon_waning_crescent.xml" value="0.21414473684210528" />
+        <entry key="app/src/main/res/drawable/moon_waning_crescent_black_24.xml" value="0.13355263157894737" />
         <entry key="app/src/main/res/drawable/pencil_outline_black_18.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/pencil_outline_black_24.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/pencil_outline_white_24.xml" value="0.21414473684210528" />
@@ -63,6 +70,8 @@
         <entry key="app/src/main/res/drawable/red_corner_radius.xml" value="0.20230263157894737" />
         <entry key="app/src/main/res/drawable/red_corner_radius_default.xml" value="0.20230263157894737" />
         <entry key="app/src/main/res/drawable/red_corner_radius_pressed.xml" value="0.20230263157894737" />
+        <entry key="app/src/main/res/drawable/red_round_background.xml" value="0.22401315789473683" />
+        <entry key="app/src/main/res/drawable/round_button.xml" value="0.21414473684210528" />
         <entry key="app/src/main/res/drawable/round_edit_text_background.xml" value="0.22401315789473683" />
         <entry key="app/src/main/res/drawable/send_outline_black_24.xml" value="0.20986842105263157" />
         <entry key="app/src/main/res/drawable/send_outline_white_24.xml" value="0.20986842105263157" />
@@ -80,11 +89,12 @@
         <entry key="app/src/main/res/drawable/white_balance_sunny.xml" value="0.21414473684210528" />
         <entry key="app/src/main/res/drawable/white_corner_radius.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/window_close.xml" value="0.22401315789473683" />
+        <entry key="app/src/main/res/drawable/window_close_black_10.xml" value="0.21414473684210528" />
         <entry key="app/src/main/res/layout/activity_admin_dashboard.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_admin_personal_info.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_admin_report.xml" value="0.21744012119771697" />
         <entry key="app/src/main/res/layout/activity_admin_setting.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_auto_compose.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_auto_compose.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_bank_list.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_blame.xml" value="0.18980263157894736" />
         <entry key="app/src/main/res/layout/activity_blame_list.xml" value="0.18980263157894736" />
@@ -140,8 +150,8 @@
         <entry key="app/src/main/res/layout/report_layout.xml" value="0.375" />
         <entry key="app/src/main/res/layout/report_motion_layout.xml" value="0.1" />
         <entry key="app/src/main/res/layout/result_header_layout.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/result_layout.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/slot_layout.xml" value="0.15657894736842104" />
+        <entry key="app/src/main/res/layout/result_layout.xml" value="0.625" />
+        <entry key="app/src/main/res/layout/slot_layout.xml" value="0.335" />
         <entry key="app/src/main/res/layout/spinner_item_layout.xml" value="0.1" />
         <entry key="app/src/main/res/layout/valid_error_layout.xml" value="0.25" />
         <entry key="app/src/main/res/layout/validatable_edit_text_layout.xml" value="0.1" />
@@ -152,6 +162,7 @@
         <entry key="app/src/main/res/menu/mn_receipt.xml" value="0.20394736842105263" />
         <entry key="app/src/main/res/menu/mn_seller_dashboard.xml" value="0.17222222222222222" />
         <entry key="app/src/main/res/menu/mn_user_type.xml" value="0.1" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
         <entry key="library/src/main/res/drawable/item_divider.xml" value="0.2" />
         <entry key="phone/src/main/res/drawable/account_cancel_outline_black_1i.xml" value="0.2" />
         <entry key="phone/src/main/res/layout/country_layout.xml" value="0.16632513661202186" />

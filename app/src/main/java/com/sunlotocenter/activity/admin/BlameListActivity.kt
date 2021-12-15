@@ -57,11 +57,11 @@ class BlameListActivity :
             userViewModel.loadSaveState()
         }
         setUpAdapter()
-        userViewModel.loadBlamesForUser(true, userExtra!!.sequence.id!!)
+        userViewModel.loadBlamesForUser(true, userExtra!!.sequence!!.id!!)
 
         swpLayout.isRefreshing= true
         swpLayout.setOnRefreshListener {
-            userViewModel.loadBlamesForUser(true, userExtra!!.sequence.id!!)
+            userViewModel.loadBlamesForUser(true, userExtra!!.sequence!!.id!!)
         }
 
         imgSubmit.setOnClickListener {
@@ -134,7 +134,7 @@ class BlameListActivity :
                 getString(R.string.ok),
                 object : ClickListener {
                     override fun onClick(): Boolean {
-                        userViewModel.loadBlamesForUser(true, userExtra!!.sequence.id!!)
+                        userViewModel.loadBlamesForUser(true, userExtra!!.sequence!!.id!!)
                         return false
                     }
 
@@ -175,7 +175,7 @@ class BlameListActivity :
     }
 
     override fun onLoadMore() {
-        userViewModel.loadBlamesForUser(false, userExtra!!.sequence.id!!)
+        userViewModel.loadBlamesForUser(false, userExtra!!.sequence!!.id!!)
         progressBar.progressiveStart()
     }
 

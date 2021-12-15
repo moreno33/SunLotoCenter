@@ -51,8 +51,8 @@ class AdminPersonalInfoActivity : ProtectedActivity() {
         userViewModel= ViewModelProvider(this, SavedStateViewModelFactory(application, this))
             .get(UserViewModel::class.java)
         categories= arrayOf(
-            SpinnerItem("seller", getString(R.string.seller)),
-            SpinnerItem("admin", getString(R.string.administrator))
+            SpinnerItem("Seller", getString(R.string.seller)),
+            SpinnerItem("Admin", getString(R.string.administrator))
         )
 
         edxPhone.switchCountry(509)
@@ -82,7 +82,7 @@ class AdminPersonalInfoActivity : ProtectedActivity() {
                 }else{
                     //Update the local data is connected user is changed
                     if(it.success){
-                        if(userExtra!= null && userExtra!!.sequence.id== MyApplication.getInstance().connectedUser.sequence.id)
+                        if(userExtra!= null && userExtra!!.sequence!!.id== MyApplication.getInstance().connectedUser.sequence!!.id)
                             MyApplication.getInstance().connectedUser= it.data
                         showDialog(this@AdminPersonalInfoActivity,
                             getString(R.string.success_title),
@@ -90,7 +90,7 @@ class AdminPersonalInfoActivity : ProtectedActivity() {
                                 if(userExtra== null) {
                                     R.string.create_account_success_message
                                 } else {
-                                    if(userExtra!!.sequence.id== MyApplication.getInstance().connectedUser.sequence.id)
+                                    if(userExtra!!.sequence!!.id== MyApplication.getInstance().connectedUser.sequence!!.id)
                                         R.string.update_own_account_success_message
                                     else R.string.update_user_account_success_message
                                 }
@@ -98,7 +98,7 @@ class AdminPersonalInfoActivity : ProtectedActivity() {
                             getString(R.string.ok),
                             object :ClickListener{
                                 override fun onClick(): Boolean {
-                                    if(userExtra== null || userExtra!!.sequence.id!= MyApplication.getInstance().connectedUser.sequence.id){
+                                    if(userExtra== null || userExtra!!.sequence!!.id!= MyApplication.getInstance().connectedUser.sequence!!.id){
                                         setResult(Activity.RESULT_OK, Intent())
                                     }
                                     finish()
@@ -129,7 +129,8 @@ class AdminPersonalInfoActivity : ProtectedActivity() {
             user.profilePath= userExtra!!.profilePath
             glide(this, user.profilePath, imgProfile, R.drawable.background_gray, getProfileImage(userExtra))
             //An admin can't downgrade
-            if(userExtra is Admin){
+            if(userExtra is Admin ||
+                (userExtra!!.sequence!!.id== MyApplication.getInstance().connectedUser.sequence!!.id && !(userExtra is Admin))){
                 clCategory.visibility= GONE
                 userType= UserType.ADMIN
             }
@@ -156,6 +157,19 @@ class AdminPersonalInfoActivity : ProtectedActivity() {
                 edxPhone.setPhoneNumber(it.number)}
             userExtra?.address?.let{edxAddress.text= it }
             userExtra?.city?.let{edxCity.text= it}
+
+            //If it's the user, let's disable everything
+            if(userExtra!!.sequence!!.id== MyApplication.getInstance().connectedUser.sequence!!.id && !(userExtra is Admin)){
+                edxFirstName.isEnabled= false
+                edxLastName.isEnabled= false
+                rdbMale.isEnabled= false
+                rdbFemale.isEnabled= false
+                edxPhone.isEnabled= false
+                edxAddress.isEnabled= false
+                edxCity.isEnabled= false
+                btnSubmit.isEnabled= false
+                clPick.isEnabled= false
+            }
 
         }else{
             toolbar.title= getString(R.string.create_employee)
@@ -194,7 +208,7 @@ class AdminPersonalInfoActivity : ProtectedActivity() {
         form.addInput(edxFirstName, edxLastName, edxPhone, edxAddress, edxCity)
 
         //Fill category spinner
-        val dataAdapter= ArrayAdapter<SpinnerItem>(this, android.R.layout.simple_spinner_item, categories)
+        val dataAdapter= ArrayAdapter(this, android.R.layout.simple_spinner_item, categories)
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spnCategory.adapter = dataAdapter
         spnCategory.onItemSelectedListener = object : OnItemSelectedListener {
@@ -205,7 +219,7 @@ class AdminPersonalInfoActivity : ProtectedActivity() {
                 id: Long
             ) {
                 UserType.values().forEach {
-                    if(it.id == dataAdapter.getItem(position)!!.id){
+                    if(it.id.equals(dataAdapter.getItem(position)!!.id)){
                         userType= it
                     }
                 }

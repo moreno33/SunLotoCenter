@@ -15,6 +15,7 @@ import com.github.zawadz88.materialpopupmenu.popupMenu
 import com.sunlotocenter.activity.ChangePasswordActivity
 import com.sunlotocenter.R
 import com.sunlotocenter.activity.admin.AdminPersonalInfoActivity
+import com.sunlotocenter.activity.admin.BankListActivity
 import com.sunlotocenter.activity.admin.BlameListActivity
 import com.sunlotocenter.activity.admin.CreateBankActivity
 import com.sunlotocenter.dao.Bank
@@ -69,8 +70,8 @@ class BankListAdapter(var banks: ArrayList<Bank>, var saveBankListener: SaveBank
                     labelRes = R.string.change
                     icon = R.drawable.pencil_outline_black_18
                     callback = {
-                        (context as AppCompatActivity).startActivityForResult(Intent(context, CreateBankActivity::class.java).putExtra(
-                            BANK_EXTRA, bank), REFRESH_REQUEST_CODE)
+                        (context as BankListActivity).activityResult.launch(Intent(context, CreateBankActivity::class.java).putExtra(
+                            BANK_EXTRA, bank))
                     }
                 }
 //                item {

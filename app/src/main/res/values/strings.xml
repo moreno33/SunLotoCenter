@@ -169,6 +169,9 @@
     <string name="update_company_success_message">Ou chanje enfòmasyon konpayi an avèk siksè!</string>
     <string name="create_company">Kreye konpayi</string>
     <string name="profile_picture_required">Ou dwe mete yon logo pou konpayi an.</string>
+    <string name="blocked_account">Kont ou bloke. Kontakte Administrasyon pou plis detay.</string>
+    <string name="game_update_success_message">Ou modifye fich lan avèk siksè!</string>
+    <string name="receipt_number">No: %1$s</string>
     <string-array name="employee_category">
         <item>Vandè</item>
         <item>Administratè</item>

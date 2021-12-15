@@ -5,7 +5,7 @@ import java.io.Serializable
 
 abstract class Entity(
     var id: Long? = null,
-    var sequence: Sequence= Sequence(),
+    var sequence: Sequence?= null,
     var createdDateTime: DateTime? = null,
     var updatedDateTime: DateTime? = null,
     var current:Boolean= true,

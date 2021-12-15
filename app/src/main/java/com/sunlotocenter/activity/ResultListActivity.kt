@@ -9,6 +9,9 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isVisible
 import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +19,8 @@ import com.sunlotocenter.MyApplication
 import com.sunlotocenter.R
 import com.sunlotocenter.activity.admin.ResultActivity
 import com.sunlotocenter.adapter.ResultListAdapter
+import com.sunlotocenter.dao.Admin
+import com.sunlotocenter.dao.Game
 import com.sunlotocenter.dao.GameType
 import com.sunlotocenter.dto.Result
 import com.sunlotocenter.extensions.enableHome
@@ -33,6 +38,8 @@ import kotlinx.android.synthetic.main.activity_result_list.progressBar
 import kotlinx.android.synthetic.main.activity_result_list.spnType
 import kotlinx.android.synthetic.main.activity_result_list.toolbar
 import kotlinx.android.synthetic.main.activity_result_list.txtInfo
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ResultListActivity : ProtectedActivity(),
     LoadMoreListener.OnLoadMoreListener{
@@ -47,6 +54,19 @@ class ResultListActivity : ProtectedActivity(),
     override fun getLayoutId(): Int {
         return R.layout.activity_result_list
     }
+
+    lateinit var activityResult:
+            ActivityResultLauncher<Intent>
+
+    override fun onStart() {
+        super.onStart()
+        activityResult= registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            if(it.resultCode== Activity.RESULT_OK){
+                gameType?.let { gameViewModel.loadResults(MyApplication.getInstance().company.sequence!!.id!!, true, it, edxFrom.text, edxTo.text) }
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableHome(toolbar)
@@ -177,8 +197,9 @@ class ResultListActivity : ProtectedActivity(),
         observe()
         setLoadMoreListener()
 
+        fltAdd.isVisible= MyApplication.getInstance().connectedUser is Admin
         fltAdd.setOnClickListener {
-            startActivityForResult(Intent(this, ResultActivity::class.java), REFRESH_REQUEST_CODE)
+            activityResult.launch(Intent(this, ResultActivity::class.java))
         }
     }
 
@@ -242,12 +263,5 @@ class ResultListActivity : ProtectedActivity(),
     override fun onLoadMore() {
         gameType?.let { gameViewModel.loadResults(MyApplication.getInstance().company.sequence!!.id!!, false, it, edxFrom.text, edxTo.text) }
         progressBar.progressiveStart()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode== REFRESH_REQUEST_CODE && resultCode== Activity.RESULT_OK){
-            gameType?.let { gameViewModel.loadResults(MyApplication.getInstance().company.sequence!!.id!!, true, it, edxFrom.text, edxTo.text) }
-        }
     }
 }

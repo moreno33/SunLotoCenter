@@ -133,6 +133,8 @@ class AdminDashboardActivity : ProtectedActivity(),
                 txtInfo.visibility= View.GONE
             }
             return
+        }else{
+            txtInfo.visibility= View.GONE
         }
         val isFirstPage= gameViewModel.page== 0
         if(alertedGames.size< LoadMoreListener.SIZE_PER_PAGE)
