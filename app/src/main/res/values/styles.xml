@@ -30,16 +30,16 @@
 <!--        <item name="colorAccent">@color/colorAccent</item>-->
 <!--    </style>-->
 
-    <style name="AppTheme.NoActionBar.Blank">
+    <style name="AppTheme.NoActionBar.White">
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorPrimary">@android:color/white</item>
 <!--        <item name="otpViewStyle">@style/OtpWidget.OtpView</item>-->
     </style>
-    <style name="AppTheme.NoActionBar.Blank.WhiteAccent">
+    <style name="AppTheme.NoActionBar.White.WhiteAccent">
         <item name="colorAccent">@color/white</item>
     </style>
 
-    <style name="AppTheme.NoActionBar.Blank.BlackAccent">
+    <style name="AppTheme.NoActionBar.White.BlackAccent">
         <item name="colorAccent">@color/colorPrimary</item>
     </style>
 

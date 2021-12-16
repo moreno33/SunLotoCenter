@@ -57,8 +57,6 @@ class AdminReportActivity : ProtectedActivity(),
 
         setUpAdapter()
         prepareControl()
-
-        dialog.show()
         gameType?.let { gameViewModel.loadReports(MyApplication.getInstance().company.sequence!!.id!!, true, it, "", "") }
         gameType?.let{ gameViewModel.getTotalReport(MyApplication.getInstance().company.sequence!!.id!!, gameType!!, "", "") }
 //        swpLayout.isRefreshing= true
@@ -197,6 +195,7 @@ class AdminReportActivity : ProtectedActivity(),
             })
         gameViewModel.totalReportData.observe(this, {
             totalReport->
+                txtBalance.text= getString(R.string.balance_value, if(totalReport!= null) totalReport.data?.balance?.toFloat() else 0f)
                 txtEnter.text= getString(R.string.enter_value, if(totalReport!= null) totalReport.data?.entry?.toFloat() else 0f)
                 txtOut.text= getString(R.string.out_value, if(totalReport!= null) totalReport.data?.out?.toFloat() else 0f)
                 txtAmount.text= if(totalReport!= null) String.format("%.0f", (totalReport.data?.entry!!-totalReport.data.out)) else "0"

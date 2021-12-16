@@ -304,7 +304,7 @@
                         app:layout_constraintEnd_toEndOf="@id/rclAlert"
                         app:layout_constraintBottom_toBottomOf="@id/rclAlert"
                         app:layout_constraintStart_toStartOf="@id/rclAlert"
-                        android:theme="@style/AppTheme.NoActionBar.Blank.BlackAccent" />
+                        android:theme="@style/AppTheme.NoActionBar.White.BlackAccent" />
 
                     <TextView
                         android:id="@+id/txtInfo"

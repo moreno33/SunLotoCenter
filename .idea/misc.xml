@@ -18,6 +18,9 @@
         <entry key="app/src/main/res/drawable/av_timer_black_18.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/av_timer_black_24.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/background_gray.xml" value="0.1819078947368421" />
+        <entry key="app/src/main/res/drawable/background_tool.xml" value="0.21414473684210528" />
+        <entry key="app/src/main/res/drawable/background_tool_default.xml" value="0.21414473684210528" />
+        <entry key="app/src/main/res/drawable/background_tool_pressed.xml" value="0.21414473684210528" />
         <entry key="app/src/main/res/drawable/balance_sunny_black_24.xml" value="0.13355263157894737" />
         <entry key="app/src/main/res/drawable/black_corner_radius.xml" value="0.15" />
         <entry key="app/src/main/res/drawable/black_corner_radius_default.xml" value="0.15" />
@@ -104,7 +107,7 @@
         <entry key="app/src/main/res/layout/activity_company_info.xml" value="0.12773224043715847" />
         <entry key="app/src/main/res/layout/activity_create_bank.xml" value="0.11475409836065574" />
         <entry key="app/src/main/res/layout/activity_employee_list.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_game.xml" value="0.19967105263157894" />
+        <entry key="app/src/main/res/layout/activity_game.xml" value="0.1660377358490566" />
         <entry key="app/src/main/res/layout/activity_game_sechedule.xml" value="0.3179611650485437" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_manage_game.xml" value="0.13524590163934427" />
@@ -112,17 +115,18 @@
         <entry key="app/src/main/res/layout/activity_marry_all.xml" value="0.18157894736842106" />
         <entry key="app/src/main/res/layout/activity_notification.xml" value="0.18388157894736842" />
         <entry key="app/src/main/res/layout/activity_prevent_trouble.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_receipt_review.xml" value="0.20394736842105263" />
+        <entry key="app/src/main/res/layout/activity_receipt_review.xml" value="0.20783132530120482" />
         <entry key="app/src/main/res/layout/activity_result.xml" value="0.1871584699453552" />
         <entry key="app/src/main/res/layout/activity_result_list.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_seller_dashboard.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_seller_report.xml" value="0.1319078947368421" />
-        <entry key="app/src/main/res/layout/activity_slot_list.xml" value="0.20394736842105263" />
+        <entry key="app/src/main/res/layout/activity_slot_list.xml" value="0.335" />
         <entry key="app/src/main/res/layout/alert_list_layout.xml" value="0.20394736842105263" />
         <entry key="app/src/main/res/layout/bank_layout.xml" value="0.45" />
         <entry key="app/src/main/res/layout/blame_layout.xml" value="0.22699386503067484" />
         <entry key="app/src/main/res/layout/block_list_layout.xml" value="0.375" />
         <entry key="app/src/main/res/layout/bottom_game_schedule_layout.xml" value="0.1837431693989071" />
+        <entry key="app/src/main/res/layout/bottom_tool_layout.xml" value="0.20394736842105263" />
         <entry key="app/src/main/res/layout/compose_row_layout.xml" value="0.15657894736842104" />
         <entry key="app/src/main/res/layout/date_time_range_picker.xml" value="0.19210526315789472" />
         <entry key="app/src/main/res/layout/dialog_layout.xml" value="0.165" />

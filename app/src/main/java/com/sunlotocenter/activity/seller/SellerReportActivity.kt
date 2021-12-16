@@ -88,6 +88,7 @@ class SellerReportActivity : ProtectedActivity(),
                     edxFrom.text= "${s.substring(0,5)}-${s.substring(5)}"
                     edxFrom.setSelection(edxFrom.text.length)
                 }else if(edxFrom.text.isEmpty() && edxTo.text.isEmpty()){
+                    dialog.show()
                     gameType?.let { gameViewModel.loadIndReports(
                         user.sequence!!.id!!,
                         user.company!!.sequence!!.id!!, true, it, "", "") }
@@ -97,6 +98,7 @@ class SellerReportActivity : ProtectedActivity(),
                 }
                 if(s.length== 10){
                     if(edxTo.text.length== 10 && form.isValid()){
+                        dialog.show()
                         gameType?.let { gameViewModel.loadIndReports(
                             user.sequence!!.id!!,
                             user.company!!.sequence!!.id!!, true, it, edxFrom.text, edxTo.text) }
@@ -127,6 +129,7 @@ class SellerReportActivity : ProtectedActivity(),
                     edxTo.text= "${s.substring(0,5)}-${s.substring(5)}"
                     edxTo.setSelection(edxTo.text.length)
                 }else if(edxFrom.text.isEmpty() && edxTo.text.isEmpty()){
+                    dialog.show()
                     gameType?.let { gameViewModel.loadIndReports(
                         user.sequence!!.id!!,
                         user.company!!.sequence!!.id!!,
@@ -137,6 +140,7 @@ class SellerReportActivity : ProtectedActivity(),
                 }
                 if(s.length== 10){
                     if(edxFrom.text.length== 10 && form.isValid()){
+                        dialog.show()
                         gameType?.let { gameViewModel.loadIndReports(
                             user.sequence!!.id!!,
                             user.company!!.sequence!!.id!!,
@@ -174,6 +178,7 @@ class SellerReportActivity : ProtectedActivity(),
                     if(it.id == dataAdapter.getItem(position)!!.id){
                         gameType= it
                         if (form.isValid()){
+                            dialog.show()
                             gameViewModel.loadIndReports(
                                 user.sequence!!.id!!,
                                 user.company!!.sequence!!.id!!,
@@ -207,6 +212,7 @@ class SellerReportActivity : ProtectedActivity(),
     private fun observe() {
         gameViewModel.lastAddedReportsData.observe(this,
             { reports ->
+                dialog.dismiss()
                 addReports(reports)
                 progressBar.progressiveStop()
 //                swpLayout.isRefreshing= false
@@ -228,15 +234,15 @@ class SellerReportActivity : ProtectedActivity(),
             if(gameViewModel.page== 0){
                 reportAdapter.reports.clear()
                 reportAdapter.notifyDataSetChanged()
-                txtInfo.visibility= View.VISIBLE
+                txtInfo.visibility= VISIBLE
             }else{
-                txtInfo.visibility= View.GONE
+                txtInfo.visibility= GONE
             }
             loadMoreListener?.setFinished(true)
             loadMoreListener?.setLoaded()
             return
         }else{
-            txtInfo.visibility= View.GONE
+            txtInfo.visibility= GONE
         }
         val isFirstPage= gameViewModel.page== 0
         if(reports.size< LoadMoreListener.SIZE_PER_PAGE)

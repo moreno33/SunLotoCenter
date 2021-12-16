@@ -85,7 +85,7 @@
                    app:layout_constraintEnd_toEndOf="parent"
                    app:layout_constraintBottom_toBottomOf="parent"
                    app:layout_constraintStart_toStartOf="parent"
-                   android:theme="@style/AppTheme.NoActionBar.Blank.WhiteAccent" />
+                   android:theme="@style/AppTheme.NoActionBar.White.WhiteAccent" />
 
                <androidx.constraintlayout.widget.ConstraintLayout
                    android:id="@+id/header_content"

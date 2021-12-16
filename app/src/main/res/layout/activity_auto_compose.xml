@@ -54,6 +54,7 @@
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:textSize="@dimen/main_text_size"
+                android:inputType="number"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_weight="50"

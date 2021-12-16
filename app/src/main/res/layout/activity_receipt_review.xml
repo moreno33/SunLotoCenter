@@ -87,29 +87,107 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/txtName"
-                    android:textSize="@dimen/main_text_size"/>
+                    android:textSize="@dimen/main_text_size"
+                    android:textColor="@color/colorPrimary"/>
                 <TextView
                     android:id="@+id/txtPhone"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:gravity="center"
-                    android:text="50934422322"
+                    android:text="@string/tel_value"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/txtAddress"
-                    android:textSize="@dimen/main_text_size"/>
+                    android:textSize="@dimen/main_text_size"
+                    android:textColor="@color/colorPrimary"/>
+
+                <TextView
+                    android:id="@+id/txtUniq"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:text="No: 12304232"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/main_text_size"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txtPhone" />
+
+                <TextView
+                    android:id="@+id/txtDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:text="Dat: Dec 2, 2021, 4h30"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/main_text_size"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txtUniq" />
+
+                <TextView
+                    android:id="@+id/txtSession"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:text="Sesyon: PM"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/main_text_size"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txtDate" />
+
+                <TextView
+                    android:id="@+id/txtGame"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:text="Jwèt: NY"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/main_text_size"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txtSession" />
+
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rclSlot"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txtPhone">
+                    app:layout_constraintTop_toBottomOf="@+id/txtGame"/>
 
-                </androidx.recyclerview.widget.RecyclerView>
+
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rclSlot"
+                    android:background="@color/main_gray"/>
+
+                <TextView
+                    android:id="@+id/txtConditions"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="40dp"
+                    android:layout_marginBottom="30dp"
+                    android:text="@string/conditions"
+                    android:textSize="@dimen/main_text_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/view" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,5 +1,6 @@
 package com.sunlotocenter;
 
+import com.mazenrashed.printooth.Printooth;
 import com.sunlotocenter.dao.Company;
 import com.sunlotocenter.utils.AnyExtensionsKt;
 import com.sunlotocenter.utils.AnyExtensionsKt;
@@ -130,6 +131,7 @@ public class MyApplication extends MultiDexApplication implements Application.Ac
 
         instance= this;
         FirebaseApp.initializeApp(this);
+        Printooth.INSTANCE.init(this);
 
 //        JodaTimeAndroid.init(this);
 
@@ -235,15 +237,15 @@ public class MyApplication extends MultiDexApplication implements Application.Ac
     public Retrofit getClientNetworking(){
         if(retrofit!= null) return retrofit;
 
-//        OkHttpClient ok= new OkHttpClient.Builder()
-//                .readTimeout(60, TimeUnit.SECONDS)
-//                .connectTimeout(60, TimeUnit.SECONDS)
-//                .writeTimeout(60, TimeUnit.SECONDS)
-//                .build();
+        OkHttpClient ok= new OkHttpClient.Builder()
+                .readTimeout(60, TimeUnit.SECONDS)
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
+                .build();
 
         retrofit= new Retrofit.Builder()
                 .baseUrl(BASE_URL)
-//                .client(ok)
+                .client(ok)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 

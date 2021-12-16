@@ -47,6 +47,7 @@
     <string name="balance">Balans</string>
     <string name="enter">Antre</string>
     <string name="out">Sòti</string>
+    <string name="balance_value">Balans: %.0f HTG</string>
     <string name="enter_value">Antre: %.0f HTG</string>
     <string name="out_value">Sòti: %.0f HTG</string>
     <string name="from">jj-mm-aaaa</string>
@@ -172,6 +173,19 @@
     <string name="blocked_account">Kont ou bloke. Kontakte Administrasyon pou plis detay.</string>
     <string name="game_update_success_message">Ou modifye fich lan avèk siksè!</string>
     <string name="receipt_number">No: %1$s</string>
+    <string name="enter_receip_number">Antre nimewo fich wap chèche an</string>
+    <string name="no_printer_no_submit">Ou dwe konekte a yon enprimant avan ou soumèt fich lan.</string>
+    <string name="twin_bolert">Bòlèt jimo</string>
+    <string name="loto3_twin">Loto3 jimo</string>
+    <string name="loto4_twin">Loto4 jimo</string>
+    <string name="loto5_twin">Loto5 jimo</string>
+    <string name="marriage_twin">Maryaj jimo</string>
+    <string name="twin_game">Jwèt jimo</string>
+    <string name="date_value">Dat: %1$s</string>
+    <string name="session_value">Sesyon: %1$s</string>
+    <string name="game_value">Jwèt: %1$s</string>
+    <string name="conditions"> <![CDATA[<font color=#333333> <b>Mèsi paskew chwazi %1$s, satisfaksyonw se priyorite nou</b></font>.<br/><br/> N.B. Fich ou an valab pou 90 jou aa pati de dat ki sou fich lan. Touche kach oubyen vèsman nna bank ou te jwe a oubyen nan Santral selon kòb la. Fich dechire yo pa ka li pa otorize, sèl nimewo ki soti sou fich la yo ka li kap touche.]]></string>
+    <string name="tel_value">Tel: %1$s</string>
     <string-array name="employee_category">
         <item>Vandè</item>
         <item>Administratè</item>

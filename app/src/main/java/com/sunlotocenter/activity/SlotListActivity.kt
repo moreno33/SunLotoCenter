@@ -64,14 +64,29 @@ class SlotListActivity : ProtectedActivity(),
         if(report!!.sequence == null)
             gameViewModel.loadSlots(MyApplication.getInstance().company.sequence!!.id!!, true,
                 getDateString(report!!.reportDate, DateTimeFormat.forPattern("MM-dd-yyyy"),
-                    DateTimeZone.forID("America/New_York"))!!, gameSession!!)
+                    DateTimeZone.forID("America/New_York"))!!, gameSession!!, "")
         else
-            gameViewModel.loadIndSlots(MyApplication.getInstance().company.sequence!!.id!!, true, report!!.sequence!!.id!!, gameSession!!)
+            gameViewModel.loadIndSlots(MyApplication.getInstance().company.sequence!!.id!!, true, report!!.sequence!!.id!!, gameSession!!, "")
 
 //        swpLayout.isRefreshing= true
 //        swpLayout.setOnRefreshListener {
 //            gameViewModel.loadSlots(true, report!!.sequence.id!!, gameSession!!)
 //        }
+
+        imgSearch.setOnClickListener {
+            dialog.show()
+            search(edxCode.text.toString().trim())
+        }
+    }
+
+    private fun search(code: String) {
+        if(report!!.sequence == null)
+            gameViewModel.loadSlots(MyApplication.getInstance().company.sequence!!.id!!, true,
+                getDateString(report!!.reportDate, DateTimeFormat.forPattern("MM-dd-yyyy"),
+                    DateTimeZone.forID("America/New_York"))!!, gameSession!!, code)
+        else
+            gameViewModel.loadIndSlots(MyApplication.getInstance().company.sequence!!.id!!, true, report!!.sequence!!.id!!, gameSession!!, code)
+
     }
 
     override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
@@ -96,6 +111,7 @@ class SlotListActivity : ProtectedActivity(),
     private fun observe() {
         gameViewModel.lastAddedSlotsData.observe(this,
             { slots ->
+                dialog.dismiss()
                 addResults(slots)
                 progressBar.progressiveStop()
 //                swpLayout.isRefreshing= false
@@ -186,9 +202,9 @@ class SlotListActivity : ProtectedActivity(),
         if(report!!.sequence== null)
             gameViewModel.loadSlots(MyApplication.getInstance().company.sequence!!.id!!, true,
                 getDateString(report!!.reportDate, DateTimeFormat.forPattern("MM-dd-yyyy"),
-                    DateTimeZone.forID("America/New_York"))!!, gameSession!!)
+                    DateTimeZone.forID("America/New_York"))!!, gameSession!!, edxCode.text.toString())
         else
-            gameViewModel.loadIndSlots(MyApplication.getInstance().company.sequence!!.id!!, true, report!!.sequence!!.id!!, gameSession!!)
+            gameViewModel.loadIndSlots(MyApplication.getInstance().company.sequence!!.id!!, true, report!!.sequence!!.id!!, gameSession!!, edxCode.text.toString())
         progressBar.progressiveStart()
     }
 

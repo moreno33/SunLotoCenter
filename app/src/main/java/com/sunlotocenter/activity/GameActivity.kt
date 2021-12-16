@@ -28,6 +28,7 @@ import com.sunlotocenter.extensions.enableHome
 import com.sunlotocenter.model.GameViewModel
 import com.sunlotocenter.utils.*
 import kotlinx.android.synthetic.main.bottom_game_schedule_layout.view.*
+import kotlinx.android.synthetic.main.bottom_tool_layout.view.*
 import org.michaelbel.bottomsheet.BottomSheet
 import kotlin.collections.ArrayList
 import kotlin.math.ceil
@@ -99,6 +100,10 @@ class GameActivity : ProtectedActivity(),
             autLoto4(gameSet)
         }
 
+        clTool.setOnClickListener {
+            showMenuTool()
+        }
+
         //Submit slot
         imgSend.setOnClickListener {
             submitSlot(gameSet)
@@ -111,6 +116,58 @@ class GameActivity : ProtectedActivity(),
         }
         //If we copy a recepit let's fill
         fillCopiedReceipt()
+    }
+
+    private fun showMenuTool() {
+        val bottomLayout= LayoutInflater.from(this).inflate(R.layout.bottom_tool_layout, null)
+        var twinGames= TreeSet<Game>()
+        bottomLayout.clBorlet.setOnClickListener {
+            twinGames.clear()
+            for (i in 0..9) {
+                twinGames.add(Borlet(number = "${i}${i}", amount = 0.0, option = "", type = 1))
+            }
+            startTwinGame(twinGames)
+        }
+        bottomLayout.clMarriage.setOnClickListener {
+            twinGames.clear()
+            for (i in 0..9) {
+                twinGames.add(Marriage(number = "${i}${i}X${i}${i}", amount = 0.0, option = "", type = 1))
+            }
+            startTwinGame(twinGames)
+        }
+        bottomLayout.clLoto3.setOnClickListener {
+            twinGames.clear()
+            for (i in 0..9) {
+                twinGames.add(Loto3(number = "${i}${i}${i}", amount = 0.0, option = "", type = 1))
+            }
+            startTwinGame(twinGames)
+        }
+        bottomLayout.clLoto4.setOnClickListener {
+            twinGames.clear()
+            for (i in 0..9) {
+                twinGames.add(Loto4(number = "${i}${i}${i}${i}", amount = 0.0, option = "", type = 1))
+            }
+            startTwinGame(twinGames)
+        }
+        bottomLayout.clLoto5.setOnClickListener {
+            twinGames.clear()
+            for (i in 0..9) {
+                twinGames.add(Loto4(number = "${i}${i}${i}${i}${i}", amount = 0.0, option = "", type = 1))
+            }
+            startTwinGame(twinGames)
+        }
+        BottomSheet.Builder(this)
+            .setView(bottomLayout)
+            .setBackgroundColor(ContextCompat.getColor(applicationContext, android.R.color.white))
+            .show()
+    }
+
+    private fun startTwinGame(treeSet: TreeSet<Game>){
+        var intent= Intent(this, AutoComposeActivity::class.java)
+        intent.putExtra(AutoComposeActivity.GAMES_EXTRA, treeSet)
+        intent.putExtra(AutoComposeActivity.TITLE_EXTRA, getString(R.string.twin_game))
+
+        activityResult.launch(intent)
     }
 
     private fun fillCopiedReceipt() {

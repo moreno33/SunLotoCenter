@@ -17,7 +17,40 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/white" />
+            android:background="@android:color/white"
+            android:paddingEnd="16dp">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <EditText
+                    android:id="@+id/edxCode"
+                    android:layout_width="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_height="@dimen/edit_text_height"
+                    android:background="@drawable/main_edit_text_background"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="50dp"
+                    android:textSize="@dimen/main_text_size"
+                    android:textColor="@color/colorPrimary"
+                    android:hint="@string/enter_receip_number"
+                    android:inputType="number"
+                    android:maxLength="10" />
+
+                <ImageButton
+                    android:id="@+id/imgSearch"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/transparent"
+                    android:src="@drawable/drw_search_gray"
+                    app:layout_constraintBottom_toBottomOf="@id/edxCode"
+                    app:layout_constraintEnd_toEndOf="@id/edxCode"
+                    app:layout_constraintTop_toTopOf="@id/edxCode" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

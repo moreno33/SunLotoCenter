@@ -116,4 +116,6 @@ dependencies {
     //This is a google utility libray for phone number
     implementation 'com.googlecode.libphonenumber:libphonenumber:7.0.4'
     implementation "com.github.isradeleon:ThermalPrinter:1.0.3"
+    implementation 'com.github.mazenrashed:Printooth:1.2.2'
+
 }
