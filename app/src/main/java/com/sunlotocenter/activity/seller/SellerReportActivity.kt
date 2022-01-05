@@ -1,5 +1,7 @@
 package com.sunlotocenter.activity.seller
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,28 +10,41 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sunlotocenter.MyApplication
 import com.sunlotocenter.activity.ProtectedActivity
 import com.sunlotocenter.R
+import com.sunlotocenter.activity.SlotListActivity
 import com.sunlotocenter.adapter.AdminReportAdapter
 import com.sunlotocenter.adapter.SellerReportAdapter
-import com.sunlotocenter.dao.GameType
-import com.sunlotocenter.dao.Report
-import com.sunlotocenter.dao.User
+import com.sunlotocenter.dao.*
 import com.sunlotocenter.extensions.enableHome
 import com.sunlotocenter.extensions.gameTypes
 import com.sunlotocenter.listener.LoadMoreListener
 import com.sunlotocenter.model.GameViewModel
+import com.sunlotocenter.utils.GAME_SESSION_EXTRA
+import com.sunlotocenter.utils.GAME_TYPE_EXTRA
+import com.sunlotocenter.utils.REPORT_EXTRA
 import com.sunlotocenter.utils.USER_EXTRA
 import com.sunlotocenter.validator.DateValidator
 import com.sunlotocenter.validator.Form
 import kotlinx.android.synthetic.main.activity_seller_report.*
+import kotlinx.android.synthetic.main.activity_seller_report.edxFrom
+import kotlinx.android.synthetic.main.activity_seller_report.edxTo
+import kotlinx.android.synthetic.main.activity_seller_report.progressBar
+import kotlinx.android.synthetic.main.activity_seller_report.rclReport
+import kotlinx.android.synthetic.main.activity_seller_report.spnType
+import kotlinx.android.synthetic.main.activity_seller_report.swpLayout
+import kotlinx.android.synthetic.main.activity_seller_report.toolbar
+import kotlinx.android.synthetic.main.activity_seller_report.txtInfo
 
 class SellerReportActivity : ProtectedActivity(),
-    LoadMoreListener.OnLoadMoreListener{
+    LoadMoreListener.OnLoadMoreListener,
+SellerReportAdapter.OnOpenReportListener{
 
     private var loadMoreListener: LoadMoreListener?= null
     private lateinit var reportAdapter: SellerReportAdapter
@@ -42,11 +57,23 @@ class SellerReportActivity : ProtectedActivity(),
     override fun getLayoutId(): Int {
         return R.layout.activity_seller_report
     }
+
+    lateinit var activityResult:
+            ActivityResultLauncher<Intent>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableHome(toolbar)
-        gameViewModel= ViewModelProvider(this, SavedStateViewModelFactory(application, this))
-            .get(GameViewModel::class.java)
+
+        activityResult= registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            if(it.resultCode== Activity.RESULT_OK){
+                gameType?.let { gameViewModel.loadIndReports(user.sequence!!.id!!,
+                    MyApplication.getInstance().company.sequence!!.id!!,
+                    true, it, edxFrom.text, edxTo.text)  }
+            }
+        }
+
+        gameViewModel= ViewModelProvider(this, SavedStateViewModelFactory(application, this))[GameViewModel::class.java]
 
         user= intent.getSerializableExtra(USER_EXTRA) as User
 
@@ -58,15 +85,17 @@ class SellerReportActivity : ProtectedActivity(),
         setUpAdapter()
         prepareControl()
 
-
-
         gameType?.let { gameViewModel.loadIndReports(
             user.sequence!!.id!!,
             user.company!!.sequence!!.id!!, true, it, "", "") }
-        gameType?.let{ gameViewModel.getIndTotalReport(
-            user.sequence!!.id!!,
-            user.company!!.sequence!!.id!!, gameType!!, "", "") }
 
+        swpLayout.isRefreshing= true
+        swpLayout.setOnRefreshListener {
+            gameType?.let { gameViewModel.loadIndReports(
+                user.sequence!!.id!!,
+                MyApplication.getInstance().company.sequence!!.id!!,
+                true, it, edxFrom.text, edxTo.text)  }
+        }
     }
 
     private fun prepareControl() {
@@ -92,9 +121,6 @@ class SellerReportActivity : ProtectedActivity(),
                     gameType?.let { gameViewModel.loadIndReports(
                         user.sequence!!.id!!,
                         user.company!!.sequence!!.id!!, true, it, "", "") }
-                    gameType?.let{ gameViewModel.getIndTotalReport(
-                        user.sequence!!.id!!,
-                        user.company!!.sequence!!.id!!, gameType!!, "", "") }
                 }
                 if(s.length== 10){
                     if(edxTo.text.length== 10 && form.isValid()){
@@ -102,9 +128,6 @@ class SellerReportActivity : ProtectedActivity(),
                         gameType?.let { gameViewModel.loadIndReports(
                             user.sequence!!.id!!,
                             user.company!!.sequence!!.id!!, true, it, edxFrom.text, edxTo.text) }
-                        gameType?.let { gameViewModel.getIndTotalReport(
-                            user.sequence!!.id!!,
-                            user.company!!.sequence!!.id!!, it, edxFrom.text, edxTo.text) }
                     }else if(edxTo.text.length<10){
                         edxTo.focus()
                     }
@@ -134,9 +157,6 @@ class SellerReportActivity : ProtectedActivity(),
                         user.sequence!!.id!!,
                         user.company!!.sequence!!.id!!,
                         true, it, "", "") }
-                    gameType?.let{ gameViewModel.getIndTotalReport(
-                        user.sequence!!.id!!,
-                        user.company!!.sequence!!.id!!, gameType!!, "", "") }
                 }
                 if(s.length== 10){
                     if(edxFrom.text.length== 10 && form.isValid()){
@@ -145,9 +165,6 @@ class SellerReportActivity : ProtectedActivity(),
                             user.sequence!!.id!!,
                             user.company!!.sequence!!.id!!,
                             true, it, edxFrom.text, edxTo.text) }
-                        gameType?.let { gameViewModel.getIndTotalReport(
-                            user.sequence!!.id!!,
-                            user.company!!.sequence!!.id!!, it, edxFrom.text, edxTo.text) }
                     }else if (edxFrom.text.length<10){
                         edxFrom.focus()
                     }
@@ -166,7 +183,7 @@ class SellerReportActivity : ProtectedActivity(),
         spnType.adapter = dataAdapter
         spnType.setTitle(getString(R.string.game))
         spnType.setPositiveButton(getString(R.string.ok))
-        gameType= GameType.NY
+        gameType= GameType.ALL
         spnType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parentView: AdapterView<*>?,
@@ -183,9 +200,7 @@ class SellerReportActivity : ProtectedActivity(),
                                 user.sequence!!.id!!,
                                 user.company!!.sequence!!.id!!,
                                 true, gameType!!, edxFrom.text, edxTo.text)
-                            gameType?.let{ gameViewModel.getIndTotalReport(
-                                user.sequence!!.id!!,
-                                user.company!!.sequence!!.id!!, gameType!!, edxFrom.text, edxTo.text) }
+
                         }
                     }
                 }
@@ -200,8 +215,7 @@ class SellerReportActivity : ProtectedActivity(),
         rclReport.layoutManager= LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
         reportAdapter= SellerReportAdapter(
-            if(isSaveState) gameViewModel.reports else arrayListOf()
-        )
+            if(isSaveState) gameViewModel.reports else arrayListOf(), this)
         gameViewModel.reports.clear()
 
         rclReport.adapter= reportAdapter
@@ -215,17 +229,8 @@ class SellerReportActivity : ProtectedActivity(),
                 dialog.dismiss()
                 addReports(reports)
                 progressBar.progressiveStop()
-//                swpLayout.isRefreshing= false
+                swpLayout.isRefreshing= false
             })
-        gameViewModel.totalReportData.observe(this, {
-                totalReport->
-            txtEnter.text= getString(R.string.enter_value, if(totalReport!= null) totalReport.data?.entry?.toFloat() else 0f)
-            txtOut.text= getString(R.string.out_value, if(totalReport!= null) totalReport.data?.out?.toFloat() else 0f)
-            txtAmount.text= if(totalReport!= null) String.format("%.0f", (totalReport.data?.entry!!-totalReport.data.out)) else "0"
-            pgbReport.visibility= GONE
-            header_content.visibility= VISIBLE
-        })
-
     }
 
     private fun addReports(reports: ArrayList<Report>) {
@@ -275,5 +280,14 @@ class SellerReportActivity : ProtectedActivity(),
             user.company!!.sequence!!.id!!,
             false, it, edxFrom.text, edxTo.text) }
         progressBar.progressiveStart()
+    }
+
+    override fun onOpen(gameSession: GameSession, report: Report) {
+        val intent= Intent(this, SlotListActivity::class.java)
+        intent.putExtra(GAME_SESSION_EXTRA, gameSession)
+        intent.putExtra(REPORT_EXTRA, report)
+        intent.putExtra(USER_EXTRA, user)
+        intent.putExtra(GAME_TYPE_EXTRA, gameType)
+        activityResult.launch(intent)
     }
 }

@@ -1,5 +1,6 @@
 package com.sunlotocenter.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
@@ -10,10 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.application.isradeleon.thermalprinter.ConnectBluetoothActivity
 import com.sunlotocenter.MyApplication
 import com.sunlotocenter.R
+import com.sunlotocenter.activity.admin.AdminReportActivity
 import com.sunlotocenter.adapter.SlotListAdapter
-import com.sunlotocenter.dao.GameSession
-import com.sunlotocenter.dao.Report
-import com.sunlotocenter.dao.Slot
+import com.sunlotocenter.dao.*
 import com.sunlotocenter.extensions.enableHome
 import com.sunlotocenter.listener.LoadMoreListener
 import com.sunlotocenter.model.GameViewModel
@@ -38,6 +38,8 @@ class SlotListActivity : ProtectedActivity(),
     private var report: Report?= null
     private var form= Form()
     private lateinit var slotListExtra:ArrayList<Slot>
+    private var user: User?= null
+    private lateinit var  type:GameType
 
 
     override fun getLayoutId(): Int {
@@ -46,6 +48,9 @@ class SlotListActivity : ProtectedActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableHome(toolbar)
+
+        user= intent.getSerializableExtra(USER_EXTRA) as User?
+        type= intent.getSerializableExtra(GAME_TYPE_EXTRA) as GameType
 
         gameViewModel= ViewModelProvider(this, SavedStateViewModelFactory(application, this))
             .get(GameViewModel::class.java)
@@ -61,12 +66,13 @@ class SlotListActivity : ProtectedActivity(),
 
         setUpAdapter()
 
-        if(report!!.sequence == null)
+        if(user== null)
             gameViewModel.loadSlots(MyApplication.getInstance().company.sequence!!.id!!, true,
                 getDateString(report!!.reportDate, DateTimeFormat.forPattern("MM-dd-yyyy"),
-                    DateTimeZone.forID("America/New_York"))!!, gameSession!!, "")
+                    DateTimeZone.forID("America/New_York"))!!, gameSession!!, type, "")
         else
-            gameViewModel.loadIndSlots(MyApplication.getInstance().company.sequence!!.id!!, true, report!!.sequence!!.id!!, gameSession!!, "")
+            gameViewModel.loadIndSlots(MyApplication.getInstance().company.sequence!!.id!!, true, getDateString(report!!.reportDate, DateTimeFormat.forPattern("MM-dd-yyyy"),
+                DateTimeZone.forID("America/New_York"))!!, user!!.sequence!!.id!!, gameSession!!, type, "")
 
 //        swpLayout.isRefreshing= true
 //        swpLayout.setOnRefreshListener {
@@ -80,12 +86,15 @@ class SlotListActivity : ProtectedActivity(),
     }
 
     private fun search(code: String) {
-        if(report!!.sequence == null)
+        if(user == null)
             gameViewModel.loadSlots(MyApplication.getInstance().company.sequence!!.id!!, true,
                 getDateString(report!!.reportDate, DateTimeFormat.forPattern("MM-dd-yyyy"),
-                    DateTimeZone.forID("America/New_York"))!!, gameSession!!, code)
+                    DateTimeZone.forID("America/New_York"))!!, gameSession!!, type, code)
         else
-            gameViewModel.loadIndSlots(MyApplication.getInstance().company.sequence!!.id!!, true, report!!.sequence!!.id!!, gameSession!!, code)
+            gameViewModel.loadIndSlots(MyApplication.getInstance().company.sequence!!.id!!, true,
+                getDateString(report!!.reportDate, DateTimeFormat.forPattern("MM-dd-yyyy"),
+                    DateTimeZone.forID("America/New_York"))!!,
+                user!!.sequence!!.id!!, gameSession!!, type, code)
 
     }
 
@@ -139,11 +148,11 @@ class SlotListActivity : ProtectedActivity(),
                         ),
                         if (it.success) getString(R.string.game_update_success_message) else it.message!!
                         ,
-                        getString(
-                            if(it.success)R.string.print_receipt else R.string.ok
-                        ),
+                        getString( R.string.ok),
                         object : ClickListener {
                             override fun onClick(): Boolean {
+                                setResult(Activity.RESULT_OK)
+                                finish()
                                 return false
                             }
 
@@ -199,16 +208,34 @@ class SlotListActivity : ProtectedActivity(),
     }
 
     override fun onLoadMore() {
-        if(report!!.sequence== null)
-            gameViewModel.loadSlots(MyApplication.getInstance().company.sequence!!.id!!, true,
+        if(user== null)
+            gameViewModel.loadSlots(MyApplication.getInstance().company.sequence!!.id!!, false,
                 getDateString(report!!.reportDate, DateTimeFormat.forPattern("MM-dd-yyyy"),
-                    DateTimeZone.forID("America/New_York"))!!, gameSession!!, edxCode.text.toString())
+                    DateTimeZone.forID("America/New_York"))!!, gameSession!!, type, edxCode.text.toString())
         else
-            gameViewModel.loadIndSlots(MyApplication.getInstance().company.sequence!!.id!!, true, report!!.sequence!!.id!!, gameSession!!, edxCode.text.toString())
+            gameViewModel.loadIndSlots(MyApplication.getInstance().company.sequence!!.id!!, false,
+                getDateString(report!!.reportDate, DateTimeFormat.forPattern("MM-dd-yyyy"),
+                    DateTimeZone.forID("America/New_York"))!!,
+                user!!.sequence!!.id!!, gameSession!!, type, edxCode.text.toString())
         progressBar.progressiveStart()
     }
 
     override fun onUpdate(slot: Slot) {
-        gameViewModel.play(slot)
+
+        showDialog(this@SlotListActivity,
+            getString(R.string.attention),
+            if (slot.status== SlotStatus.CANCELLED) getString(R.string.sure_about_cancel_slot) else getString(R.string.reinstaure_game)
+            ,
+            getString(R.string.yes),
+            getString(R.string.no),
+            object : ClickListener {
+                override fun onClick(): Boolean {
+                    dialog.show()
+                    gameViewModel.play(slot)
+                    return false } },
+            object : ClickListener {
+                override fun onClick(): Boolean {
+                    return false } },
+            false, DialogType.WARNING)
     }
 }

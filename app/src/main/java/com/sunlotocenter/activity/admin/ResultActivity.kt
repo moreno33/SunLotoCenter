@@ -76,7 +76,7 @@ class ResultActivity : ProtectedActivity() {
                             getString(R.string.success_title),
                             getString(
                                 if (resultExtra == null) R.string.create_result_success_message
-                                else R.string.update_game_schedule_success_message
+                                else R.string.updaate_result_success_message
 
                             ),
                             getString(R.string.ok),
@@ -237,7 +237,9 @@ class ResultActivity : ProtectedActivity() {
             result?.lo2= edxLo2.text
             result?.lo3= edxLo3.text
             result?.author= MyApplication.getInstance().connectedUser
-            result?.resultDate= DateTime.parse(edxText.text.toString(), DateTimeFormat.forPattern("dd-MM-yyyy")).withZone(DateTimeZone.forID("America/New_York"))
+            result?.resultDate= DateTime.parse(edxText.text.toString(), DateTimeFormat.forPattern("dd-MM-yyyy"))
+                .withZone(DateTimeZone.forID("America/New_York"))
+                .withTime(0, 0, 0, 0)
 
             dialog.show()
             gameViewModel.saveGameResult(result!!)

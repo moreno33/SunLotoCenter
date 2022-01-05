@@ -40,7 +40,7 @@ class BankListAdapter(var banks: ArrayList<Bank>, var saveBankListener: SaveBank
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         var bank= banks[position]
-        holder.txtName.text= "${bank.name} (${bank.code})"
+        holder.txtName.text= "${bank.name} (${bank.bankCode})"
         holder.txtStartDate.text= context.getString(R.string.since, getDateString(bank.createdDateTime!!))
 
 //        if(employee.status== UserStatus.ACTIVE && employee.blames.isEmpty())

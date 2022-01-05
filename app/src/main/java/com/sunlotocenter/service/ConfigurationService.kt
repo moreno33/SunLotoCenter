@@ -83,6 +83,7 @@ class ConfigurationService : IntentService(TAG) {
     }
 
     private fun updateUserInfo(connectedUser: User?) {
+        if(connectedUser== null) MyApplication.getInstance().logout()
         if (!MyApplication.getInstance().connectedUser.phoneNumber?.number
                 .equals(connectedUser?.phoneNumber?.number) ||
             connectedUser?.status != UserStatus.ACTIVE

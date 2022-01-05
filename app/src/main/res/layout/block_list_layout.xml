@@ -13,7 +13,7 @@
 
         <TextView
             android:id="@+id/txtCode"
-            android:layout_width="0dp"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
@@ -28,7 +28,7 @@
 
         <TextView
             android:id="@+id/txtGame"
-            android:layout_width="0dp"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
@@ -38,15 +38,16 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/txtType"
             app:layout_constraintStart_toEndOf="@id/txtCode"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
         <TextView
             android:id="@+id/txtType"
-            android:layout_width="0dp"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            android:text="NEW YORK"
+            android:text="NY"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/main_text_size"
             app:layout_constraintBottom_toBottomOf="parent"

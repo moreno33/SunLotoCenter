@@ -5,78 +5,102 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.sunlotocenter.R
 import com.sunlotocenter.activity.SlotListActivity
 import com.sunlotocenter.dao.GameSession
 import com.sunlotocenter.dao.Report
+import com.sunlotocenter.dao.User
 import com.sunlotocenter.utils.*
+import kotlinx.android.synthetic.main.report_header_layout.view.*
 import kotlinx.android.synthetic.main.report_layout.view.*
+import org.joda.time.DateTimeZone
 
-class SellerReportAdapter(var reports: ArrayList<Report>) : RecyclerView.Adapter<SellerReportAdapter.CustomViewHolder>() {
+class SellerReportAdapter(var reports: ArrayList<Report>,
+                          var onOpenReportListener: OnOpenReportListener
+) :
+    RecyclerView.Adapter<SellerReportAdapter.CustomViewHolder>() {
 
+    private val ITEM: Int= 0;
+    private val HEADER:Int= 1;
     lateinit var context: Context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         context= parent.context
-        return CustomViewHolder(LayoutInflater.from(context).inflate(R.layout.report_layout, null))
+        return CustomViewHolder(LayoutInflater.from(context).inflate(if(viewType== ITEM) R.layout.report_layout else R.layout.report_header_layout, null))
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         var report= reports[position]
-        holder.txtDateMorning.text= getDateString(report.reportDate!!)
-        holder.txtDateNight.text= getDateString(report.reportDate!!)
+        if(getItemViewType(position)== ITEM){
+            holder.txtDateMorning.text= getDateString(report.reportDate!!, DateTimeZone.forID("America/New_York"))
+            holder.txtDateNight.text= getDateString(report.reportDate!!, DateTimeZone.forID("America/New_York"))
 
-        holder.txtEntryMorning.text= context.getString(R.string.enter_value, report.totalMorning)
-        holder.txtEntryNight.text= context.getString(R.string.enter_value, report.totalNight)
+            holder.txtEntryMorning.text= context.getString(R.string.enter_value, report.totalMorning)
+            holder.txtEntryNight.text= context.getString(R.string.enter_value, report.totalNight)
 
-        holder.txtOutMorning.text= if(report.winMorning!= null)
-            context.getString(R.string.out_value, report.winMorning) else
-            context.getString(R.string.out_value, 0f)
-        holder.txtOutNight.text= if(report.winNight!= null)
-            context.getString(R.string.out_value, report.winNight!!) else
-            context.getString(R.string.out_value, 0f)
+            holder.txtOutMorning.text= if(report.winMorning!= null)
+                context.getString(R.string.out_value, report.winMorning) else
+                context.getString(R.string.out_value, 0f)
+            holder.txtOutNight.text= if(report.winNight!= null)
+                context.getString(R.string.out_value, report.winNight!!) else
+                context.getString(R.string.out_value, 0f)
 
-        val resultMorning= if(report.winMorning!= null) report.totalMorning!! - report.winMorning!! else null
-        val resultNight= if(report.winNight!= null) report.totalNight!! - report.winNight!! else null
+            val resultMorning= if(report.winMorning!= null) report.totalMorning!! - report.winMorning!! else null
+            val resultNight= if(report.winNight!= null) report.totalNight!! - report.winNight!! else null
 
-        if(resultMorning!= null){
-            holder.txtAmountMorning.text= context.getString(R.string.price_currency, resultMorning)
-            if(resultMorning>0){
-                holder.txtAmountMorning.setTextColor(ContextCompat.getColor(context, R.color.main_green))
-            }else{
-                holder.txtAmountMorning.setTextColor(ContextCompat.getColor(context, R.color.main_red))
+            if(resultMorning!= null){
+                holder.txtAmountMorning.text= context.getString(R.string.price_currency, resultMorning)
+                if(resultMorning>=0){
+                    holder.txtAmountMorning.setTextColor(ContextCompat.getColor(context, R.color.main_green))
+                }else{
+                    holder.txtAmountMorning.setTextColor(ContextCompat.getColor(context, R.color.main_red))
+                }
             }
-        }
-        else{
-            holder.txtAmountMorning.text= "-"
-            holder.txtAmountMorning.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary))
-        }
+            else{
+                holder.txtAmountMorning.text= "-"
+                holder.txtAmountMorning.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary))
+            }
 
-        if(resultNight!= null){
-            holder.txtAmountNight.text= context.getString(R.string.price_currency, resultNight)
-            if(resultNight>=0){
-                holder.txtAmountNight.setTextColor(ContextCompat.getColor(context, R.color.main_green))
+            if(resultNight!= null){
+                holder.txtAmountNight.text= context.getString(R.string.price_currency, resultNight)
+                if(resultNight>=0){
+                    holder.txtAmountNight.setTextColor(ContextCompat.getColor(context, R.color.main_green))
+                }else{
+                    holder.txtAmountNight.setTextColor(ContextCompat.getColor(context, R.color.main_red))
+                }
             }else{
-                holder.txtAmountNight.setTextColor(ContextCompat.getColor(context, R.color.main_red))
+                holder.txtAmountNight.text= "-"
+                holder.txtAmountNight.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary))
+            }
+            holder.imgOpenMorning.setOnClickListener {
+                onOpenReportListener.onOpen(GameSession.MORNING, report)
+            }
+            holder.imgOpenNight.setOnClickListener {
+                onOpenReportListener.onOpen(GameSession.NIGHT, report)
             }
         }else{
-            holder.txtAmountNight.text= "-"
-            holder.txtAmountNight.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary))
+            val totalReport= report.totalReport
+            holder.txtBalance.text= context.getString(R.string.balance_value,
+                totalReport?.balance?.toFloat() ?: 0f
+            )
+            holder.txtEnter.text= context.getString(R.string.enter_value,
+                totalReport?.entry?.toFloat() ?: 0f
+            )
+            holder.txtOut.text= context.getString(R.string.out_value,
+                totalReport?.out?.toFloat() ?: 0f
+            )
+            holder.txtAmount.text= if(totalReport!= null) String.format("%.0f", (totalReport.entry-totalReport.out)) else "0"
         }
-        holder.imgOpenMorning.setOnClickListener {
-            val intent= Intent(context, SlotListActivity::class.java)
-            intent.putExtra(GAME_SESSION_EXTRA, GameSession.MORNING)
-            intent.putExtra(REPORT_EXTRA, report)
-            context.startActivity(intent)
-        }
-        holder.imgOpenNight.setOnClickListener {
-            val intent= Intent(context, SlotListActivity::class.java)
-            intent.putExtra(GAME_SESSION_EXTRA, GameSession.NIGHT)
-            intent.putExtra(REPORT_EXTRA, report)
-            context.startActivity(intent)
-        }
+
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (reports.isNotEmpty() && reports[position].totalReport!= null)
+            HEADER
+        else ITEM
     }
 
     override fun getItemCount(): Int {
@@ -95,5 +119,14 @@ class SellerReportAdapter(var reports: ArrayList<Report>) : RecyclerView.Adapter
         val imgOpenMorning by lazy { item.imgOpenMorning }
         val imgOpenNight by lazy { item.imgOpenNight }
 
+        //header
+        val txtBalance by lazy { item.txtBalance }
+        val txtEnter by lazy { item.txtEnter }
+        val txtOut by lazy { item.txtOut }
+        val txtAmount by lazy { item.txtAmount }
+    }
+
+    interface OnOpenReportListener{
+        fun onOpen(gameSession: GameSession, report: Report)
     }
 }

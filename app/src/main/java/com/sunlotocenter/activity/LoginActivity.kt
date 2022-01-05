@@ -121,7 +121,17 @@ class LoginActivity : BasicActivity() {
             }
 
             override fun onFailure(call: Call<Response<User>>, t: Throwable) {
-                Log.i("Response", t.toString())
+                showDialog(this@LoginActivity,
+                    getString(R.string.internet_error_title),
+                    getString(
+                        R.string.internet_error_message
+                    ),
+                    getString(R.string.ok),
+                    object : ClickListener {
+                        override fun onClick(): Boolean {
+                            return false
+                        }
+                    }, true, DialogType.ERROR)
                 dialog.dismiss()
             }
         })

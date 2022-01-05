@@ -12,8 +12,7 @@ import com.yongchun.library.utils.CURRENT_SELECTION
 import com.yongchun.library.utils.DISABLE_CAMERA
 import com.yongchun.library.utils.LIMIT
 import com.yongchun.library.utils.SELECTED_IMAGES
-import com.yongchun.library.view.ImageSelectorActivity
-import com.yongchun.library.view.ImageSelectorActivity.EXTRA_MAX_SELECT_NUM
+import com.yongchun.library.view.ImageSelectorActivity.Companion.EXTRA_MAX_SELECT_NUM
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

@@ -26,17 +26,20 @@ class Borlet(number:String, amount:Double, option:String, type: Int, amountWin: 
     }
 
     override fun compareTo(other: Game): Int {
-        if(this.position== other.position) {
-            if(this.type== other.type) {
 
-                if(this.number== other.number) return 0
-                else return 1
+        return compareBy<Game> { it.position }.thenBy { it.type }.thenBy { it.number }.compare(this, other)
 
-            }
-            else if(this.type> other.type) return 1
-            else return -1
-        }
-        else if(this.position> other.position) return 1
-        else return -1
+//        if(this.position== other.position) {
+//            if(this.type== other.type) {
+//
+//                if(this.number== other.number) return 0
+//                else return 1
+//
+//            }
+//            else if(this.type> other.type) return 1
+//            else return -1
+//        }
+//        else if(this.position> other.position) return 1
+//        else return -1
     }
 }

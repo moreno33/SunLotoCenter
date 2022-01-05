@@ -2,3 +2,4 @@ include ':app'
 rootProject.name = "LoginActivity"
 include ':library'
 include ':phone'
+include ':printooth'

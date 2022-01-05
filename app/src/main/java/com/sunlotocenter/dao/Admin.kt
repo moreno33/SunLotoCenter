@@ -4,7 +4,7 @@ import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
 
 //var classType: Class<out Account>? = this::class.java
-class Admin(id:Long?=null,
+open class Admin(id:Long?=null,
             sequence: Sequence= Sequence(),
             firstName:String?= null,
             lastName: String?= null,

@@ -46,18 +46,16 @@ class BankListActivity : ProtectedActivity(),
     lateinit var activityResult:
             ActivityResultLauncher<Intent>
 
-    override fun onStart() {
-        super.onStart()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableHome(toolbar)
+
         activityResult= registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             if(it.resultCode== Activity.RESULT_OK){
                 bankViewModel.loadBanks(true)
             }
         }
-    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableHome(toolbar)
         bankViewModel= ViewModelProvider(this, SavedStateViewModelFactory(application, this))
             .get(BankViewModel::class.java)
 

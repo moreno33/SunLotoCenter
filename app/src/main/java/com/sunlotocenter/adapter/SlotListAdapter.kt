@@ -2,6 +2,7 @@ package com.sunlotocenter.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.opengl.Visibility
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,6 +57,14 @@ class SlotListAdapter(var slots: ArrayList<Slot>, var onUpdatelot: OnUpdateSlot)
         var gameAdapter= GameSlotAdapter(TreeSet(slot.games))
 
         holder.txtNumber.text= context.getString(R.string.receipt_number, slot.uniq)
+        holder.txtTypeSessionDate.text= "${slot.type.id} (${slot.session.id}) - ${getDateTimeString(context, slot.createdDateTime!!)}"
+        holder.txtPlayer.text= "${slot.author.firstName} ${slot.author.lastName} (${slot.author.accountNumber})"
+
+        if (slot.status== SlotStatus.ACTIVE){
+            holder.txtNumber.background= ContextCompat.getDrawable(context, R.drawable.green_round_background)
+        }else{
+            holder.txtNumber.background= ContextCompat.getDrawable(context, R.drawable.red_round_background)
+        }
 
         holder.rclSlotRow.apply {
             setHasFixedSize(true)
@@ -67,8 +76,21 @@ class SlotListAdapter(var slots: ArrayList<Slot>, var onUpdatelot: OnUpdateSlot)
             context.startActivity(Intent(context, GameActivity::class.java).putExtra(COPIED_GAME_LIST, filteredGameList))
         }
 
+        if(slot.status== SlotStatus.ACTIVE){
+            holder.imgCancel.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.window_close_black_10))
+        }else{
+            holder.imgCancel.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.check_outline_black_10))
+        }
+
+        if (MyApplication.getInstance().connectedUser is Admin){
+            holder.imgCancel.visibility= View.VISIBLE
+        }else{
+            holder.imgCancel.visibility= View.GONE
+        }
+
         holder.imgCancel.setOnClickListener {
             var slotCopy= slot.clone() as Slot
+            slotCopy.author= MyApplication.getInstance().connectedUser
 
             if(slot.status== SlotStatus.ACTIVE){
                 slotCopy.status= SlotStatus.CANCELLED
@@ -98,6 +120,8 @@ class SlotListAdapter(var slots: ArrayList<Slot>, var onUpdatelot: OnUpdateSlot)
         val imgCopy by lazy { item.imgCopy }
         val imgCancel by lazy { item.imgCancel }
         val txtNumber by lazy { item.txtNumber }
+        val txtTypeSessionDate by lazy { item.txtTypeSessionDate }
+        val txtPlayer by lazy { item.txtPlayer }
     }
 
     interface OnUpdateSlot{

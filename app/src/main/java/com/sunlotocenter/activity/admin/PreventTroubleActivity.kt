@@ -50,19 +50,17 @@ class PreventTroubleActivity : ProtectedActivity(),
     private lateinit var activityResult:
             ActivityResultLauncher<Intent>
 
-    override fun onStart() {
-        super.onStart()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        enableHome(toolbar)
+
         activityResult= registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             if(it.resultCode== Activity.RESULT_OK){
                 dialog.show()
                 gameViewModel.loadBlockedGame(MyApplication.getInstance().company.sequence!!.id!!,true)
             }
         }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableHome(toolbar)
 
         gameViewModel= ViewModelProvider(this, SavedStateViewModelFactory(application, this))
             .get(GameViewModel::class.java)

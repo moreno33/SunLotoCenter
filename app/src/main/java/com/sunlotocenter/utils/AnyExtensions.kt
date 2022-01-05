@@ -78,6 +78,7 @@ val BROADCAST_NOTIF_EXTRA= "BROADCAST_NOTIF_EXTRA"
 val COPIED_GAME_LIST= "COPIED_GAME_LIST"
 val SLOT_EXTRA= "SLOT_EXTRA"
 val COMPANY_EXTRA= "COMPANY_EXTRA"
+val GAME_TYPE_EXTRA= "GAME_TYPE_EXTRA"
 
 val userApi =
     MyApplication.getInstance().clientNetworking.create(UserApi::class.java)
@@ -356,9 +357,12 @@ fun showDialog(context: Context, title: String, message: String, neutralText: St
         when(dialogType){
             DialogType.NEUTRAL-> {
                 view.btnPositive.background= ContextCompat.getDrawable(context, R.drawable.black_corner_radius)
-                view.btnNegative.background= ContextCompat.getDrawable(context, R.drawable.empty_black_corner_radius)
             }
             DialogType.SUCCESS-> view.btnPositive.background= ContextCompat.getDrawable(context, R.drawable.green_corner_radius)
+            DialogType.WARNING-> {
+                view.btnPositive.background= ContextCompat.getDrawable(context, R.drawable.yellow_corner_radius)
+                view.btnPositive.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary))
+            }
             DialogType.ERROR-> view.btnPositive.background= ContextCompat.getDrawable(context, R.drawable.red_corner_radius)
         }
     }
@@ -611,7 +615,8 @@ interface ClickListener {
 enum class DialogType {
     NEUTRAL,
     SUCCESS,
-    ERROR
+    ERROR,
+    WARNING
 }
 
 fun format(value:Double):String{

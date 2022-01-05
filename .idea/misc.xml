@@ -21,6 +21,7 @@
         <entry key="app/src/main/res/drawable/background_tool.xml" value="0.21414473684210528" />
         <entry key="app/src/main/res/drawable/background_tool_default.xml" value="0.21414473684210528" />
         <entry key="app/src/main/res/drawable/background_tool_pressed.xml" value="0.21414473684210528" />
+        <entry key="app/src/main/res/drawable/balance_sunny_black_18.xml" value="0.22401315789473683" />
         <entry key="app/src/main/res/drawable/balance_sunny_black_24.xml" value="0.13355263157894737" />
         <entry key="app/src/main/res/drawable/black_corner_radius.xml" value="0.15" />
         <entry key="app/src/main/res/drawable/black_corner_radius_default.xml" value="0.15" />
@@ -31,8 +32,12 @@
         <entry key="app/src/main/res/drawable/blue_corner_radius_pressed.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/blue_round_background.xml" value="0.22401315789473683" />
         <entry key="app/src/main/res/drawable/bottom_background.xml" value="0.22401315789473683" />
+        <entry key="app/src/main/res/drawable/button_background_gray.xml" value="0.21414473684210528" />
+        <entry key="app/src/main/res/drawable/button_background_gray_default.xml" value="0.21414473684210528" />
+        <entry key="app/src/main/res/drawable/button_background_gray_pressed.xml" value="0.21414473684210528" />
         <entry key="app/src/main/res/drawable/camera_outline_white_18.xml" value="0.20855263157894738" />
         <entry key="app/src/main/res/drawable/check_outline_black.xml" value="0.21414473684210528" />
+        <entry key="app/src/main/res/drawable/check_outline_black_10.xml" value="0.21414473684210528" />
         <entry key="app/src/main/res/drawable/chevron_down_black_18.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/chevron_down_white_18.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/chevron_right_black_18.xml" value="0.22302631578947368" />
@@ -93,6 +98,9 @@
         <entry key="app/src/main/res/drawable/white_corner_radius.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/window_close.xml" value="0.22401315789473683" />
         <entry key="app/src/main/res/drawable/window_close_black_10.xml" value="0.21414473684210528" />
+        <entry key="app/src/main/res/drawable/yellow_corner_radius.xml" value="0.21414473684210528" />
+        <entry key="app/src/main/res/drawable/yellow_corner_radius_default.xml" value="0.21414473684210528" />
+        <entry key="app/src/main/res/drawable/yellow_corner_radius_pressed.xml" value="0.21414473684210528" />
         <entry key="app/src/main/res/layout/activity_admin_dashboard.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_admin_personal_info.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_admin_report.xml" value="0.21744012119771697" />
@@ -151,11 +159,12 @@
         <entry key="app/src/main/res/layout/marry_all_row_layout.xml" value="0.335" />
         <entry key="app/src/main/res/layout/notification_layout.xml" value="0.24273858921161826" />
         <entry key="app/src/main/res/layout/option_price_layout.xml" value="0.18886612021857924" />
+        <entry key="app/src/main/res/layout/report_header_layout.xml" value="0.2138157894736842" />
         <entry key="app/src/main/res/layout/report_layout.xml" value="0.375" />
         <entry key="app/src/main/res/layout/report_motion_layout.xml" value="0.1" />
         <entry key="app/src/main/res/layout/result_header_layout.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/result_layout.xml" value="0.625" />
-        <entry key="app/src/main/res/layout/slot_layout.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/result_layout.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/slot_layout.xml" value="0.25" />
         <entry key="app/src/main/res/layout/spinner_item_layout.xml" value="0.1" />
         <entry key="app/src/main/res/layout/valid_error_layout.xml" value="0.25" />
         <entry key="app/src/main/res/layout/validatable_edit_text_layout.xml" value="0.1" />
@@ -171,6 +180,7 @@
         <entry key="phone/src/main/res/drawable/account_cancel_outline_black_1i.xml" value="0.2" />
         <entry key="phone/src/main/res/layout/country_layout.xml" value="0.16632513661202186" />
         <entry key="phone/src/main/res/layout/phone_number_layout.xml" value="0.25" />
+        <entry key="printooth/src/main/res/layout/activity_scanning.xml" value="0.20328947368421052" />
       </map>
     </option>
   </component>

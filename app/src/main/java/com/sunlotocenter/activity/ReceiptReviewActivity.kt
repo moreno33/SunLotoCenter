@@ -1,56 +1,43 @@
 package com.sunlotocenter.activity
-
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.telephony.PhoneNumberUtils
-import android.text.Html
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.NotificationCompat
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.application.isradeleon.thermalprinter.ConnectBluetoothActivity
-import com.application.isradeleon.thermalprinter.models.PrintAlignment
-import com.application.isradeleon.thermalprinter.models.PrintFont
-import com.application.isradeleon.thermalprinter.models.ThermalPrinter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.google.i18n.phonenumbers.PhoneNumberUtil
-import com.google.i18n.phonenumbers.Phonenumber
 import com.mazenrashed.printooth.Printooth
-import com.mazenrashed.printooth.data.printable.ImagePrintable
-import com.mazenrashed.printooth.data.printable.Printable
-import com.mazenrashed.printooth.data.printable.TextPrintable
-import com.mazenrashed.printooth.data.printer.DefaultPrinter
 import com.mazenrashed.printooth.ui.ScanningActivity
 import com.mazenrashed.printooth.utilities.Printing
 import com.mazenrashed.printooth.utilities.PrintingCallback
 import com.sunlotocenter.MyApplication
 import com.sunlotocenter.R
 import com.sunlotocenter.adapter.GameReceiptAdapter
-import com.sunlotocenter.adapter.SlotListAdapter
 import com.sunlotocenter.dao.*
 import com.sunlotocenter.extensions.enableHome
 import com.sunlotocenter.extensions.toast
-import com.sunlotocenter.listener.LoadMoreListener
 import com.sunlotocenter.model.GameViewModel
 import com.sunlotocenter.utils.*
-import com.sunlotocenter.validator.Form
 import kotlinx.android.synthetic.main.activity_receipt_review.*
 import java.util.*
-import kotlin.collections.ArrayList
+import com.dantsu.escposprinter.textparser.PrinterTextParserImg
+
+import com.dantsu.escposprinter.connection.bluetooth.BluetoothPrintersConnections
+
+import com.dantsu.escposprinter.EscPosPrinter
+import com.valdesekamdem.library.mdtoast.MDToast
+
 
 class ReceiptReviewActivity : ProtectedActivity(), PrintingCallback {
     private lateinit var gameReceiptAdapter: GameReceiptAdapter
@@ -58,28 +45,26 @@ class ReceiptReviewActivity : ProtectedActivity(), PrintingCallback {
     private var isSaveState= false
     private lateinit var slotExtra:Slot
     private var printing: Printing?= null
+    private var PERMISSION_BLUETOOTH= 1000
 
 
     override fun getLayoutId(): Int {
         return R.layout.activity_receipt_review
     }
 
-    private lateinit var activityResult:
-            ActivityResultLauncher<Intent>
+    private lateinit var activityResult: ActivityResultLauncher<Intent>
 
-    override fun onStart() {
-        super.onStart()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableHome(toolbar)
+
+        printing= if (Printooth.hasPairedPrinter())Printooth.printer() else null
+
         activityResult= registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             if(it.resultCode== Activity.RESULT_OK){
                 printing= Printooth.printer()
             }
         }
-    }
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableHome(toolbar)
 
         gameViewModel= ViewModelProvider(this, SavedStateViewModelFactory(application, this))
             .get(GameViewModel::class.java)
@@ -133,7 +118,7 @@ class ReceiptReviewActivity : ProtectedActivity(), PrintingCallback {
                 return true
             }
             R.id.mnSend->{
-                if(Printooth.hasPairedPrinter()) {
+                if (Printooth.hasPairedPrinter()) {
                     submit(slotExtra)
                 }
                 else {
@@ -212,7 +197,7 @@ class ReceiptReviewActivity : ProtectedActivity(), PrintingCallback {
                                     else {
                                         showDialog(this@ReceiptReviewActivity,
                                             getString(R.string.internet_error_title),
-                                            getString(R.string.no_printer_no_submit),
+                                            getString(R.string.no_printer_connect),
                                             getString(R.string.connect),
                                             object : ClickListener {
                                                 override fun onClick(): Boolean {
@@ -262,81 +247,77 @@ class ReceiptReviewActivity : ProtectedActivity(), PrintingCallback {
     }
 
     private fun printReceipt(resource: Bitmap, company:Company, slot: Slot) {
-        val printables= ArrayList<Printable>()
+        val printer = EscPosPrinter(BluetoothPrintersConnections.selectFirstPaired(), 203, 48f, 32)
 
-        printables.add(ImagePrintable.Builder(resource).build())
+        val phoneNumberUtil: PhoneNumberUtil = PhoneNumberUtil.getInstance()
+        val phone = phoneNumberUtil.parseAndKeepRawInput(company.phoneNumber!!.number, company.phoneNumber!!.countryCode)
+        val formattedNumber = phoneNumberUtil.format(phone, PhoneNumberUtil.PhoneNumberFormat.NATIONAL)
 
-        printables.add(TextPrintable.Builder()
-            .setText(company.name!!)
-            .setAlignment(DefaultPrinter.ALIGNMENT_CENTER)
-            .setEmphasizedMode(DefaultPrinter.EMPHASIZED_MODE_BOLD)
-            .build())
-        printables.add(TextPrintable.Builder()
-            .setText(company.address!!)
-            .setAlignment(DefaultPrinter.ALIGNMENT_CENTER)
-            .build())
-        printables.add(TextPrintable.Builder()
-            .setText(company.phoneNumber!!.number)
-            .setAlignment(DefaultPrinter.ALIGNMENT_CENTER)
-            .setNewLinesAfter(4)
-            .build())
 
-        printables.add(TextPrintable.Builder()
-            .setText(getString(R.string.receipt_number, slot.uniq))
-            .build())
-        printables.add(TextPrintable.Builder()
-            .setText(getString(R.string.date_value, getDateTimeString(this, slot.createdDateTime!!)))
-            .build())
-        printables.add(TextPrintable.Builder()
-            .setText(getString(R.string.session_value, slot.session.id))
-            .build())
-        printables.add(TextPrintable.Builder()
-            .setText(getString(R.string.game_value, slot.type.id))
-            .build())
+        var formattedText=  "[C]<img>${PrinterTextParserImg.bitmapToHexadecimalString(printer, resource)}</img>\n\n"+
+                            "[C]<b>${company.name!!}</b>\n" +
+                            "[C]${company.address!!}\n" +
+                            "[C]${formattedNumber}\n" +
+                            "[C]--------------------------------\n"+
+                            "[C]${getString(R.string.receipt_number, slot.uniq)}\n"+
+                            "[C]${getString(R.string.date_value, getDateTimeString(this, slot.createdDateTime!!))}\n"+
+                            "[C]${getString(R.string.session_value, slot.session.id)}\n"+
+                            "[C]${getString(R.string.game_value_for_encoding, slot.type.id)}\n"+
+                            "[C]${getString(R.string.seller_value, "${MyApplication.getInstance().connectedUser.firstName} " + "${MyApplication.getInstance().connectedUser.lastName}")}\n"+
+                            "[C]${getString(R.string.seller_account_number_value, MyApplication.getInstance().connectedUser.accountNumber)}\n"+
+                            "[C]--------------------------------\n\n"
 
         var counter= 0
         gameReceiptAdapter.games.forEachIndexed {id, it->
             if(it.type==1 && it.amount > 0){
                 counter++
             }
-            if(it.position== 4){
-                printables.add(TextPrintable.Builder()
-                    .setText(getString(R.string.total_preview, counter, it.amount))
-                    .setAlignment(DefaultPrinter.ALIGNMENT_CENTER)
-                    .setEmphasizedMode(DefaultPrinter.EMPHASIZED_MODE_BOLD)
-                    .build())
+            if(it.position== 5){
+                formattedText+=  "[C]--------------------------------\n"+
+                                 "[C]<b>${getString(R.string.total_preview, counter, it.amount)}</b>\n"+
+                                 "[C]--------------------------------\n"+
+                                 "[C]${getString(R.string.conditions_header, company.name)}\n"+
+                                 "[C]${getString(R.string.conditions_footer)}\n"
             }else{
-                val builder= TextPrintable.Builder()
-                    .setText(it.number + "              " + it.opt + "          " + it.amount)
-                    .setAlignment(DefaultPrinter.ALIGNMENT_CENTER)
-                if(id== gameReceiptAdapter.games.size-2)
-                    builder.setNewLinesAfter(1)
-                        .setUnderlined(DefaultPrinter.UNDERLINED_MODE_ON)
-
-                printables.add(builder.build())
+                if(it.type== 1 && it.amount> 0){
+                    formattedText+= "[L]${it.number}[C]${it.opt}[R]${getString(R.string.price_currency, it.amount)}\n\n"
+                }else{
+                    formattedText+= "[L]${getGameName(it)}[C]${getString(R.string.option)}[R]${getString(R.string.price)}\n"
+                }
             }
         }
 
-        printing?.print(printables)
+        printer
+            .printFormattedText(formattedText.trimIndent())
+
+
+    }
+
+    private fun getGameName(it: Game): String {
+        return if(it.position == 0) getString(R.string.borlet_for_encoding)
+        else if(it.position == 2) getString(R.string.loto3)
+        else if(it.position == 3) getString(R.string.loto4)
+        else if(it.position == 1) getString(R.string.marriage)
+        else getString(R.string.loto5)
     }
 
     override fun connectingWithPrinter() {
-
+        toast(getString(R.string.connecting_to_printer), MDToast.TYPE_WARNING)
     }
 
     override fun connectionFailed(error: String) {
-        TODO("Not yet implemented")
+        toast(getString(R.string.printer_connection_failed), MDToast.TYPE_ERROR)
     }
 
     override fun onError(error: String) {
-        TODO("Not yet implemented")
+        toast(getString(R.string.printer_connection_failed), MDToast.TYPE_ERROR)
     }
 
     override fun onMessage(message: String) {
-        TODO("Not yet implemented")
+        toast(message, MDToast.TYPE_INFO)
     }
 
     override fun printingOrderSentSuccessfully() {
-        TODO("Not yet implemented")
+        toast(getString(R.string.printer_command_sent), MDToast.TYPE_SUCCESS)
     }
 }

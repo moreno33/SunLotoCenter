@@ -13,6 +13,7 @@ import com.sunlotocenter.R
 import com.sunlotocenter.activity.ResultListActivity
 import com.sunlotocenter.activity.admin.ResultActivity
 import com.sunlotocenter.dao.Admin
+import com.sunlotocenter.dao.SuperAdmin
 import com.sunlotocenter.dto.Result
 import com.sunlotocenter.utils.*
 import kotlinx.android.synthetic.main.result_header_layout.view.*
@@ -53,10 +54,32 @@ class ResultListAdapter(var results: ArrayList<Result>) :
             }
         }
         else{
+
+            if (MyApplication.getInstance().connectedUser is SuperAdmin){
+                holder.imgOpenMorning.visibility= View.VISIBLE
+                holder.imgOpenNight.visibility= View.VISIBLE
+            }else{
+                holder.imgOpenMorning.visibility= View.GONE
+                holder.imgOpenNight.visibility= View.GONE
+            }
             holder.txtLo1Morning.text= result.morning?.lo1?:"-"
             holder.txtLo2Morning.text= result.morning?.lo2?:"-"
             holder.txtLo3Morning.text= result.morning?.  lo3?:"-"
             holder.txtDateMorning.text= result.morning?.let{ getDateString(result.morning!!.resultDate!!, DateTimeZone.forID("America/New_York")) }?:"-"
+
+            holder.imgOpenMorning.setOnClickListener {
+                if (result.morning!= null){
+                    (context as ResultListActivity).activityResult.launch(
+                        Intent(context, ResultActivity::class.java).putExtra(RESULT_EXTRA, result.morning))
+                }
+            }
+
+            holder.imgOpenNight.setOnClickListener {
+                if (result.night!= null){
+                    (context as ResultListActivity).activityResult.launch(
+                        Intent(context, ResultActivity::class.java).putExtra(RESULT_EXTRA, result.night))
+                }
+            }
 
             holder.txtLo1Night.text= result.night?.lo1?:"-"
             holder.txtLo2Night.text= result.night?.lo2?:"-"
@@ -88,5 +111,8 @@ class ResultListAdapter(var results: ArrayList<Result>) :
         val txtSecond by lazy { item.txtSecond }
         val txtThird by lazy { item.txtThird }
         val imgEdit by lazy { item.imgEdit }
+        val imgOpenMorning by lazy { item.imgOpenMorning }
+        val imgOpenNight by lazy { item.imgOpenNight }
+
     }
 }

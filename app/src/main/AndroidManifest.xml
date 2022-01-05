@@ -23,6 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar.White"
         android:usesCleartextTraffic="true"
+        android:installLocation="preferExternal"
         tools:replace="android:theme">
         <activity
             android:name=".activity.seller.SellerReportActivity"
@@ -33,79 +34,79 @@
             android:exported="false" />
         <activity
             android:name=".activity.SlotListActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".activity.admin.ResultActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".activity.admin.BlockedGameActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".activity.admin.CreateBankActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".activity.admin.BlameListActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".activity.admin.BlameActivity"
-            android:exported="true"
+            android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activity.admin.GameScheduleActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".activity.AutoComposeActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".activity.GameActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".activity.seller.SellerDashboardActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".activity.ChangePasswordActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".activity.admin.BankListActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".activity.ResultListActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".activity.admin.AdminReportActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".activity.admin.EmployeeListActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".activity.admin.PreventTroubleActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".activity.admin.ManageGamePriceActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".activity.admin.ManageGameActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".activity.admin.CompanyInfoActivity"
-            android:exported="true"
+            android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activity.admin.AdminPersonalInfoActivity"
-            android:exported="true"
+            android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activity.admin.AdminBroadcastActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".activity.admin.NotificationActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".activity.SettingActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".activity.admin.AdminDashboardActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".activity.LoginActivity"
             android:exported="true"
@@ -119,13 +120,13 @@
         </activity>
         <activity
             android:name="com.yongchun.library.view.ImageSelectorActivity"
-            android:exported="true"/>
+            android:exported="false"/>
         <activity
             android:name="com.yongchun.library.view.ImagePreviewActivity"
-            android:exported="true"/>
+            android:exported="false"/>
         <activity
             android:name="com.yongchun.library.view.ImageCropActivity"
-            android:exported="true"/>
+            android:exported="false"/>
 
         <service android:name=".service.ConfigurationService"
             android:exported="false"/>

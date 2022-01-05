@@ -2,9 +2,12 @@ package com.yongchun.library.utils
 
 import android.app.Activity
 import android.content.Intent
-import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.fragment.app.Fragment
 import com.yongchun.library.view.ImageSelectorActivity.*
+import com.yongchun.library.view.ImageSelectorActivity.Companion.EXTRA_CAMERA_DIRECT
+import com.yongchun.library.view.ImageSelectorActivity.Companion.EXTRA_DISABLE_CAMERA
+import com.yongchun.library.view.ImageSelectorActivity.Companion.EXTRA_LIMIT
+import com.yongchun.library.view.ImageSelectorActivity.Companion.startActivityForResult
 import java.lang.IllegalStateException
 
 /**
@@ -47,7 +50,7 @@ class GligarPicker {
         }
 
         if(withActivity!=null){
-            startActivityForResult(withActivity!!,requestCode,intent)
+            startActivityForResult(withActivity!!, requestCode, intent)
         }else{
             startActivityForResult(withFragment!!,requestCode,intent)
         }

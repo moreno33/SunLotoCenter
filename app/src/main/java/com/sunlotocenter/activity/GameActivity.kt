@@ -29,6 +29,7 @@ import com.sunlotocenter.model.GameViewModel
 import com.sunlotocenter.utils.*
 import kotlinx.android.synthetic.main.bottom_game_schedule_layout.view.*
 import kotlinx.android.synthetic.main.bottom_tool_layout.view.*
+import kotlinx.android.synthetic.main.fragment_borlet.*
 import org.michaelbel.bottomsheet.BottomSheet
 import kotlin.collections.ArrayList
 import kotlin.math.ceil
@@ -54,8 +55,10 @@ class GameActivity : ProtectedActivity(),
     private lateinit var activityResult:
             ActivityResultLauncher<Intent>
 
-    override fun onStart() {
-        super.onStart()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableHome(toolbar)
+
         activityResult= registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             if(it.resultCode== Activity.RESULT_OK){
                 (it.data?.getSerializableExtra(AutoComposeActivity.GAMES_EXTRA) as TreeSet<Game>).forEach {
@@ -65,11 +68,7 @@ class GameActivity : ProtectedActivity(),
                 gameAdapter.notifyDataSetChanged()
             }
         }
-    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableHome(toolbar)
         manageTabs()
 
 
@@ -120,7 +119,9 @@ class GameActivity : ProtectedActivity(),
 
     private fun showMenuTool() {
         val bottomLayout= LayoutInflater.from(this).inflate(R.layout.bottom_tool_layout, null)
-        var twinGames= TreeSet<Game>()
+
+        val twinGames= TreeSet<Game>()
+
         bottomLayout.clBorlet.setOnClickListener {
             twinGames.clear()
             for (i in 0..9) {
@@ -128,13 +129,7 @@ class GameActivity : ProtectedActivity(),
             }
             startTwinGame(twinGames)
         }
-        bottomLayout.clMarriage.setOnClickListener {
-            twinGames.clear()
-            for (i in 0..9) {
-                twinGames.add(Marriage(number = "${i}${i}X${i}${i}", amount = 0.0, option = "", type = 1))
-            }
-            startTwinGame(twinGames)
-        }
+
         bottomLayout.clLoto3.setOnClickListener {
             twinGames.clear()
             for (i in 0..9) {
@@ -142,20 +137,7 @@ class GameActivity : ProtectedActivity(),
             }
             startTwinGame(twinGames)
         }
-        bottomLayout.clLoto4.setOnClickListener {
-            twinGames.clear()
-            for (i in 0..9) {
-                twinGames.add(Loto4(number = "${i}${i}${i}${i}", amount = 0.0, option = "", type = 1))
-            }
-            startTwinGame(twinGames)
-        }
-        bottomLayout.clLoto5.setOnClickListener {
-            twinGames.clear()
-            for (i in 0..9) {
-                twinGames.add(Loto4(number = "${i}${i}${i}${i}${i}", amount = 0.0, option = "", type = 1))
-            }
-            startTwinGame(twinGames)
-        }
+
         BottomSheet.Builder(this)
             .setView(bottomLayout)
             .setBackgroundColor(ContextCompat.getColor(applicationContext, android.R.color.white))

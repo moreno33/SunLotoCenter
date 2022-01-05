@@ -32,45 +32,53 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-
-                <com.sunlotocenter.validator.ValidatableEditText
-                    android:id="@+id/edxLo1Price"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:drawablePadding="7dp"
-                    android:inputType="number"
-                    app:drawable_left="@drawable/currency_usd_black_18"
-                    app:hint="@string/lo1"
                     app:layout_constraintBottom_toTopOf="@+id/edxLo3Price"
-                    app:layout_constraintEnd_toStartOf="@+id/edxLo2Price"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:max_length="9"
-                    app:text_size="@dimen/main_text_size" />
-
-                <!--2e Lo-->
-
-                <com.sunlotocenter.validator.ValidatableEditText
-                    android:id="@+id/edxLo2Price"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="30dp"
-                    android:drawablePadding="7dp"
-                    android:inputType="number"
-                    app:drawable_left="@drawable/currency_usd_black_18"
-                    app:hint="@string/lo2"
-                    app:layout_constraintBottom_toBottomOf="@+id/edxLo1Price"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/edxLo1Price"
-                    app:layout_constraintTop_toTopOf="@+id/edxLo1Price"
-                    app:max_length="9"
-                    app:text_size="@dimen/main_text_size" />
+                    android:layout_marginBottom="10dp">
+
+                    <com.sunlotocenter.validator.ValidatableEditText
+                        android:id="@+id/edxLo1Price"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginEnd="10dp"
+                        android:drawablePadding="7dp"
+                        android:inputType="number"
+                        app:drawable_left="@drawable/currency_usd_black_18"
+                        app:hint="@string/lo1"
+                        app:max_length="9"
+                        app:text_size="@dimen/main_text_size"
+                        app:layout_constraintEnd_toStartOf="@+id/edxLo2Price"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <!--2e Lo-->
+
+                    <com.sunlotocenter.validator.ValidatableEditText
+                        android:id="@+id/edxLo2Price"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="30dp"
+                        android:drawablePadding="7dp"
+                        android:inputType="number"
+                        app:drawable_left="@drawable/currency_usd_black_18"
+                        app:hint="@string/lo2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/edxLo1Price"
+                        app:layout_constraintTop_toTopOf="@+id/edxLo1Price"
+                        app:max_length="9"
+                        app:text_size="@dimen/main_text_size" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <!--3e Lo-->
 
@@ -104,47 +112,54 @@
                     android:inputType="number"
                     app:drawable_left="@drawable/currency_usd_black_18"
                     app:hint="@string/marriage"
-                    app:layout_constraintBottom_toTopOf="@+id/edxLoto3Price"
+                    app:layout_constraintBottom_toTopOf="@+id/clLot3AndLoto4"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:max_length="9"
                     app:text_size="@dimen/main_text_size" />
 
-                <com.sunlotocenter.validator.ValidatableEditText
-                    android:id="@+id/edxLoto3Price"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clLot3AndLoto4"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:drawablePadding="7dp"
-                    android:inputType="number"
-                    app:drawable_left="@drawable/currency_usd_black_18"
-                    app:hint="@string/loto3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toTopOf="@+id/edxLoto5Price"
-                    app:layout_constraintEnd_toStartOf="@+id/edxLoto4Price"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:max_length="9"
-                    app:text_size="@dimen/main_text_size" />
+                    android:layout_marginBottom="10dp">
+                    <com.sunlotocenter.validator.ValidatableEditText
+                        android:id="@+id/edxLoto3Price"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginEnd="10dp"
+                        android:drawablePadding="7dp"
+                        android:inputType="number"
+                        app:drawable_left="@drawable/currency_usd_black_18"
+                        app:hint="@string/loto3"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/edxLoto4Price"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:max_length="9"
+                        app:text_size="@dimen/main_text_size" />
 
-                <!--Loto 4-->
+                    <!--Loto 4-->
 
 
-                <com.sunlotocenter.validator.ValidatableEditText
-                    android:id="@+id/edxLoto4Price"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="30dp"
-                    android:drawablePadding="7dp"
-                    android:inputType="number"
-                    app:drawable_left="@drawable/currency_usd_black_18"
-                    app:hint="@string/loto4"
-                    app:layout_constraintBottom_toBottomOf="@+id/edxLoto3Price"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/edxLoto3Price"
-                    app:layout_constraintTop_toTopOf="@+id/edxLoto3Price"
-                    app:max_length="9"
-                    app:text_size="@dimen/main_text_size" />
+                    <com.sunlotocenter.validator.ValidatableEditText
+                        android:id="@+id/edxLoto4Price"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="30dp"
+                        android:drawablePadding="7dp"
+                        android:inputType="number"
+                        app:drawable_left="@drawable/currency_usd_black_18"
+                        app:hint="@string/loto4"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/edxLoto3Price"
+                        app:layout_constraintTop_toTopOf="@+id/edxLoto3Price"
+                        app:max_length="9"
+                        app:text_size="@dimen/main_text_size" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                 <!--Loto 5-->

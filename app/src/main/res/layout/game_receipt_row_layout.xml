@@ -15,7 +15,7 @@
             android:id="@+id/txtGame"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:gravity="start"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/main_text_size"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -33,19 +33,19 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/txtAmount"
             app:layout_constraintStart_toEndOf="@+id/txtGame"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/txtAmount"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:gravity="end"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/main_text_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/txtOption"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

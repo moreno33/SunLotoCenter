@@ -44,7 +44,7 @@ class GameSlotAdapter(gameSet: TreeSet<Game>) : RecyclerView.Adapter<GameSlotAda
                 totalLost+= it.amountWin
             }
         }
-        games.add(Borlet(number = "", amount = totalAmount, amountWin = totalLost, option = "", position = 4, type = 4))
+        games.add(Borlet(number = "", amount = totalAmount, amountWin = totalLost, option = "", position = 5, type = 5))
     }
 
     fun addGame(game: Game) {
@@ -116,7 +116,7 @@ class GameSlotAdapter(gameSet: TreeSet<Game>) : RecyclerView.Adapter<GameSlotAda
                 return LOTO4_HEADER
             else return ITEM
         }
-        else if(game.position== 4){
+        else if(game.position== 5){
             return FOOTER
         }
         else {

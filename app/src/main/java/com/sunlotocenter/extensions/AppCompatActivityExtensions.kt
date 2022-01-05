@@ -23,9 +23,10 @@ import com.valdesekamdem.library.mdtoast.MDToast
 
 fun AppCompatActivity.gameTypes(): Array<SpinnerItem>{
     return arrayOf(
+            SpinnerItem("ALL", getString(R.string.all_type)),
             SpinnerItem("NY", getString(R.string.new_york)),
-    SpinnerItem("FL", getString(R.string.florida)),
-    SpinnerItem("GA", getString(R.string.georgia))
+            SpinnerItem("FL", getString(R.string.florida)),
+            SpinnerItem("GA", getString(R.string.georgia))
     )
 }
 

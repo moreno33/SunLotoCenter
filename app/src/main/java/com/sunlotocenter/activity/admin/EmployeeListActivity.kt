@@ -45,18 +45,16 @@ SaveUserListener{
     lateinit var activityResult:
             ActivityResultLauncher<Intent>
 
-    override fun onStart() {
-        super.onStart()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableHome(toolbar)
+
         activityResult= registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             if(it.resultCode== Activity.RESULT_OK){
                 userViewModel.loadEmployees(true)
             }
         }
-    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableHome(toolbar)
         userViewModel= ViewModelProvider(this, SavedStateViewModelFactory(application, this))
             .get(UserViewModel::class.java)
 

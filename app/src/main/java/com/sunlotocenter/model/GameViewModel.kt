@@ -429,13 +429,13 @@ class GameViewModel (private val savedStateHandle: SavedStateHandle) : ViewModel
         })
     }
 
-    fun loadIndSlots(company: Long, isFirstPage: Boolean, sequenceId: Long, gameSession: GameSession, uniq:String) {
+    fun loadIndSlots(company: Long, isFirstPage: Boolean, reportDate: String, authorId: Long, gameSession: GameSession, gameType: GameType, uniq:String) {
         if(!isFirstPage)
             page++
         else
             page= 0
 
-        gameApi.getSlots(company, page, sequenceId, gameSession, uniq).enqueue(object: Callback<Response<ArrayList<Slot>>>{
+        gameApi.getSlots(company, page, reportDate, authorId , gameSession, gameType, uniq).enqueue(object: Callback<Response<ArrayList<Slot>>>{
             override fun onResponse(
                 call: Call<Response<ArrayList<Slot>>>,
                 response: retrofit2.Response<Response<ArrayList<Slot>>>
@@ -454,13 +454,13 @@ class GameViewModel (private val savedStateHandle: SavedStateHandle) : ViewModel
         })
     }
 
-    fun loadSlots(company: Long, isFirstPage: Boolean, reportDate: String, gameSession: GameSession, uniq: String) {
+    fun loadSlots(company: Long, isFirstPage: Boolean, reportDate: String, gameSession: GameSession, gameType: GameType, uniq: String) {
         if (!isFirstPage)
             page++
         else
             page = 0
 
-        gameApi.getSlots(company, page, reportDate, gameSession, uniq)
+        gameApi.getSlots(company, page, reportDate, gameSession, gameType, uniq)
             .enqueue(object : Callback<Response<ArrayList<Slot>>> {
                 override fun onResponse(
                     call: Call<Response<ArrayList<Slot>>>,

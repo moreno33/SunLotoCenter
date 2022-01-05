@@ -40,7 +40,7 @@ class Loto4Fragment(private var addGameListener: AddGameListener) : Fragment() {
         )
         form.addInput(view.edxNumber)
         if(form.isValid()){
-            showDialog(this.context!!, getString(R.string.option), content, getString(R.string.add), getString(R.string.cancel), object :ClickListener{
+            showDialog(this.requireContext(), getString(R.string.option), content, getString(R.string.add), getString(R.string.cancel), object :ClickListener{
                 override fun onClick(): Boolean {
                     val amount1= content.edxAmount1.text
                     if(amount1.isNotEmpty()){

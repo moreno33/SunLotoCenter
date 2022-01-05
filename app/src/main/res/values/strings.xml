@@ -7,6 +7,7 @@
     <string name="term_and_condition_link">Lèw klike sou \"Konekte\" ou aksepte \"Tèm ak Kondisyon\" nou yo</string>
     <string name="administrator">Administratè</string>
     <string name="borlet">Bòlèt</string>
+    <string name="borlet_for_encoding">Bolet</string>
     <string name="employee">Anplwaye</string>
     <string name="employee_total">Total: %1$d anplwaye</string>
     <string name="microphone">Difize</string>
@@ -91,7 +92,7 @@
     <string name="ball">Boul</string>
     <string name="amount">Montan</string>
     <string name="option">Opsyon</string>
-    <string name="total_preview">%1d BOUL        TOTAL: %.2f HTG</string>
+    <string name="total_preview">%1d BOUL        TOTAL: %.0f HTG</string>
     <string name="action">Aksyon</string>
     <string name="amount1">Montan 1</string>
     <string name="amount2">Montan 2</string>
@@ -175,6 +176,7 @@
     <string name="receipt_number">No: %1$s</string>
     <string name="enter_receip_number">Antre nimewo fich wap chèche an</string>
     <string name="no_printer_no_submit">Ou dwe konekte a yon enprimant avan ou soumèt fich lan.</string>
+    <string name="no_printer_connect">Ou dwe konekte a yon enprimant pouw ka enprime fich sa.</string>
     <string name="twin_bolert">Bòlèt jimo</string>
     <string name="loto3_twin">Loto3 jimo</string>
     <string name="loto4_twin">Loto4 jimo</string>
@@ -184,8 +186,20 @@
     <string name="date_value">Dat: %1$s</string>
     <string name="session_value">Sesyon: %1$s</string>
     <string name="game_value">Jwèt: %1$s</string>
-    <string name="conditions"> <![CDATA[<font color=#333333> <b>Mèsi paskew chwazi %1$s, satisfaksyonw se priyorite nou</b></font>.<br/><br/> N.B. Fich ou an valab pou 90 jou aa pati de dat ki sou fich lan. Touche kach oubyen vèsman nna bank ou te jwe a oubyen nan Santral selon kòb la. Fich dechire yo pa ka li pa otorize, sèl nimewo ki soti sou fich la yo ka li kap touche.]]></string>
+    <string name="game_value_for_encoding">Jwet: %1$s</string>
+    <string name="conditions"> <![CDATA[<font color=#333333> <b>Mèsi paskew chwazi %1$s, satisfaksyonw se priyorite nou</b></font>.<br/><br/> N.B. Fich ou an valab pou 90 jou a pati de dat ki sou fich lan. Touche kach oubyen vèsman nan bank ou te jwe a oubyen nan Santral selon kòb la. Fich dechire yo pa ka li pa otorize, sèl nimewo ki soti sou fich la yo ka li kap touche.]]></string>
+    <string name="conditions_header">Mesi paskew chwazi %1$s, satisfaksyonw se priyorite nou</string>
+    <string name="conditions_footer"> N.B. Fich ou an valab pou 90 jou a pati de dat ki sou fich lan. Touche kach oubyen vesman nan bank ou te jwe a oubyen nan Santral selon kob la. Fich dechire yo pa ka li pa otorize, sel nimewo ki soti sou fich la yo ka li kap touche.</string>
     <string name="tel_value">Tel: %1$s</string>
+    <string name="sure_about_cancel_slot">Ou si ou vle anile fich sa?</string>
+    <string name="reinstaure_game">Ou si ou vle reentore fich sa?</string>
+    <string name="printer_connection_failed">Koneksyon ak enprimant lan echwe!</string>
+    <string name="connecting_to_printer">Koneksyon..</string>
+    <string name="printer_command_sent">Enprime..</string>
+    <string name="seller_value">Vande: %1$s</string>
+    <string name="seller_account_number_value">Kont: %1$s</string>
+    <string name="all_type">Tout</string>
+    <string name="updaate_result_success_message">Rezilta sa yo modifye avèk siksè!</string>
     <string-array name="employee_category">
         <item>Vandè</item>
         <item>Administratè</item>

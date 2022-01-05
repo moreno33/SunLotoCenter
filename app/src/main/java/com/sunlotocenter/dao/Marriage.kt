@@ -25,18 +25,23 @@ class Marriage(number:String, amount:Double, option:String, type: Int): Game(nul
     }
 
     override fun compareTo(other: Game): Int {
-        if(this.position== other.position) {
-            if(this.type== other.type) {
-                if(this.number== other.number || this.number== other.number.split("X")[1] +"X"+other.number.split("X")[0]){
-                    return 0
-                }
-                else return 1
-            }
-            else if(this.type> other.type) return 1
-            else return -1
-        }
-        else if(this.position> other.position) return 1
-        else return -1
+
+        if(other.number.contains("X") && this.number== other.number.split("X")[1] +"X"+other.number.split("X")[0]) return 0
+        return compareBy<Game> { it.position }.thenBy { it.type }.thenBy{it.number}.compare(this, other)
+
+//        if(this.position== other.position) {
+//            if(this.type== other.type) {
+//                if(this.number== other.number || this.number== other.number.split("X")[1] +"X"+other.number.split("X")[0]){
+//                    return 0
+//                }
+//                else return 1
+//            }
+//            else if(this.type> other.type) return 1
+//            else return -1
+//        }
+//        else if(this.position> other.position) return 1
+//        else return -1
+//        }
     }
 
 }

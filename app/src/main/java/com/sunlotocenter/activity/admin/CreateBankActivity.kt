@@ -170,7 +170,7 @@ class CreateBankActivity: ProtectedActivity() {
                     glide(this, bankExtra!!.profilePath, imgProfile, R.drawable.bank_image, R.drawable.background_gray)
                 }
             bankExtra?.name?.let{edxName.text= it}
-            bankExtra?.code?.let{edxCode.text= it}
+            bankExtra?.bankCode?.let{edxCode.text= it}
             bankExtra?.address?.let{edxAddress.text= it}
             bankExtra?.city?.let{edxCity.text= it}
 
@@ -247,7 +247,7 @@ class CreateBankActivity: ProtectedActivity() {
                 ModelMapper().map(bankExtra, bank)
             bank.apply {
                 name = edxName.text.trim()
-                code = edxCode.text.trim()
+                bankCode = edxCode.text.trim()
                 address = edxAddress.text.trim()
                 city = edxCity.text.trim()
                 author= MyApplication.getInstance().connectedUser

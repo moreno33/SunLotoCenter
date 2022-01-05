@@ -27,6 +27,6 @@ abstract class User (
     var fcmToken:String?= null, company: Company?= null
 ): Entity(id, sequence, createdDateTime, updatedDateTime, company = company), Serializable{
     override fun toString(): String {
-        return "${firstName} ${lastName}" + if(isNotEmpty(accountNumber)) "(${accountNumber})" else ""
+        return if (isNotEmpty(firstName)) "$firstName" else "" + if (isNotEmpty(lastName)) "$lastName" else "" + if(isNotEmpty(accountNumber)) {"($accountNumber)"} else {""}
     }
 }

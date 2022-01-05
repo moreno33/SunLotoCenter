@@ -11,13 +11,13 @@
         android:supportsRtl="true">
         <activity
             android:name="com.yongchun.library.view.ImageSelectorActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity
             android:name="com.yongchun.library.view.ImagePreviewActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity
             android:name="com.yongchun.library.view.ImageCropActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"

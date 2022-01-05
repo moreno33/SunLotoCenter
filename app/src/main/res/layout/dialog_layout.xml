@@ -110,6 +110,7 @@
                 android:textAllCaps="false"
                 android:textColor="@color/colorPrimary"
                 android:visibility="gone"
+                android:background="@drawable/button_background_gray"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/btnPositive"

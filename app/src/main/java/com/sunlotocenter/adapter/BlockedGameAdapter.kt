@@ -13,7 +13,9 @@ import com.sunlotocenter.R
 import com.sunlotocenter.dao.*
 import com.sunlotocenter.extensions.gameTypes
 import com.sunlotocenter.utils.USER_EXTRA
+import com.sunlotocenter.utils.getDateString
 import com.sunlotocenter.utils.getDateTimeString
+import com.sunlotocenter.utils.getShortDateString
 import kotlinx.android.synthetic.main.block_list_layout.view.*
 import kotlinx.android.synthetic.main.employee_layout.view.*
 import kotlinx.android.synthetic.main.game_schedule_layout.view.*
@@ -30,15 +32,15 @@ class BlockedGameAdapter(var blockedGames: ArrayList<BlockedGame>, var onChangeB
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         var blockedGame= blockedGames[position]
 
-        var spinnerItem:SpinnerItem?= null
-        (context as AppCompatActivity).gameTypes().forEach {
-            if(it.id== blockedGame.type?.id)
-                spinnerItem= it
-        }
+//        var spinnerItem:SpinnerItem?= null
+//        (context as AppCompatActivity).gameTypes().forEach {
+//            if(it.id== blockedGame.type?.id)
+//                spinnerItem= it
+//        }
         holder.txtCode.text= blockedGame.number
         holder.txtGame.text= getGameName(blockedGame.number, context)
-        holder.txtType.text= spinnerItem?.name
-        holder.txtCreationDate.text= getDateTimeString(context, blockedGame.createdDateTime!!)
+        holder.txtType.text= blockedGame.type?.id
+        holder.txtCreationDate.text= getDateString(blockedGame.createdDateTime!!)
 
         holder.imgDelete.setOnClickListener {
             onChangeBlockedGameListener.onChange(blockedGame)

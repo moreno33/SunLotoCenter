@@ -48,14 +48,14 @@ class GameScheduleSessionAdapter(var schedules: ArrayList<GameScheduleSession>,
             holder.txtGame.text= "${spinnerItem!!.name} --- ${context.getString(R.string.morning)} ${ if(showOpenStatus)"(${getTimeString(schedule.gameSchedule.morningTime!!, DateTimeZone.getDefault())})" else ""}"
             Glide
                 .with(context)
-                .load(R.drawable.sun)
+                .load(R.drawable.balance_sunny_black_18)
                 .into(holder.imgSession)
         }
         else {
             holder.txtGame.text= "${spinnerItem!!.name} --- ${context.getString(R.string.night)} ${ if(showOpenStatus)"(${getTimeString(schedule.gameSchedule.nightTime!!, DateTimeZone.getDefault())})" else ""}"
             Glide
                 .with(context)
-                .load(R.drawable.moon)
+                .load(R.drawable.moon_waning_crescent_black_18)
                 .into(holder.imgSession)
         }
 
@@ -63,7 +63,7 @@ class GameScheduleSessionAdapter(var schedules: ArrayList<GameScheduleSession>,
         else holder.txtStatus.visibility= View.GONE
 
         if(schedule.gameSession== GameSession.MORNING){
-            if(LocalTime.now().isAfter(schedule.gameSchedule.morningTime!!
+            if(LocalTime.now(DateTimeZone.forID("America/New_York")).isAfter(schedule.gameSchedule.morningTime!!
                     .minusMinutes(schedule.gameSchedule.secInterval!!.toInt()))){
                 holder.txtStatus.text= context.getString(R.string.game_close)
 
@@ -80,7 +80,7 @@ class GameScheduleSessionAdapter(var schedules: ArrayList<GameScheduleSession>,
                 }
             }
         }else{
-            if(LocalTime.now().isAfter(schedule.gameSchedule.nightTime!!
+            if(LocalTime.now(DateTimeZone.forID("America/New_York")).isAfter(schedule.gameSchedule.nightTime!!
                     .minusMinutes(schedule.gameSchedule.secInterval!!.toInt()))){
                 holder.txtStatus.text= context.getString(R.string.game_close)
                 holder.txtStatus.setTextColor(ContextCompat.getColor(context, R.color.main_red))

@@ -30,7 +30,6 @@ import com.sunlotocenter.model.GameViewModel
 import com.sunlotocenter.utils.REFRESH_REQUEST_CODE
 import com.sunlotocenter.validator.DateValidator
 import com.sunlotocenter.validator.Form
-import kotlinx.android.synthetic.main.activity_admin_report.*
 import kotlinx.android.synthetic.main.activity_result_list.*
 import kotlinx.android.synthetic.main.activity_result_list.edxFrom
 import kotlinx.android.synthetic.main.activity_result_list.edxTo
@@ -58,18 +57,16 @@ class ResultListActivity : ProtectedActivity(),
     lateinit var activityResult:
             ActivityResultLauncher<Intent>
 
-    override fun onStart() {
-        super.onStart()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableHome(toolbar)
+
         activityResult= registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             if(it.resultCode== Activity.RESULT_OK){
                 gameType?.let { gameViewModel.loadResults(MyApplication.getInstance().company.sequence!!.id!!, true, it, edxFrom.text, edxTo.text) }
             }
         }
-    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableHome(toolbar)
         gameViewModel= ViewModelProvider(this, SavedStateViewModelFactory(application, this))
             .get(GameViewModel::class.java)
 
@@ -170,6 +167,7 @@ class ResultListActivity : ProtectedActivity(),
             ) {
                 GameType.values().forEach {
                     if(it.id == dataAdapter.getItem(position)!!.id){
+                        dialog.show()
                         gameType= it
                         gameViewModel.loadResults(MyApplication.getInstance().company.sequence!!.id!!, true, gameType!!, edxFrom.text, edxTo.text)
                     }
@@ -206,6 +204,7 @@ class ResultListActivity : ProtectedActivity(),
     private fun observe() {
         gameViewModel.lastAddedResultsData.observe(this,
             { results ->
+                dialog.dismiss()
                 addResults(results)
                 progressBar.progressiveStop()
                 swpLayout.isRefreshing= false

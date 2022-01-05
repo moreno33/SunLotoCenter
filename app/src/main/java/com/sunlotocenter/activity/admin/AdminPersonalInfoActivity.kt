@@ -126,7 +126,8 @@ class AdminPersonalInfoActivity : ProtectedActivity() {
     private fun fillControl() {
         userExtra= intent.extras?.getSerializable(USER_EXTRA) as User?
         if (userExtra!= null){
-            user.profilePath= userExtra!!.profilePath
+            user.profilePath= userExtra?.profilePath
+            user.sex= userExtra?.sex
             glide(this, user.profilePath, imgProfile, R.drawable.background_gray, getProfileImage(userExtra))
             //An admin can't downgrade
             if(userExtra is Admin ||

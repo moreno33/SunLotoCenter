@@ -92,7 +92,7 @@ class ChangePasswordActivity : ProtectedActivity() {
     private fun loginListener(it: Response<User>?) {
         if(it== null){
             dialog.dismiss()
-            com.sunlotocenter.utils.showDialog(this,
+            showDialog(this,
                 getString(R.string.internet_error_title),
                 getString( R.string.internet_error_message),
                 getString(R.string.ok),
@@ -104,13 +104,12 @@ class ChangePasswordActivity : ProtectedActivity() {
                 }, true, DialogType.ERROR)
         }else{
             if(userExtra!!.sequence!!.id== MyApplication.getInstance().connectedUser.sequence!!.id){
-                if(it.success){
-                    val user= userExtra
-                    user!!.password= edxNewPassword.text.trim()
-                    userViewModel.save(user)
+                if(it.success && it.data!= null){
+                    userExtra!!.password= edxNewPassword.text.trim()
+                    userViewModel.save(userExtra!!)
                 }else{
                     dialog.dismiss()
-                    com.sunlotocenter.utils.showDialog(this,
+                    showDialog(this,
                         getString(R.string.internet_error_title),
                         getString(R.string.wrong_old_password_error_message),
                         getString(R.string.ok),
@@ -128,7 +127,7 @@ class ChangePasswordActivity : ProtectedActivity() {
     private fun saveListener(it: Response<User>?) {
         dialog.dismiss()
         if(it== null){
-            com.sunlotocenter.utils.showDialog(this,
+            showDialog(this,
                 getString(R.string.internet_error_title),
                 getString(
                     R.string.internet_error_message
@@ -145,7 +144,7 @@ class ChangePasswordActivity : ProtectedActivity() {
             if(userExtra!!.sequence!!.id== MyApplication.getInstance().connectedUser.sequence!!.id)
                 MyApplication.getInstance().connectedUser= it.data
 
-            com.sunlotocenter.utils.showDialog(this,
+            showDialog(this,
                 getString(R.string.success_title),
                 getString(
                     if (userExtra!!.sequence!!.id== MyApplication.getInstance().connectedUser.sequence!!.id)

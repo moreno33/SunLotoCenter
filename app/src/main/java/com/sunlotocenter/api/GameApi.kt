@@ -60,7 +60,8 @@ interface GameApi {
     @GET("/reports/ind/{ind}/{company}/{page}/{type}/{start}/{end}")
     fun getIndReports(@Path("ind") ind: Long,
                       @Path("company") company: Long,
-                      @Path("page") page: Int,  @Path("type") type: GameType,
+                      @Path("page") page: Int,
+                      @Path("type") type: GameType,
                       @Path("start") start: String?,
                       @Path("end") end: String?): Call<Response<ArrayList<Report>>>
 
@@ -86,19 +87,22 @@ interface GameApi {
             Call<Response<ArrayList<Result>>>
 
 
-    @GET("/slots/ind/{company}/{page}/{sequenceId}/{session}/{uniq}")
+    @GET("/slots/ind/{company}/{page}/{reportDate}/{authorId}/{session}/{type}/{uniq}")
     fun getSlots(@Path("company") company: Long,
                  @Path("page") page: Int,
-                 @Path("sequenceId") sequenceId: Long,
+                 @Path("reportDate") reportDate: String,
+                 @Path("authorId") authorId: Long,
                  @Path("session") session: GameSession,
+                 @Path("type") type: GameType,
                  @Path("uniq") uniq: String):
             Call<Response<ArrayList<Slot>>>
 
-    @GET("/slots/{company}/{page}/{reportDate}/{session}/{uniq}")
+    @GET("/slots/{company}/{page}/{reportDate}/{session}/{type}/{uniq}")
     fun getSlots(@Path("company") company: Long,
                  @Path("page") page: Int,
                  @Path("reportDate") reportDate: String,
                  @Path("session") session: GameSession,
+                 @Path("type") type: GameType,
                  @Path("uniq") uniq: String):
             Call<Response<ArrayList<Slot>>>
 

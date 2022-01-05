@@ -77,6 +77,7 @@ dependencies {
     implementation project(':library')
     //Image selector
     implementation project(':phone')
+    implementation project(':printooth')
 
     //Glide library to load picture
     implementation 'com.github.bumptech.glide:glide:4.12.0'
@@ -116,6 +117,10 @@ dependencies {
     //This is a google utility libray for phone number
     implementation 'com.googlecode.libphonenumber:libphonenumber:7.0.4'
     implementation "com.github.isradeleon:ThermalPrinter:1.0.3"
-    implementation 'com.github.mazenrashed:Printooth:1.2.2'
+
+    //Printing library
+//    implementation 'com.github.mazenrashed:Printooth:1.2.2'
+    implementation 'com.github.DantSu:ESCPOS-ThermalPrinter-Android:3.0.1'
+
 
 }

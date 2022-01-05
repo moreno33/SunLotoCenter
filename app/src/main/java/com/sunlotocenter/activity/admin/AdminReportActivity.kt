@@ -1,4 +1,6 @@
 package com.sunlotocenter.activity.admin
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -7,19 +9,27 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sunlotocenter.MyApplication
 import com.sunlotocenter.activity.ProtectedActivity
 import com.sunlotocenter.R
+import com.sunlotocenter.activity.SlotListActivity
 import com.sunlotocenter.adapter.AdminReportAdapter
+import com.sunlotocenter.dao.GameSession
 import com.sunlotocenter.dao.GameType
 import com.sunlotocenter.dao.Report
+import com.sunlotocenter.dao.SpinnerItem
 import com.sunlotocenter.extensions.enableHome
 import com.sunlotocenter.extensions.gameTypes
 import com.sunlotocenter.listener.LoadMoreListener
 import com.sunlotocenter.model.GameViewModel
+import com.sunlotocenter.utils.GAME_SESSION_EXTRA
+import com.sunlotocenter.utils.GAME_TYPE_EXTRA
+import com.sunlotocenter.utils.REPORT_EXTRA
 import com.sunlotocenter.validator.DateValidator
 import com.sunlotocenter.validator.Form
 import kotlinx.android.synthetic.main.activity_admin_report.*
@@ -27,12 +37,13 @@ import kotlinx.android.synthetic.main.activity_admin_report.edxFrom
 import kotlinx.android.synthetic.main.activity_admin_report.edxTo
 import kotlinx.android.synthetic.main.activity_admin_report.progressBar
 import kotlinx.android.synthetic.main.activity_admin_report.spnType
-//import kotlinx.android.synthetic.main.activity_admin_report.swpLayout
+import kotlinx.android.synthetic.main.activity_admin_report.swpLayout
 import kotlinx.android.synthetic.main.activity_admin_report.toolbar
 import kotlinx.android.synthetic.main.activity_admin_report.txtInfo
 
 class AdminReportActivity : ProtectedActivity(),
-    LoadMoreListener.OnLoadMoreListener{
+    LoadMoreListener.OnLoadMoreListener,
+AdminReportAdapter.OnOpenReportListener{
 
     private var loadMoreListener: LoadMoreListener?= null
     private lateinit var adminReportAdapter: AdminReportAdapter
@@ -44,11 +55,19 @@ class AdminReportActivity : ProtectedActivity(),
     override fun getLayoutId(): Int {
         return R.layout.activity_admin_report
     }
+
+    lateinit var activityResult:
+            ActivityResultLauncher<Intent>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableHome(toolbar)
-        gameViewModel= ViewModelProvider(this, SavedStateViewModelFactory(application, this))
-            .get(GameViewModel::class.java)
+        activityResult= registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            if(it.resultCode== Activity.RESULT_OK){
+                gameType?.let { gameViewModel.loadReports(MyApplication.getInstance().company.sequence!!.id!!, true, it, edxFrom.text, edxTo.text)  }
+            }
+        }
+        gameViewModel= ViewModelProvider(this, SavedStateViewModelFactory(application, this))[GameViewModel::class.java]
 
         if(savedInstanceState!=  null){
             isSaveState= true
@@ -58,11 +77,10 @@ class AdminReportActivity : ProtectedActivity(),
         setUpAdapter()
         prepareControl()
         gameType?.let { gameViewModel.loadReports(MyApplication.getInstance().company.sequence!!.id!!, true, it, "", "") }
-        gameType?.let{ gameViewModel.getTotalReport(MyApplication.getInstance().company.sequence!!.id!!, gameType!!, "", "") }
-//        swpLayout.isRefreshing= true
-//        swpLayout.setOnRefreshListener {
-//            gameType?.let { gameViewModel.loadReports(true, it, edxFrom.text, edxTo.text) }
-//        }
+        swpLayout.isRefreshing= true
+        swpLayout.setOnRefreshListener {
+            gameType?.let { gameViewModel.loadReports(MyApplication.getInstance().company.sequence!!.id!!, true, it, edxFrom.text, edxTo.text)  }
+        }
     }
 
     private fun prepareControl() {
@@ -86,13 +104,11 @@ class AdminReportActivity : ProtectedActivity(),
                 }else if(edxFrom.text.isEmpty() && edxTo.text.isEmpty()){
                     dialog.show()
                     gameType?.let { gameViewModel.loadReports(MyApplication.getInstance().company.sequence!!.id!!, true, it, "", "") }
-                    gameType?.let{ gameViewModel.getTotalReport(MyApplication.getInstance().company.sequence!!.id!!, gameType!!, "", "") }
                 }
                 if(s.length== 10){
                     if(edxTo.text.length== 10 && form.isValid()){
                         dialog.show()
                         gameType?.let { gameViewModel.loadReports(MyApplication.getInstance().company.sequence!!.id!!, true, it, edxFrom.text, edxTo.text) }
-                        gameType?.let { gameViewModel.getTotalReport(MyApplication.getInstance().company.sequence!!.id!!, it, edxFrom.text, edxTo.text) }
                     }else if(edxTo.text.length<10){
                         edxTo.focus()
                     }
@@ -120,14 +136,12 @@ class AdminReportActivity : ProtectedActivity(),
                     dialog.show()
                     gameType?.let { gameViewModel.loadReports(MyApplication.getInstance().company.sequence!!.id!!,
                         true, it, "", "") }
-                    gameType?.let{ gameViewModel.getTotalReport(MyApplication.getInstance().company.sequence!!.id!!, gameType!!, "", "") }
                 }
                 if(s.length== 10){
                     if(edxFrom.text.length== 10 && form.isValid()){
                         dialog.show()
                         gameType?.let { gameViewModel.loadReports(MyApplication.getInstance().company.sequence!!.id!!,
                             true, it, edxFrom.text, edxTo.text) }
-                        gameType?.let { gameViewModel.getTotalReport(MyApplication.getInstance().company.sequence!!.id!!, it, edxFrom.text, edxTo.text) }
                     }else if (edxFrom.text.length<10){
                         edxFrom.focus()
                     }
@@ -146,7 +160,7 @@ class AdminReportActivity : ProtectedActivity(),
         spnType.adapter = dataAdapter
         spnType.setTitle(getString(R.string.game))
         spnType.setPositiveButton(getString(R.string.ok))
-        gameType= GameType.NY
+        gameType= GameType.ALL
         spnType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parentView: AdapterView<*>?,
@@ -161,7 +175,6 @@ class AdminReportActivity : ProtectedActivity(),
                             dialog.show()
                             gameViewModel.loadReports(MyApplication.getInstance().company.sequence!!.id!!,
                                 true, gameType!!, edxFrom.text, edxTo.text)
-                            gameType?.let{ gameViewModel.getTotalReport(MyApplication.getInstance().company.sequence!!.id!!, gameType!!, edxFrom.text, edxTo.text) }
                         }
                     }
                 }
@@ -175,9 +188,7 @@ class AdminReportActivity : ProtectedActivity(),
         rclReport.setHasFixedSize(true)
         rclReport.layoutManager= LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        adminReportAdapter= AdminReportAdapter(
-            if(isSaveState) gameViewModel.reports else arrayListOf()
-        )
+        adminReportAdapter= AdminReportAdapter(if(isSaveState) gameViewModel.reports else arrayListOf(), this)
         gameViewModel.reports.clear()
 
         rclReport.adapter= adminReportAdapter
@@ -191,18 +202,8 @@ class AdminReportActivity : ProtectedActivity(),
                 dialog.dismiss()
                 progressBar.progressiveStop()
                 addReports(reports)
-//                swpLayout.isRefreshing= false
+                swpLayout.isRefreshing= false
             })
-        gameViewModel.totalReportData.observe(this, {
-            totalReport->
-                txtBalance.text= getString(R.string.balance_value, if(totalReport!= null) totalReport.data?.balance?.toFloat() else 0f)
-                txtEnter.text= getString(R.string.enter_value, if(totalReport!= null) totalReport.data?.entry?.toFloat() else 0f)
-                txtOut.text= getString(R.string.out_value, if(totalReport!= null) totalReport.data?.out?.toFloat() else 0f)
-                txtAmount.text= if(totalReport!= null) String.format("%.0f", (totalReport.data?.entry!!-totalReport.data.out)) else "0"
-                pgbReport.visibility= GONE
-                header_content.visibility= VISIBLE
-        })
-
     }
 
     private fun addReports(reports: ArrayList<Report>) {
@@ -250,5 +251,13 @@ class AdminReportActivity : ProtectedActivity(),
         gameType?.let { gameViewModel.loadReports(MyApplication.getInstance().company.sequence!!.id!!,
             false, it, edxFrom.text, edxTo.text) }
         progressBar.progressiveStart()
+    }
+
+    override fun onOpen(gameSession: GameSession, report: Report) {
+        val intent= Intent(this, SlotListActivity::class.java)
+        intent.putExtra(GAME_SESSION_EXTRA, gameSession)
+        intent.putExtra(REPORT_EXTRA, report)
+        intent.putExtra(GAME_TYPE_EXTRA, gameType)
+        activityResult.launch(intent)
     }
 }
