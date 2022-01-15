@@ -200,6 +200,9 @@
     <string name="seller_account_number_value">Kont: %1$s</string>
     <string name="all_type">Tout</string>
     <string name="updaate_result_success_message">Rezilta sa yo modifye avèk siksè!</string>
+    <string name="texas">Tekzas</string>
+    <string name="manage_version">Jere vèsyon yo</string>
+    <string name="version">Vèsyon</string>
     <string-array name="employee_category">
         <item>Vandè</item>
         <item>Administratè</item>

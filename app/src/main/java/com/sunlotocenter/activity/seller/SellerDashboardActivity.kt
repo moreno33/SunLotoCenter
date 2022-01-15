@@ -54,6 +54,7 @@ LoadMoreListener.OnLoadMoreListener{
     private var loadMoreListener: LoadMoreListener?= null
     private var isSaveState= false
     private lateinit var alertedGameAdapter: AlertedGameAdapter
+    private var gameSessionHolder: GameScheduleSessionAdapter.GameScheduleSession?= null
 
     override fun getLayoutId(): Int {
         return R.layout.activity_seller_dashboard
@@ -216,8 +217,8 @@ LoadMoreListener.OnLoadMoreListener{
             txtFirst.text= "-"
             txtSecond.text= "-"
             txtThird.text= "-"
-            displayGameSessionImage(null)
-            txtGame.text= "-"
+            displayGameSessionImage(gameSessionHolder?.gameSession)
+            txtGame.text= gameSessionHolder?.gameSchedule?.type?.id?:"-"
         }
     }
 
@@ -270,6 +271,7 @@ LoadMoreListener.OnLoadMoreListener{
 
     override fun onClick(gameScheduleSession: GameScheduleSessionAdapter.GameScheduleSession) {
         dialog.show()
+        gameSessionHolder= gameScheduleSession
         this.selectedGameScheduleSession= gameScheduleSession
         txtGame.text= gameScheduleSession.gameSchedule.type?.id
         displayGameSessionImage(gameScheduleSession.gameSession)

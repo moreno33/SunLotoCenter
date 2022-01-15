@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".activity.VersionActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp"
+        android:background="@color/main_gray"
+        android:paddingBottom="1dp">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            app:title="@string/version" />
+    </com.google.android.material.appbar.AppBarLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swpLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:indeterminate="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:spb_color="@color/main_green"
+                    app:spb_mirror_mode="false"
+                    app:spb_progressiveStart_activated="false"
+                    app:spb_progressiveStart_speed="1"
+                    app:spb_progressiveStop_speed="1.5"
+                    app:spb_reversed="false"
+                    app:spb_sections_count="4"
+                    app:spb_speed="2"
+                    app:spb_stroke_separator_length="4dp"
+                    app:spb_stroke_width="4dp" />
+
+                <TextView
+                    android:id="@+id/txtInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no_data"
+                    android:textSize="@dimen/main_text_size"
+                    app:layout_constraintTop_toTopOf="@id/rclResult"
+                    app:layout_constraintStart_toStartOf="@id/rclResult"
+                    app:layout_constraintBottom_toBottomOf="@id/rclResult"
+                    app:layout_constraintEnd_toEndOf="@id/rclResult"
+                    android:visibility="gone"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rclVersion"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:paddingBottom="10dp"
+                    android:clipToPadding="false"
+                    app:layout_constraintBottom_toTopOf="@id/layout2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:background="@color/main_gray"/>
+
+
+
+                    <com.sunlotocenter.validator.ValidatableEditText
+                        android:id="@+id/edxVersionCode"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="16dp"
+                        android:drawableLeft="@drawable/calendar_month_outline_black_18"
+                        android:drawablePadding="7dp"
+                        android:inputType="number"
+                        app:hint="@string/from"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/edxVersionName"
+                        app:layout_constraintHorizontal_weight="34"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0"
+                        app:max_length="10"
+                        app:text_size="@dimen/main_text_size" />
+
+                    <com.sunlotocenter.validator.ValidatableEditText
+                        android:id="@+id/edxVersionName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:drawableLeft="@drawable/calendar_month_outline_black_18"
+                        android:drawablePadding="7dp"
+                        android:inputType="number"
+                        app:hint="@string/to"
+                        app:layout_constraintBottom_toBottomOf="@id/edxVersionCode"
+                        app:layout_constraintEnd_toStartOf="@id/btnSubmit"
+                        app:layout_constraintHorizontal_weight="34"
+                        app:layout_constraintStart_toEndOf="@id/edxVersionCode"
+                        app:layout_constraintTop_toTopOf="@id/edxVersionCode"
+                        app:max_length="10"
+                        app:text_size="@dimen/main_text_size" />
+
+                    <life.sabujak.roundedbutton.RoundedButton
+                        android:id="@+id/btnSubmit"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/edit_text_height"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="20dp"
+                        android:text="@string/submit"
+                        android:textAllCaps="false"
+                        app:buttonGradientStartColor="@color/colorPrimary"
+                        app:buttonGradientEndColor="@color/colorPrimary"
+                        app:layout_constraintHorizontal_weight="32"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/edxVersionName"
+                        app:buttonCornerRadius="@dimen/main_corner"
+                        android:textSize="@dimen/main_text_size"
+                        app:layout_constraintTop_toTopOf="@id/edxVersionName"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

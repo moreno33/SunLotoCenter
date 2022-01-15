@@ -92,9 +92,9 @@ public class MyApplication extends MultiDexApplication implements Application.Ac
     /**
      * This is the base URL for the whole app
      */
-//    public static final String BASE_URL= "http://10.0.0.176:8080";
+    public static final String BASE_URL= "http://10.0.0.176:8080";
 
-    public static final String BASE_URL= " https://sunlotocenter.herokuapp.com/";
+//    public static final String BASE_URL= " https://sunlotocenter.herokuapp.com/";
 
     private Prefs prefs;
 

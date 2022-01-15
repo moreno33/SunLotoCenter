@@ -26,7 +26,8 @@ fun AppCompatActivity.gameTypes(): Array<SpinnerItem>{
             SpinnerItem("ALL", getString(R.string.all_type)),
             SpinnerItem("NY", getString(R.string.new_york)),
             SpinnerItem("FL", getString(R.string.florida)),
-            SpinnerItem("GA", getString(R.string.georgia))
+            SpinnerItem("GA", getString(R.string.georgia)),
+            SpinnerItem("TX", getString(R.string.texas))
     )
 }
 

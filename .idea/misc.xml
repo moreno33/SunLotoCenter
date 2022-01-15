@@ -15,6 +15,7 @@
         <entry key="app/src/main/res/drawable/auto_loto_background_disabled.xml" value="0.17401315789473684" />
         <entry key="app/src/main/res/drawable/auto_loto_background_enabled.xml" value="0.17401315789473684" />
         <entry key="app/src/main/res/drawable/auto_loto_background_pressed.xml" value="0.17401315789473684" />
+        <entry key="app/src/main/res/drawable/autorenew.xml" value="0.22335526315789472" />
         <entry key="app/src/main/res/drawable/av_timer_black_18.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/av_timer_black_24.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/background_gray.xml" value="0.1819078947368421" />
@@ -53,6 +54,7 @@
         <entry key="app/src/main/res/drawable/dots_horizontal_black_18.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/empty_black_corner_radius.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/empty_black_corner_radius_default.xml" value="0.25" />
+        <entry key="app/src/main/res/drawable/folder_plus_outline_black_18.xml" value="0.22335526315789472" />
         <entry key="app/src/main/res/drawable/game_row_divider.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/gender_male_female_black_18.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/green_circle_background.xml" value="0.20986842105263157" />
@@ -101,10 +103,10 @@
         <entry key="app/src/main/res/drawable/yellow_corner_radius.xml" value="0.21414473684210528" />
         <entry key="app/src/main/res/drawable/yellow_corner_radius_default.xml" value="0.21414473684210528" />
         <entry key="app/src/main/res/drawable/yellow_corner_radius_pressed.xml" value="0.21414473684210528" />
-        <entry key="app/src/main/res/layout/activity_admin_dashboard.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_admin_dashboard.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_admin_personal_info.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_admin_report.xml" value="0.21744012119771697" />
-        <entry key="app/src/main/res/layout/activity_admin_setting.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_admin_setting.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_auto_compose.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_bank_list.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_blame.xml" value="0.18980263157894736" />
@@ -129,6 +131,7 @@
         <entry key="app/src/main/res/layout/activity_seller_dashboard.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_seller_report.xml" value="0.1319078947368421" />
         <entry key="app/src/main/res/layout/activity_slot_list.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/activity_version.xml" value="0.2131578947368421" />
         <entry key="app/src/main/res/layout/alert_list_layout.xml" value="0.20394736842105263" />
         <entry key="app/src/main/res/layout/bank_layout.xml" value="0.45" />
         <entry key="app/src/main/res/layout/blame_layout.xml" value="0.22699386503067484" />

@@ -5,8 +5,6 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.sunlotocenter.MyApplication
 import com.sunlotocenter.R
@@ -40,6 +38,7 @@ class ResultListAdapter(var results: ArrayList<Result>) :
         var result= results[position]
         if(getItemViewType(position)== HEADER){
             var resultHeader= if(result.night== null) result.morning else result.night
+            holder.txtHeaderGameTypeAndTime.text= "${resultHeader?.type?.id}"
             holder.txtFirst.text= resultHeader?.lo1
             holder.txtSecond.text= resultHeader?.lo2
             holder.txtThird.text= resultHeader?.lo3
@@ -62,6 +61,8 @@ class ResultListAdapter(var results: ArrayList<Result>) :
                 holder.imgOpenMorning.visibility= View.GONE
                 holder.imgOpenNight.visibility= View.GONE
             }
+
+            holder.txtGameTypeAndTime.text= "${if(result.morning!= null) result.morning!!.type else result.night!!.type}"
             holder.txtLo1Morning.text= result.morning?.lo1?:"-"
             holder.txtLo2Morning.text= result.morning?.lo2?:"-"
             holder.txtLo3Morning.text= result.morning?.  lo3?:"-"
@@ -113,6 +114,8 @@ class ResultListAdapter(var results: ArrayList<Result>) :
         val imgEdit by lazy { item.imgEdit }
         val imgOpenMorning by lazy { item.imgOpenMorning }
         val imgOpenNight by lazy { item.imgOpenNight }
+        val txtGameTypeAndTime by lazy { item.txtGameType }
+        val txtHeaderGameTypeAndTime by lazy { item.txtHeaderGameType }
 
     }
 }

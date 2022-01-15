@@ -38,6 +38,7 @@ class AdminDashboardActivity : ProtectedActivity(),
     private var loadMoreListener: LoadMoreListener?= null
     private var isSaveState= false
     private lateinit var alertedGameAdapter: AlertedGameAdapter
+    private var gameSessionHolder: GameScheduleSessionAdapter.GameScheduleSession?= null
 
     override fun getLayoutId(): Int {
         return R.layout.activity_admin_dashboard
@@ -198,8 +199,8 @@ class AdminDashboardActivity : ProtectedActivity(),
             txtFirst.text= "-"
             txtSecond.text= "-"
             txtThird.text= "-"
-            displayGameSessionImage(null)
-            txtGame.text= "-"
+            displayGameSessionImage(gameSessionHolder?.gameSession)
+            txtGame.text= gameSessionHolder?.gameSchedule?.type?.id?:"-"
         }
     }
 
@@ -254,6 +255,7 @@ class AdminDashboardActivity : ProtectedActivity(),
 
     override fun onClick(gameScheduleSession: GameScheduleSessionAdapter.GameScheduleSession) {
         dialog.show()
+        gameSessionHolder= gameScheduleSession
         this.selectedGameScheduleSession= gameScheduleSession
         txtGame.text= gameScheduleSession.gameSchedule.type?.id
         displayGameSessionImage(gameScheduleSession.gameSession)

@@ -73,8 +73,8 @@
                     android:id="@+id/rclResult"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
+                    android:paddingBottom="10dp"
                     android:clipToPadding="false"
-                    android:paddingBottom="70dp"
                     app:layout_constraintBottom_toTopOf="@id/layout2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -186,6 +186,7 @@
         android:src="@drawable/plus_white_24"
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="91dp"
-        android:layout_marginRight="16dp"/>
+        android:layout_marginRight="16dp"
+        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -16,6 +16,17 @@
         android:layout_marginEnd="16dp"
         android:background="@drawable/dashboard_top_background">
 
+        <TextView
+            android:id="@+id/txtHeaderGameType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="NY (Monday)"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clLo1"
             android:layout_width="45dp"
@@ -26,7 +37,7 @@
             android:background="@drawable/red_circle_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/txtHeaderGameType">
 
             <TextView
                 android:id="@+id/txtFirst"
@@ -46,9 +57,9 @@
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
             android:background="@drawable/yellow_circle_background"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/clLo1"
             app:layout_constraintStart_toEndOf="@+id/clLo1"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="@id/clLo1">
 
             <TextView
                 android:id="@+id/txtSecond"
@@ -71,10 +82,9 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/green_circle_background"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/clLo2"
             app:layout_constraintStart_toEndOf="@+id/clLo2"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0">
+            app:layout_constraintTop_toTopOf="@id/clLo2">
 
             <TextView
                 android:id="@+id/txtThird"
@@ -96,9 +106,9 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:src="@drawable/pencil_outline_white_24"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/clLo3"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/clLo3" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>

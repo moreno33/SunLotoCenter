@@ -50,7 +50,8 @@ class SettingActivity : ProtectedActivity() {
             Pair(clManageGame, ManageGameActivity::class.java),
             Pair(clChangePassword, ChangePasswordActivity::class.java),
             Pair(clChangeGamePrice, ManageGamePriceActivity::class.java),
-            Pair(clLimit, PreventTroubleActivity::class.java)))
+            Pair(clLimit, PreventTroubleActivity::class.java),
+            Pair(clVersion, VersionActivity::class.java)))
     }
 
     private fun manageClick(actions: Map<ConstraintLayout, Class<out AppCompatActivity>>) {

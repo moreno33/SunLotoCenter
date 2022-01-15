@@ -152,7 +152,7 @@ class ResultListActivity : ProtectedActivity(),
 
 
         //Fill game spinner
-        val dataAdapter= ArrayAdapter(this, android.R.layout.simple_spinner_item, gameTypes())
+        val dataAdapter= ArrayAdapter(this, android.R.layout.simple_spinner_item, gameTypes().copyOfRange(1, gameTypes().size))
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spnType.adapter = dataAdapter
         spnType.setTitle(getString(R.string.game))
@@ -213,6 +213,7 @@ class ResultListActivity : ProtectedActivity(),
 
     private fun addResults(results: ArrayList<Result>) {
         loadMoreListener?.setFinished(false)
+        var size= 0
         if(results.isEmpty()){
             if(gameViewModel.page== 0){
                 resultListAdapter.results.clear()
@@ -227,6 +228,7 @@ class ResultListActivity : ProtectedActivity(),
         }else{
             txtInfo.visibility= View.GONE
             if(gameViewModel.page== 0){
+                size= -1
                 if(results[0].night== null){
                     results.add(0, Result(results[0].morning, null))
                 }else{
@@ -235,7 +237,12 @@ class ResultListActivity : ProtectedActivity(),
             }
         }
         val isFirstPage= gameViewModel.page== 0
-        if(results.size< LoadMoreListener.SIZE_PER_PAGE)
+
+        results.forEach {
+            if(it.morning!= null) size++
+            if(it.night!= null) size++
+        }
+        if(size< LoadMoreListener.SIZE_PER_PAGE)
             loadMoreListener?.setFinished(true)
         val lastPosition= resultListAdapter.results.size
         if(isFirstPage)
