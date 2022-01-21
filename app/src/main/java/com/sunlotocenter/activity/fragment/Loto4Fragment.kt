@@ -54,7 +54,7 @@ class Loto4Fragment(private var addGameListener: AddGameListener) : Fragment() {
                     }
                     val amount3= content.edxAmount3.text
                     if(amount3.isNotEmpty()){
-                        val loto4= Loto4(view.edxNumber.text, amount1.toDouble(), "3", 1)
+                        val loto4= Loto4(view.edxNumber.text, amount3.toDouble(), "3", 1)
                         addGameListener.addGame(loto4)
                     }
                     edxNumber.text= ""

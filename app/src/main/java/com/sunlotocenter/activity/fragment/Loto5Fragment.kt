@@ -41,7 +41,7 @@ class Loto5Fragment(private var addGameListener: AddGameListener) : Fragment() {
         )
         form.addInput(view.edxNumber)
         if(form.isValid()){
-            showDialog(this.context!!, getString(R.string.option), content, getString(R.string.add), getString(R.string.cancel), object :ClickListener{
+            showDialog(this.requireContext(), getString(R.string.option), content, getString(R.string.add), getString(R.string.cancel), object :ClickListener{
                 override fun onClick(): Boolean {
                     val amount1= content.edxAmount1.text
                     if(amount1.isNotEmpty()){
@@ -55,7 +55,7 @@ class Loto5Fragment(private var addGameListener: AddGameListener) : Fragment() {
                     }
                     val amount3= content.edxAmount3.text
                     if(amount3.isNotEmpty()){
-                        val loto5= Loto5(view.edxNumber.text, amount1.toDouble(), "3", 1)
+                        val loto5= Loto5(view.edxNumber.text, amount3.toDouble(), "3", 1)
                         addGameListener.addGame(loto5)
                     }
                     edxNumber.text= ""
