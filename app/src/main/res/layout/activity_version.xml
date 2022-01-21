@@ -63,10 +63,10 @@
                     android:layout_height="wrap_content"
                     android:text="@string/no_data"
                     android:textSize="@dimen/main_text_size"
-                    app:layout_constraintTop_toTopOf="@id/rclResult"
-                    app:layout_constraintStart_toStartOf="@id/rclResult"
-                    app:layout_constraintBottom_toBottomOf="@id/rclResult"
-                    app:layout_constraintEnd_toEndOf="@id/rclResult"
+                    app:layout_constraintTop_toTopOf="@id/rclVersion"
+                    app:layout_constraintStart_toStartOf="@id/rclVersion"
+                    app:layout_constraintBottom_toBottomOf="@id/rclVersion"
+                    app:layout_constraintEnd_toEndOf="@id/rclVersion"
                     android:visibility="gone"/>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -78,7 +78,9 @@
                     app:layout_constraintBottom_toTopOf="@id/layout2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"/>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout2"
@@ -107,7 +109,7 @@
                         android:drawableLeft="@drawable/calendar_month_outline_black_18"
                         android:drawablePadding="7dp"
                         android:inputType="number"
-                        app:hint="@string/from"
+                        app:hint="@string/version_code_hint"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/edxVersionName"
                         app:layout_constraintHorizontal_weight="34"
@@ -124,8 +126,7 @@
                         android:layout_marginEnd="10dp"
                         android:drawableLeft="@drawable/calendar_month_outline_black_18"
                         android:drawablePadding="7dp"
-                        android:inputType="number"
-                        app:hint="@string/to"
+                        app:hint="@string/version_name_hint"
                         app:layout_constraintBottom_toBottomOf="@id/edxVersionCode"
                         app:layout_constraintEnd_toStartOf="@id/btnSubmit"
                         app:layout_constraintHorizontal_weight="34"

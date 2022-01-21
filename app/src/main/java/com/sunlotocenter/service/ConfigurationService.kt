@@ -23,7 +23,42 @@ class ConfigurationService : IntentService(TAG) {
         val action = intent!!.action
         when (action) {
             ACTION_CONFIG_DATA -> cacheConfigurationData()
+            ACTION_VERSION->cacheVersionData()
         }
+    }
+
+    private fun cacheVersionData() {
+        val headers: MutableMap<String, String> = HashMap()
+        headers["accept-language"] = Locale.getDefault().toString()
+            val versionCall: Call<Response<Version>> = userApi
+            .getCurrentVersion()
+
+        versionCall.enqueue(object : Callback<Response<Version>> {
+            /*
+            In case we get a positive answer we need to update our list accordingly
+             */
+            override fun onResponse(call: Call<Response<Version>>,
+                                    response: retrofit2.Response<Response<Version>>) {
+
+                if (response.body() != null) {
+                    if (response.body()!!.success) {
+                        //If the response comes successfully and the account is null, there is a problem, log the user out.
+                        val version = response.body()!!.data
+                        updateVersion(version)
+                    }
+                }
+            }
+
+            /*
+             * In case there is a failure no need to advise the user because this is a service
+             * running on background
+             * @param call
+             * @param t
+             */
+            override fun onFailure(call: Call<Response<Version>>, t: Throwable) {
+                Log.e(TAG, "onFailure: Sorry we fail fetching version")
+            }
+        })
     }
 
     private fun cacheConfigurationData() {
@@ -53,6 +88,7 @@ class ConfigurationService : IntentService(TAG) {
                             updateGameSchedules(configuration.gameSchedules)
                             updateLatestResult(configuration.latestGameResult)
                             updateCompany(configuration.company)
+                            updateVersion(configuration.version)
                         }
                     }
                 }
@@ -65,9 +101,13 @@ class ConfigurationService : IntentService(TAG) {
              * @param t
              */
             override fun onFailure(call: Call<Response<Configuration>>, t: Throwable) {
-                Log.e(TAG, "onFailure: Sorry we fail fetching mark model and category")
+                Log.e(TAG, "onFailure: Sorry we fail fetching your configuration data")
             }
         })
+    }
+
+    private fun updateVersion(version: Version?) {
+        MyApplication.getInstance().version= version
     }
 
     private fun updateCompany(company: Company?) {
@@ -95,6 +135,7 @@ class ConfigurationService : IntentService(TAG) {
     }
 
     companion object {
+        const val ACTION_VERSION= "com.sunlotocenter.ACTION_VERSION"
         const val ACTION_CONFIG_DATA = "com.sunlotocenter.ACTION_CONFIG_DATA"
         const val TAG = "ConfigurationService"
     }

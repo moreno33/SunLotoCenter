@@ -7,6 +7,7 @@ import com.sunlotocenter.dao.Company;
 import com.sunlotocenter.dao.GameResult;
 import com.sunlotocenter.dao.GameSchedule;
 import com.sunlotocenter.dao.User;
+import com.sunlotocenter.dao.Version;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,6 +40,11 @@ public class Prefs {
      * For game result
      */
     public static final String GAME_RESULT_PREF= "game_schedules_pref";
+
+    /**
+     * For version
+     */
+    public static final String VERSION_PREF= "version_pref";
 
     /**
      * Here we declare our shared preferences
@@ -181,6 +187,36 @@ public class Prefs {
         SharedPreferences.Editor editor= prefs.edit();
         try {
             editor.putString(GAME_RESULT_PREF, ObjectSerializer.serialize(gameResult));
+            editor.apply();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This helper method allows to retrieve the selected version
+     * @return
+     */
+    public Version getVersion(){
+        Version version= null;
+        try {
+            version= (Version) ObjectSerializer.deserialize(prefs.getString(VERSION_PREF, null));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return version;
+    }
+
+    /**
+     * This helper method allows to save the selected version into
+     * the shared preferences
+     * @param version
+     */
+    public void setVersion(Version version){
+
+        SharedPreferences.Editor editor= prefs.edit();
+        try {
+            editor.putString(VERSION_PREF, ObjectSerializer.serialize(version));
             editor.apply();
         } catch (IOException e) {
             e.printStackTrace();

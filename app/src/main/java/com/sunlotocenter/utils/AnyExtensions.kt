@@ -1,6 +1,7 @@
 package com.sunlotocenter.utils
 
 import android.app.AlertDialog
+import android.app.DownloadManager
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -40,6 +41,7 @@ import com.sunlotocenter.api.GameApi
 import com.sunlotocenter.api.NotificationApi
 import com.sunlotocenter.api.UserApi
 import com.sunlotocenter.dao.Entity
+import com.sunlotocenter.dao.Version
 import kotlinx.android.synthetic.main.dialog_layout.view.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -49,14 +51,19 @@ import org.joda.time.DateTimeZone
 import org.joda.time.LocalTime
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.format.DateTimeFormatter
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
+import java.io.*
+import java.net.URL
+import java.net.URLConnection
 import java.security.SecureRandom
 import java.text.DecimalFormat
 import java.util.*
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 import kotlin.collections.ArrayList
+import androidx.core.content.ContextCompat.getSystemService
+
+
+
 
 
 val random = SecureRandom()
@@ -79,6 +86,7 @@ val COPIED_GAME_LIST= "COPIED_GAME_LIST"
 val SLOT_EXTRA= "SLOT_EXTRA"
 val COMPANY_EXTRA= "COMPANY_EXTRA"
 val GAME_TYPE_EXTRA= "GAME_TYPE_EXTRA"
+val VERSION_EXTRA= "VERSION_EXTRA"
 
 val userApi =
     MyApplication.getInstance().clientNetworking.create(UserApi::class.java)
@@ -171,6 +179,26 @@ fun createOrGetFile(destination: File, fileName: String, directory: String): Fil
         }
     }
     return File(folder, fileName)
+}
+
+fun download(url: String, outputFile: File, context: Context) {
+    try {
+        Executors.newSingleThreadExecutor().execute { val u = URL(url)
+            val conn: URLConnection = u.openConnection()
+            val contentLength: Int = conn.contentLength
+            val stream = DataInputStream(u.openStream())
+            val buffer = ByteArray(contentLength)
+            stream.readFully(buffer)
+            stream.close()
+            val fos = DataOutputStream(FileOutputStream(outputFile))
+            fos.write(buffer)
+            fos.flush()
+            fos.close() }
+    } catch (e: FileNotFoundException) {
+        return
+    } catch (e: IOException) {
+        return
+    }
 }
 
 fun getDateString(date: DateTime): String {

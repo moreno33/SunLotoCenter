@@ -203,6 +203,17 @@
     <string name="texas">Tekzas</string>
     <string name="manage_version">Jere vèsyon yo</string>
     <string name="version">Vèsyon</string>
+    <string name="version_code_hint">Kòd vèsyon an</string>
+    <string name="version_name_hint">Non vèsyon an</string>
+    <string name="version_susccess_message">Ou ajoute yon nouvo vèsyon avèk siksè!</string>
+    <string name="incorrect_version">Kòd vèsyon an dwe %1$d e non vèsyon an dwe %2$s.</string>
+    <string name="new_version_available">Gen yon nouvo vèsyon (%1$s) aplikasyon an ki disponib, telechajel pouw ka kontinye itilize aplikasyon an: %2$s</string>
+    <string name="download">Telechaje</string>
+    <string name="downloading">Telechaje..</string>
+    <string name="new_version_available_title">Nouvo vèsyon</string>
+    <string name="no_version_available_title">Pa gen nouvo vèsyon</string>
+    <string name="no_version_available">Aplikasyon ou an a jou. Ou ka kontinye itilizel san oken pwoblèm</string>
+    <string name="update">Mete a jou</string>
     <string-array name="employee_category">
         <item>Vandè</item>
         <item>Administratè</item>

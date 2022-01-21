@@ -26,10 +26,13 @@ class UserViewModel (private val savedStateHandle: SavedStateHandle) : ViewModel
     private val BLAMES: String= "blames"
     var lastAddedEmployeesData= MutableLiveData<ArrayList<out User>>()
     var lastAddedBlamesData= MutableLiveData<ArrayList<Blame>>()
+    var lastAddedVersionsData= MutableLiveData<ArrayList<Version>>()
     var employeeTotalData= MutableLiveData<Long>()
     var blameData= MutableLiveData<Response<Blame>>()
+    var versionData= MutableLiveData<Response<Version>>()
     var employees= arrayListOf<User>()
     var blames= arrayListOf<Blame>()
+    var versions= arrayListOf<Version>()
     var page= -1
     var ACTION= ACTION_SAVE
 
@@ -238,6 +241,50 @@ class UserViewModel (private val savedStateHandle: SavedStateHandle) : ViewModel
             }
         })
 
+    }
+
+    fun loadVersions(isFirstPage: Boolean) {
+        if(!isFirstPage)
+            page++
+        else
+            page= 0
+
+        userApi.getVersions(page).enqueue(object: Callback<Response<ArrayList<Version>>>{
+            override fun onResponse(
+                call: Call<Response<ArrayList<Version>>>,
+                response: retrofit2.Response<Response<ArrayList<Version>>>
+            ) {
+                if(response.body()== null){
+                    lastAddedVersionsData.postValue(ArrayList())
+                }else{
+                    lastAddedVersionsData.postValue(response.body()!!.data)
+                }
+
+
+            }
+            override fun onFailure(call: Call<Response<ArrayList<Version>>>, t: Throwable) {
+                lastAddedVersionsData.postValue(ArrayList())
+            }
+
+        })
+    }
+
+    fun saveVersion(version: Version) {
+        val call: Call<Response<Version>> = userApi.saveVersion(version)
+        call.enqueue(object : Callback<Response<Version>> {
+            override fun onResponse(call: Call<Response<Version>>,
+                                    response: retrofit2.Response<Response<Version>>) {
+                if(response.code()== 200){
+                    versionData.value= response.body()
+                }else{
+                    versionData.value= null
+                }
+            }
+
+            override fun onFailure(call: Call<Response<Version>>, t: Throwable) {
+                versionData.value= null
+            }
+        })
     }
 
 }

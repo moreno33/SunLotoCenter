@@ -1,11 +1,9 @@
 package com.sunlotocenter.dto
 
-import com.sunlotocenter.dao.Company
-import com.sunlotocenter.dao.GameResult
-import com.sunlotocenter.dao.GameSchedule
-import com.sunlotocenter.dao.User
+import com.sunlotocenter.dao.*
 
 class Configuration(var connectedUser: User?= null,
                     var gameSchedules: ArrayList<GameSchedule>?= null,
                     var latestGameResult: GameResult?= null,
-                    var company: Company?= null)
+                    var company: Company?= null,
+                    var version: Version?= null)

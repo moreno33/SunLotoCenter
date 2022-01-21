@@ -171,6 +171,7 @@
         <entry key="app/src/main/res/layout/spinner_item_layout.xml" value="0.1" />
         <entry key="app/src/main/res/layout/valid_error_layout.xml" value="0.25" />
         <entry key="app/src/main/res/layout/validatable_edit_text_layout.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/version_layout.xml" value="0.335" />
         <entry key="app/src/main/res/menu/date_time_range_picker.xml" value="0.19210526315789472" />
         <entry key="app/src/main/res/menu/mn_admin_dashboard.xml" value="0.16319444444444445" />
         <entry key="app/src/main/res/menu/mn_broadcast.xml" value="0.2138157894736842" />

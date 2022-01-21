@@ -40,6 +40,9 @@ interface UserApi {
     @POST("/blames")
     fun addBlame(@Body blame: Blame): Call<Response<Blame>>
 
+    @POST("/versions")
+    fun saveVersion(@Body version: Version): Call<Response<Version>>
+
     @GET("/blames/{page}/{userSequenceId}")
     fun getBlames(@Path("page") page: Int, @Path("userSequenceId") userSequenceId: Long): Call<Response<ArrayList<Blame>>>
 
@@ -48,4 +51,10 @@ interface UserApi {
 
     @GET("/config/data/{sequenceId}")
     fun getConfigurationData(@Path("sequenceId") userSequenceId: Long?): Call<Response<Configuration>>
+
+    @GET("/version")
+    fun getCurrentVersion(): Call<Response<Version>>
+
+    @GET("/versions/{page}")
+    fun getVersions(@Path("page") page: Int): Call<Response<ArrayList<Version>>>
 }

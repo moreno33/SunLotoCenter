@@ -1,12 +1,22 @@
 package com.sunlotocenter;
 
+import com.github.javiersantos.appupdater.AppUpdater;
+import com.github.javiersantos.appupdater.AppUpdaterUtils;
+import com.github.javiersantos.appupdater.UpdateClickListener;
+import com.github.javiersantos.appupdater.enums.AppUpdaterError;
+import com.github.javiersantos.appupdater.enums.Display;
+import com.github.javiersantos.appupdater.enums.UpdateFrom;
+import com.github.javiersantos.appupdater.objects.Update;
 import com.mazenrashed.printooth.Printooth;
+import com.sunlotocenter.activity.admin.AdminDashboardActivity;
 import com.sunlotocenter.dao.Company;
+import com.sunlotocenter.dao.Version;
 import com.sunlotocenter.utils.AnyExtensionsKt;
 import com.sunlotocenter.utils.AnyExtensionsKt;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.net.Uri;
@@ -69,6 +79,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Url;
 
 public class MyApplication extends MultiDexApplication implements Application.ActivityLifecycleCallbacks{
 
@@ -98,6 +109,8 @@ public class MyApplication extends MultiDexApplication implements Application.Ac
 
     private Prefs prefs;
 
+    public static boolean doesDowloadProcessStart= false;
+
     private Gson gson= new GsonBuilder()
             .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
             .registerTypeAdapterFactory(new ClassTypeAdapterFactory())
@@ -121,6 +134,30 @@ public class MyApplication extends MultiDexApplication implements Application.Ac
     @Override
     public void onCreate() {
         super.onCreate();
+
+
+
+
+//        AppUpdater appUpdater = new AppUpdater(this)
+//                .setDisplay(Display.DIALOG)
+//                .setCancelable(false)
+//                .setUpdateFrom(UpdateFrom.GITHUB)
+//                .setGitHubUserAndRepo("moreno33", "SunLotoCenterServer")
+//                .setTitleOnUpdateAvailable(getString(R.string.new_version_available_title))
+//                .setContentOnUpdateAvailable(getString(R.string.new_version_available))
+//                .setTitleOnUpdateNotAvailable(getString(R.string.no_version_available_title))
+//                .setContentOnUpdateNotAvailable(getString(R.string.no_version_available))
+//                .setButtonUpdate(getString(R.string.update))
+//                .setButtonDoNotShowAgain(null)
+//                .setButtonUpdateClickListener(new UpdateClickListener(this, UpdateFrom.GITHUB, Url apk){
+//
+//                })
+//	.setButtonDismiss("Maybe later")
+//                .setButtonDismissClickListener(...)
+//	.setButtonDoNotShowAgain("Huh, not interested")
+//                .setButtonDoNotShowAgainClickListener(...)
+//	.setIcon(R.drawable.ic_update) // Notification icon
+//                .setCancelable(false) // Dialog could not be dismissable
 
 
 //        registerActivityLifecycleCallbacks(this);
@@ -281,9 +318,24 @@ public class MyApplication extends MultiDexApplication implements Application.Ac
 
     @Override
     public void onActivityResumed(@NonNull Activity activity) {
+
+        //here we request the version
+        startService(new Intent(this, ConfigurationService.class)
+                .setAction(ConfigurationService.ACTION_VERSION));
+
+
         if(getConnectedUser()!= null){
             startService(new Intent(this, ConfigurationService.class)
                     .setAction(ConfigurationService.ACTION_CONFIG_DATA));
+        }
+
+        if(getVersion()!= null && !doesDowloadProcessStart){
+            if(getVersion().getVersionCode()!= BuildConfig.VERSION_CODE
+                    || !getVersion().getVersionName().equals(BuildConfig.VERSION_NAME)){
+                logout();
+                Intent intent= new Intent(this, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
         }
     }
 
@@ -442,6 +494,25 @@ public class MyApplication extends MultiDexApplication implements Application.Ac
     public void setGameResult(GameResult gameResult){
         prefs= new Prefs(this, PreferenceType.PERMANENT);
         prefs.setGameResult(gameResult);
+    }
+
+
+    /**
+     * Return the selected version
+     * @return
+     */
+    public Version getVersion() {
+        prefs= new Prefs(this, PreferenceType.ONE_TIME_SAVING);
+        return prefs.getVersion();
+    }
+
+    /**
+     * Set the selected version
+     * @param version
+     */
+    public void setVersion(Version version){
+        prefs= new Prefs(this, PreferenceType.ONE_TIME_SAVING);
+        prefs.setVersion(version);
     }
 
 

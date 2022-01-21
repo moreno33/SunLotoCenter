@@ -1,11 +1,28 @@
 package com.sunlotocenter.activity
 
-import android.content.Intent
+import android.app.Activity
+import android.app.DownloadManager
+import android.app.PendingIntent
+import android.content.*
+import android.content.pm.PackageInstaller
+import android.content.pm.PackageManager
+import android.database.Cursor
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
+import android.view.View
+import android.webkit.CookieManager
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.net.toFile
 import com.emarkall.worldwidephonenumberedittext.Country
 import com.emarkall.worldwidephonenumberedittext.CountryListActivity
 import com.emarkall.worldwidephonenumberedittext.WorldWidePhoneNumberEditText
+import com.mazenrashed.printooth.Printooth
+import com.mazenrashed.printooth.ui.ScanningActivity
+import com.sunlotocenter.BuildConfig
 import com.sunlotocenter.MyApplication
 import com.sunlotocenter.R
 import com.sunlotocenter.dao.Response
@@ -24,24 +41,50 @@ import kotlinx.android.synthetic.main.activity_admin_personal_info.edxPhone
 import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Call
 import retrofit2.Callback
+import java.io.File
+import java.io.IOException
+import java.lang.Exception
 import java.util.*
+import kotlin.math.log
 
 class LoginActivity : BasicActivity() {
+
+    private lateinit var activityResult: ActivityResultLauncher<Intent>
+    private var manager:DownloadManager?=  null
+    private var downloadId: Long?= null
 
     override fun getLayoutId(): Int {
         return R.layout.activity_login
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        activityResult= registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == RESULT_OK) {
+                val install = Intent(Intent.ACTION_VIEW)
+                install.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                install.setDataAndType(manager?.getUriForDownloadedFile(downloadId!!),
+                    "application/vnd.android.package-archive"
+                )
+                startActivity(install)
+//                unregisterReceiver(this)
+            } else if (it.resultCode == RESULT_CANCELED) {
+                Log.d("TAG", "onActivityResult: user canceled the (un)install");
+            } else if (it.resultCode == RESULT_FIRST_USER) {
+                Log.d("TAG", "onActivityResult: failed to (un)install");
+            }
+        }
+
         edxPhone.switchCountry(509)
         btnLogin.setOnClickListener { submit() }
     }
 
+
     override fun onResume() {
         super.onResume()
+
         if(MyApplication.getInstance().isLoggedIn)redirectToDashboard(MyApplication.getInstance().connectedUser)
     }
-
 
     /**
      * This method allows us to perform a click on the login button.
@@ -61,11 +104,8 @@ class LoginActivity : BasicActivity() {
 
             //Let's check the internet connectiviy
             if (isConnected()) {
-
                 dialog.show()
-
                 login(edxPhone.text, edxPassword.text)
-
             } else {
                 //We will show a dialog to tell the user to check his internet connection
                 neutralDialog()
