@@ -36,13 +36,13 @@ open abstract class BasicActivity: CheckInternetActivity() {
 
 
         val appUpdaterUtils = AppUpdaterUtils(this)
-            .setUpdateFrom(UpdateFrom.GITHUB)
-            .setGitHubUserAndRepo("moreno33", "SunLotoCenterServer")
+            .setUpdateFrom(UpdateFrom.JSON)
+            .setGitHubUserAndRepo("moreno33", "SunLotoCenter")
             .withListener(object : UpdateListener {
                 override fun onSuccess(update: Update, isUpdateAvailable: Boolean) {
 
                     var releaseNote= ""
-                    update.releaseNotes.forEach { releaseNote += "-${it}\n" }
+                    update.releaseNotes?.forEach { releaseNote += "-${it}\n" }
 
                     com.sunlotocenter.utils.showDialog(
                         this@BasicActivity,
